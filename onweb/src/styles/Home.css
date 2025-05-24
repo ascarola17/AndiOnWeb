@@ -1,0 +1,36 @@
+/* src/styles/Home.css */
+.home-wrapper {
+  background-size: cover; /* Makes the background cover the entire screen */
+  background-position: center center; /* Centers the image */
+  background-repeat: no-repeat; /* Prevents repeating the image */
+  min-height: 100vh; /* Ensures the background covers the entire page */
+  text-align: center;
+  padding: 50px 0;
+  font-family: 'Comic Sans MS', sans-serif; /* Fun, playful font */
+}
+
+/* Other styles for your title, subtitle, button, etc. */
+.home-title {
+  font-size: 3em;
+  color: #f7d300; /* SpongeBob yellow */
+  text-shadow: 2px 2px 4px #000000;
+  margin-bottom: 20px;
+}
+
+.home-subtitle {
+  font-size: 1.5em;
+  color: #0000ff; /* Deep ocean blue */
+  margin-bottom: 30px;
+}
+
+.home-button {
+  background-color: #ffeb00;
+  padding: 15px 30px;
+  font-size: 1.2em;
+  cursor: pointer;
+  border-radius: 20px;
+}
+
+.home-button:hover {
+  background-color: #f7d300;
+}

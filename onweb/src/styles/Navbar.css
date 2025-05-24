@@ -1,0 +1,37 @@
+/* Basic styles for the Navbar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f7d300; /* SpongeBob yellow */
+  padding: 20px;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.navbar-logo h2 {
+  font-size: 2rem;
+  font-family: 'Comic Sans MS', sans-serif;
+  color: #ff4500; /* SpongeBob orange */
+  margin: 0;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 20px;
+}
+
+.navbar-link {
+  color: #0000ff; /* Deep ocean blue */
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.navbar-link:hover {
+  color: #f7d300;
+  text-shadow: 2px 2px 4px #ff4500;
+}
