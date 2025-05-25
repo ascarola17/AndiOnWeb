@@ -1,18 +1,131 @@
 .projects-wrapper {
-  background-color: #f0f8ff;
-  padding: 50px;
-  text-align: center;
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000000;
+  overflow: hidden;
+}
+.background-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  background-image: url('../images/Bp.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
 }
 
-.projects-title {
-  font-size: 3em;
-  color: #32cd32; /* Green for projects */
+.tv-screen {
+  position: absolute;
+  top: clamp(35vh, 40vh, 42vh);
+  left: clamp(34vw, 37.3vw, 55vw);
+  width: clamp(200px, 25vw, 615px); 
+  aspect-ratio: 4 / 3;
+  transform: translate(-50%, -50%) rotateZ(3Deg);
+  z-index: 3;
+  overflow: hidden;
+  border-radius: 3px;
+  overflow: hidden;
+  transition: top 0.2s, left 0.2s, width 0.2s ease;
 }
 
-.project-card {
-  display: inline-block;
-  background-color: #fff;
-  padding: 20px;
-  margin: 10px;
-  border-radius: 8px;
+
+
+
+.tv-screen:hover {
+  transform: translate(-50%, -50%) scale(1.1) rotate(2deg) skewX(-3.2deg);
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+}
+
+/* Border around the video */
+.video-border {
+  background-color: black;
+  border-radius: 20px;
+  padding: 6px;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.video-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+}
+
+.demo-video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Info box that slides up */
+.project-info {
+  position: absolute;
+  bottom: -150px;
+  left: 0;
+  width: 100%;
+  background: srgba(0, 0, 0, 0.85);
+  color: #fff;
+  padding: 16px;
+  font-size: 0.95rem;
+  transition: bottom 0.3s ease;
+  z-index: 4;
+}
+
+.tv-screen:hover .project-info {
+  bottom: 0;
+}
+
+.project-info h2 {
+  margin: 0;
+  font-size: 1.2rem;
+  color: #00ffff;
+}
+
+.project-info p {
+  margin: 8px 0;
+}
+
+.project-info a {
+  color: #ffd700;
+  text-decoration: none;
+  font-weight: bold;
+}
+.project-info.top-info {
+  top: 0;
+  bottom: unset;
+  left: 0;
+  width: 100%;
+  /* background: rgba(0, 0, 0, 0.85); */
+  color: #fff;
+  padding: 12px;
+  font-size: 0.95rem;
+  z-index: 5;
+  position: absolute;
+  transition: opacity 0.3s ease;
+}
+
+.tv-screen:hover .top-info {
+  opacity: 1;
+}
+
+/* Responsive positioning */
+@media (max-width: 768px) {
+  .tv-screen {
+    top: 42%;
+    left: 36%;
+    width: 40%;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1200px) {
+  .tv-screen {
+    top: 41.8%;
+    left: 35.6%;
+    width: 25%;
+  }
 }
