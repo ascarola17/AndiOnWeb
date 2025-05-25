@@ -1,45 +1,32 @@
 import React from 'react';
-import '../styles/Home.css'; // Import the Home.css file
-import background from '../images/bikini-bottom.png';
+import BubbleTransition from '../components/BubbleTransition';
+import '../styles/Home.css';
+import background from '../images/bm.png';
+import andiCharacter from '../images/AndiBob.png';
+import karenCharacter from '../images/Karen.png';
 
 const Home = () => {
   return (
-<div
-  className="home-wrapper"
-  style={{
-    backgroundImage: `url(${background})`,
-    backgroundSize: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    height: '100vh',
-    width: '100%',
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    flexDirection: 'column',
-    color: '#FFD700', // SpongeBob yellow
-    textAlign: 'center',
-    padding: '0 20px',
-  }}
->
-  <h1 style={{ fontSize: '3rem', margin: 0 }}>Hi, I'm Andi!</h1>
-  <p style={{ fontSize: '1.2rem', color: 'blue', marginBottom: '20px' }}>
-Somewhere between a Git commit and Goo Lagoon.  </p>
-  <button
-    onClick={() => alert('Dive into my projects!')}
-    style={{
-      backgroundColor: '#FFFF00',
-      border: '2px solid black',
-      padding: '10px 20px',
-      fontWeight: 'bold',
-      borderRadius: '8px',
-      cursor: 'pointer',
-    }}
-  >
-    Dive In!
-  </button>
-</div>
+    <div className="home-wrapper">
+      <img src={background} alt="Bikini Bottom Background" className="bg-img" />
+      <BubbleTransition textId="homeText" delay={3000} />
 
+      <main>
+        <div className="home-text hidden-text" id="homeText">
+          <h1 className="home-title">
+            Hi, I'm <span className="name-highlight">Andi!</span>
+          </h1>
+          <p className="home-subtitle">Somewhere between a Git commit and Goo Lagoon...</p>
+          <button className="home-button" onClick={() => alert('Dive into my projects!')}>
+            Dive In!
+          </button>
+        </div>
+
+      <img className="home-character" src={andiCharacter} alt="Andi - character" />
+      <img className="karen-img" src={karenCharacter} alt="Karen from SpongeBob" />
+
+      </main>
+    </div>
   );
 };
 

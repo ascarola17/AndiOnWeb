@@ -1,37 +1,60 @@
-/* Basic styles for the Navbar */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500&display=swap');
+
+/* Navbar Container */
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #f7d300; /* SpongeBob yellow */
-  padding: 20px;
+  background: linear-gradient(90deg, #f7d300 0%, #ffe600 100%);
+  padding: 16px 32px;
   position: sticky;
   top: 0;
   z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
+/* Logo Style */
 .navbar-logo h2 {
-  font-size: 2rem;
-  font-family: 'Comic Sans MS', sans-serif;
-  color: #ff4500; /* SpongeBob orange */
+  font-size: 2.4rem;
+  font-family: 'Fredoka', sans-serif;
+  color: #4dd0e1; /* Seafoam blue */
   margin: 0;
+  letter-spacing: 2px;
+  text-shadow: 2px 2px 0 #fff, 1px 1px 4px #00acc1;
+  animation: floaty 2s ease-in-out infinite alternate;
 }
 
+
+/* Link Container */
 .navbar-links {
   display: flex;
-  gap: 20px;
+  gap: 24px;
 }
 
+/* Individual Link Styles */
 .navbar-link {
-  color: #0000ff; /* Deep ocean blue */
+  color: #0051ff;
   text-decoration: none;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  font-weight: 600;
+  position: relative;
+  font-family: 'Fredoka', sans-serif;
+  transition: transform 0.2s ease;
 }
 
+/* Hover FX: Bounce + Glow */
 .navbar-link:hover {
-  color: #f7d300;
-  text-shadow: 2px 2px 4px #ff4500;
+  color: #ff9800;
+  transform: scale(1.1) rotate(-1deg);
+  text-shadow: 1px 1px 6px #fff176;
+}
+
+/* Optional: Floating Animation for Logo */
+@keyframes floaty {
+  from {
+    transform: translateY(0px);
+  }
+  to {
+    transform: translateY(-4px);
+  }
 }
