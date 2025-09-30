@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import emailjs from '@emailjs/browser';
-import { emailjsConfig } from '../config/emailjs-config';
 import '../styles/Contact.css';
 
 const Contact = () => {
@@ -59,10 +58,10 @@ const Contact = () => {
 
       // Send email using EmailJS
       await emailjs.send(
-        emailjsConfig.serviceId, 
-        emailjsConfig.templateId, 
+        process.env.REACT_APP_EMAILJS_SERVICE_ID || 'service_5zg27zn', 
+        process.env.REACT_APP_EMAILJS_TEMPLATE_ID || 'mvEpq-J2jXkAoInYf', 
         templateParams, 
-        emailjsConfig.publicKey
+        process.env.REACT_APP_EMAILJS_PUBLIC_KEY || 'mvEpq-J2jXkAoInYf'
       );
       
       setIsSubmitted(true);
