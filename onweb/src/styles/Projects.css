@@ -9,40 +9,61 @@
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url('../images/Bp.png');
+  background-image: url('../images/Bp.png'); /* or ProjectBg if you want dynamic imports */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  overflow: hidden;
+  z-index: 0;
 }
 
-.tv-screen {
+/* Stitched TV container - video integrated into Karen's screen area */
+.tv-container {
   position: absolute;
-  top: clamp(35vh, 40vh, 42vh);
-  left: clamp(34vw, 37.3vw, 55vw);
-  width: clamp(200px, 25vw, 615px); 
-  aspect-ratio: 4 / 3;
-  transform: translate(-50%, -50%) rotateZ(3Deg);
-  z-index: 3;
-  overflow: hidden;
-  border-radius: 3px;
-  overflow: hidden;
-  transition: top 0.2s, left 0.2s, width 0.2s ease;
+  top: 50%;
+  left: 32%;
+  transform: translate(-50%, -50%);
+  width: clamp(420px, 55vw, 900px);
+  aspect-ratio: 16 / 10;
+  background-image: url('../images/ProjectsKaren.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  z-index: 2;
 }
 
+/* The actual screen area where video plays */
+.tv-screen-area {
+  position: absolute;
+  top: 36.9%;
+  left: 50.1%;
+  width: 50.3%;
+  aspect-ratio: 4 / 3;
+  transform: translate(-50%, -50%) rotateZ(4.2deg);
+  overflow: hidden;
+  border-radius: 2px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
 
+/* Video stitched directly into the screen */
+.video-stitched {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+  transform: scale(0.96);
+}
 
-
-.tv-screen:hover {
-  transform: translate(-50%, -50%) scale(1.1) rotate(2deg) skewX(-3.2deg);
+.tv-screen-area:hover {
+  transform: translate(-50%, -50%) scale(1.05) rotateZ(3.8deg);
   box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
 }
 
-/* Border around the video */
 .video-border {
   background-color: black;
-  border-radius: 20px;
-  padding: 6px;
+  border-radius: 10px;
+  padding: 3px;
   height: 100%;
   box-sizing: border-box;
 }
@@ -58,17 +79,22 @@
 .demo-video {
   width: 100%;
   height: 100%;
-  border: none;
+  object-fit: cover;
   display: block;
 }
 
-/* Info box that slides up */
+/* Local video specific styling */
+video.demo-video {
+  background-color: #000;
+  border-radius: 12px;
+}
+
 .project-info {
   position: absolute;
   bottom: -150px;
   left: 0;
   width: 100%;
-  background: srgba(0, 0, 0, 0.85);
+  background: rgba(0, 0, 0, 0.85);
   color: #fff;
   padding: 16px;
   font-size: 0.95rem;
@@ -100,32 +126,137 @@
   bottom: unset;
   left: 0;
   width: 100%;
-  /* background: rgba(0, 0, 0, 0.85); */
+  background: rgba(0, 0, 0, 0.3);
   color: #fff;
   padding: 12px;
   font-size: 0.95rem;
   z-index: 5;
   position: absolute;
   transition: opacity 0.3s ease;
+  backdrop-filter: blur(5px);
 }
 
 .tv-screen:hover .top-info {
   opacity: 1;
 }
 
-/* Responsive positioning */
+/* Responsive positioning for stitched TV */
 @media (max-width: 768px) {
-  .tv-screen {
-    top: 42%;
-    left: 36%;
-    width: 40%;
+  .tv-container {
+    width: min(80vw, 720px);
+    top: 55%;
+    left: 44%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .tv-screen-area {
+    top: 36.6%;
+    left: 50.3%;
+    width: 50.8%;
+    transform: translate(-50%, -50%) rotateZ(4.0deg);
   }
 }
 
 @media (min-width: 769px) and (max-width: 1200px) {
-  .tv-screen {
-    top: 41.8%;
-    left: 35.6%;
-    width: 25%;
+  .tv-container {
+    width: min(65vw, 800px);
+    top: 52%;
+    left: 42%;
+    transform: translate(-50%, -50%);
+  }
+  
+  .tv-screen-area {
+    top: 36.7%;
+    left: 50.2%;
+    width: 50.6%;
+    transform: translate(-50%, -50%) rotateZ(4.1deg);
+  }
+}
+
+/* iPad-specific alignment */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tv-screen-area {
+    top: 36.8%;
+    left: 50.1%;
+    width: 50.4%;
+    transform: translate(-50%, -50%) rotateZ(4.0deg);
+  }
+}
+
+/* TV Controls */
+.tv-controls {
+  position: absolute;
+  bottom: 10vh;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 10px 20px;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+}
+
+.tv-btn {
+  background: #333;
+  border: 2px solid #666;
+  color: #fff;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.tv-btn:hover {
+  background: #555;
+  border-color: #888;
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px rgba(0, 255, 255, 0.3);
+}
+
+.play-pause-btn {
+  background: #0066cc !important;
+  border-color: #0088ff !important;
+}
+
+.play-pause-btn:hover {
+  background: #0088ff !important;
+  border-color: #00aaff !important;
+  box-shadow: 0 4px 15px rgba(0, 136, 255, 0.4) !important;
+}
+
+.project-indicator {
+  color: #fff;
+  font-weight: bold;
+  font-size: 14px;
+  min-width: 60px;
+  text-align: center;
+}
+
+/* Responsive TV Controls */
+@media (max-width: 768px) {
+  .tv-controls {
+    bottom: 5vh;
+    gap: 15px;
+    padding: 8px 15px;
+  }
+  
+  .tv-btn {
+    width: 35px;
+    height: 35px;
+    font-size: 14px;
+  }
+  
+  .project-indicator {
+    font-size: 12px;
+    min-width: 50px;
   }
 }

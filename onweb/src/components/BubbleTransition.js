@@ -4,7 +4,7 @@ import '../styles/BubbleTransition.css';
 const BubbleTransition = ({ textId = 'pageText', delay = 3000 }) => {
     useEffect(() => {
     const transition = document.getElementById('bubbleTransition');
-    const text = document.getElementById('homeText');
+    const text = document.getElementById(textId);
 
     // Prevent duplicate bubbles
     if (transition && transition.children.length === 0) {
