@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import emailjs from '@emailjs/browser';
-import { emailjsConfig } from '../config/emailjs-config';
 import '../styles/Contact.css';
+
+// EmailJS Configuration - inline to avoid import issues
+const emailjsConfig = {
+  serviceId: process.env.REACT_APP_EMAILJS_SERVICE_ID || 'service_5zg27zn',
+  templateId: process.env.REACT_APP_EMAILJS_TEMPLATE_ID || 'template_4el6x7q',
+  publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY || 'mvEpq-J2jXkAoInYf'
+};
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -57,19 +63,12 @@ const Contact = () => {
         reply_to: formData.email
       };
 
-      // Debug: Log the configuration
-      console.log('EmailJS Config:', {
-        serviceId: process.env.REACT_APP_EMAILJS_SERVICE_ID || emailjsConfig.serviceId,
-        templateId: process.env.REACT_APP_EMAILJS_TEMPLATE_ID || emailjsConfig.templateId,
-        publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY || emailjsConfig.publicKey
-      });
-
       // Send email using EmailJS
       await emailjs.send(
-        process.env.REACT_APP_EMAILJS_SERVICE_ID || emailjsConfig.serviceId, 
-        process.env.REACT_APP_EMAILJS_TEMPLATE_ID || emailjsConfig.templateId, 
+        emailjsConfig.serviceId, 
+        emailjsConfig.templateId, 
         templateParams, 
-        process.env.REACT_APP_EMAILJS_PUBLIC_KEY || emailjsConfig.publicKey
+        emailjsConfig.publicKey
       );
       
       setIsSubmitted(true);

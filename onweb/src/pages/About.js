@@ -1,6 +1,18 @@
 import React, { useEffect } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
-import '../styles/About.css'; 
+import '../styles/About.css';
+
+// Import all images
+import meImage from '../images/Me.png';
+import keckImage from '../images/keck.JPG';
+import keckPeopleImage from '../images/keck-people.jpg';
+import gymImage from '../images/Gym.png';
+import climbImage from '../images/Climb.jpg';
+import funnyGymImage from '../images/FunnyGym.JPG';
+import friendsImage from '../images/Friends.JPG';
+import laserTagImage from '../images/LaserTag.JPG';
+import pinballImage from '../images/Pinball.JPG';
+import fiveKImage from '../images/5k.JPG'; 
 
 const About = () => {
   useEffect(() => {
@@ -54,7 +66,7 @@ const About = () => {
           <div className="me-polaroid">
             <div className="me-photo-placeholder">
               <img 
-                src={require('../images/Me.png')} 
+                src={meImage} 
                 alt="Andi Danielle Scarola"
               />
             </div>
@@ -80,7 +92,7 @@ const About = () => {
       <div className="content-row reveal">
         <div className="photo-item polaroid">
           <div className="photo-placeholder keck-photo">
-            <img src={require('../images/keck.JPG')} alt="Keck Center Building" />
+            <img src={keckImage} alt="Keck Center Building" />
           </div>
           <p className="photo-caption">The Keck</p>
         </div>
@@ -121,7 +133,7 @@ const About = () => {
       <div className="content-row reveal">
         <div className="photo-item polaroid">
           <div className="photo-placeholder keck-people-photo">
-            <img src={require('../images/keck-people.jpg')} alt="Keck People" />
+            <img src={keckPeopleImage} alt="Keck People" />
           </div>
           <p className="photo-caption">Keck's Finest</p>
         </div>
@@ -181,7 +193,7 @@ const About = () => {
         
         <div className="photo-item polaroid">
           <div className="photo-placeholder gym-photo">
-            <img src={require('../images/Gym.png')} alt="Gym Workout" />
+            <img src={gymImage} alt="Gym Workout" />
           </div>
           <p className="photo-caption">My Happy Place</p>
         </div>
@@ -198,7 +210,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder climbing-photo">
-                  <img src={require('../images/Climb.jpg')} alt="Rock Climbing" />
+                  <img src={climbImage} alt="Rock Climbing" />
                 </div>
                 <p className="photo-caption">Sandy's Rock Wall</p>
               </div>
@@ -207,7 +219,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder funny-gym-photo">
-                  <img src={require('../images/FunnyGym.JPG')} alt="Funny Gym" />
+                  <img src={funnyGymImage} alt="Funny Gym" />
                 </div>
                 <p className="photo-caption">Gym Shenanigans</p>
               </div>
@@ -216,7 +228,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder friends-photo">
-                  <img src={require('../images/Friends.JPG')} alt="Friends" />
+                  <img src={friendsImage} alt="Friends" />
                 </div>
                 <p className="photo-caption">Bikini Bottom Friends</p>
               </div>
@@ -225,7 +237,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder laser-tag-photo">
-                  <img src={require('../images/LaserTag.JPG')} alt="Laser Tag" />
+                  <img src={laserTagImage} alt="Laser Tag" />
                 </div>
                 <p className="photo-caption">Jellyfish Fields</p>
               </div>
@@ -234,7 +246,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder pinball-photo">
-                  <img src={require('../images/Pinball.JPG')} alt="Pinball" />
+                  <img src={pinballImage} alt="Pinball" />
                 </div>
                 <p className="photo-caption">Goo Lagoon Arcade</p>
               </div>
@@ -243,7 +255,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder fivek-photo">
-                  <img src={require('../images/5k.JPG')} alt="5K Run" />
+                  <img src={fiveKImage} alt="5K Run" />
                 </div>
                 <p className="photo-caption">Goo Lagoon 5K</p>
               </div>
@@ -253,7 +265,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder climbing-photo">
-                  <img src={require('../images/Climb.jpg')} alt="Rock Climbing" />
+                  <img src={climbImage} alt="Rock Climbing" />
                 </div>
                 <p className="photo-caption">Sandy's Rock Wall</p>
               </div>
@@ -262,7 +274,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder funny-gym-photo">
-                  <img src={require('../images/FunnyGym.JPG')} alt="Funny Gym" />
+                  <img src={funnyGymImage} alt="Funny Gym" />
                 </div>
                 <p className="photo-caption">Gym Shenanigans</p>
               </div>
@@ -271,7 +283,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder friends-photo">
-                  <img src={require('../images/Friends.JPG')} alt="Friends" />
+                  <img src={friendsImage} alt="Friends" />
                 </div>
                 <p className="photo-caption">Bikini Bottom Friends</p>
               </div>
@@ -280,7 +292,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder laser-tag-photo">
-                  <img src={require('../images/LaserTag.JPG')} alt="Laser Tag" />
+                  <img src={laserTagImage} alt="Laser Tag" />
                 </div>
                 <p className="photo-caption">Jellyfish Fields</p>
               </div>
@@ -289,7 +301,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder pinball-photo">
-                  <img src={require('../images/Pinball.JPG')} alt="Pinball" />
+                  <img src={pinballImage} alt="Pinball" />
                 </div>
                 <p className="photo-caption">Goo Lagoon Arcade</p>
               </div>
@@ -298,7 +310,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder fivek-photo">
-                  <img src={require('../images/5k.JPG')} alt="5K Run" />
+                  <img src={fiveKImage} alt="5K Run" />
                 </div>
                 <p className="photo-caption">Goo Lagoon 5K</p>
               </div>
