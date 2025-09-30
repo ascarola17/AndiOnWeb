@@ -1167,14 +1167,16 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .about-container {
-    padding: 3rem 1rem 5rem;
+    padding: 2rem 0.5rem 4rem;
   }
   
   .content-row {
     flex-direction: column !important;
-    gap: 2rem;
+    gap: 1.5rem;
     max-width: 100%;
     min-height: auto;
+    margin: 0 auto 2rem;
+    padding: 0 0.5rem;
   }
   
   .content-row.reverse {
@@ -1183,6 +1185,7 @@
   
   .text-content {
     width: 100%;
+    padding: 0;
   }
   
   .photo-row {
@@ -1195,12 +1198,12 @@
   }
   
   .carousel-title {
-    font-size: 1.3rem;
+    font-size: 1.2rem;
   }
   
   .carousel-title-container {
-    padding: 0.6rem 1.2rem;
-    margin-bottom: 1.5rem;
+    padding: 0.5rem 1rem;
+    margin-bottom: 1rem;
   }
   
   .education-skills-container {
@@ -1229,12 +1232,12 @@
   }
   
   .carousel-slide {
-    width: 200px;
+    width: 180px;
   }
   
   .carousel-track {
-    gap: 1rem;
-    width: calc(200px * 10 + 1rem * 10);
+    gap: 0.8rem;
+    width: calc(180px * 10 + 0.8rem * 10);
   }
   
   @keyframes carousel-scroll {
@@ -1242,19 +1245,21 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(calc(-200px * 5 - 1rem * 5));
+      transform: translateX(calc(-180px * 5 - 0.8rem * 5));
     }
   }
   
   .about-why-row {
     flex-direction: column !important;
-    gap: 2rem;
+    gap: 1.5rem;
     max-width: 100%;
+    margin: 0 auto 2rem;
+    padding: 0 0.5rem;
   }
   
   .polaroid-gallery {
-    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem;
   }
   
   .education-skills-section,
@@ -1271,7 +1276,8 @@
   .fun-section,
   .my-why-section {
     max-width: 100%;
-    margin-bottom: 0;
+    margin-bottom: 1rem;
+    padding: 1rem;
   }
   
   .education-standalone .education-section {
@@ -1281,12 +1287,12 @@
   }
   
   .photo-item.large-photo {
-    max-width: 320px;
+    max-width: 280px;
     margin: 0 auto;
   }
   
   .photo-placeholder {
-    height: 250px;
+    height: 200px;
   }
   
   .goals-fun-container {
@@ -1300,11 +1306,68 @@
   .small-box {
     padding: 0.8rem !important;
   }
+  
+  /* Improve text readability on mobile */
+  .about-card h1 {
+    font-size: 1.8rem;
+  }
+  
+  .about-card p {
+    font-size: 0.9rem;
+    line-height: 1.4;
+  }
+  
+  .card-subtitle {
+    font-size: 0.8rem;
+  }
+  
+  .my-why-section h3 {
+    font-size: 1.8rem;
+  }
+  
+  .my-why-content p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  
+  .education-section h3 {
+    font-size: 1.4rem;
+  }
+  
+  .research-section h3 {
+    font-size: 1.4rem;
+  }
+  
+  .goals-section h3,
+  .fun-section h3 {
+    font-size: 1.4rem;
+  }
+  
+  .research-papers-section h3 {
+    font-size: 1.4rem;
+  }
+  
+  .paper-item h4 {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+  
+  .paper-item p {
+    font-size: 0.75rem;
+  }
+  
+  .resume-title {
+    font-size: 1.6rem;
+  }
+  
+  .resume-iframe {
+    height: 350px;
+  }
 }
 
 @media (max-width: 480px) {
   .about-container {
-    padding: 2rem 0.75rem 4rem;
+    padding: 1.5rem 0.5rem 3rem;
   }
   
   .about-card,
@@ -1314,51 +1377,117 @@
   .goals-section,
   .fun-section,
   .my-why-section {
-    padding: 1rem;
+    padding: 0.8rem;
+    margin-bottom: 1rem;
   }
   
   .about-card h1 {
+    font-size: 1.4rem;
+  }
+  
+  .about-card p {
+    font-size: 0.85rem;
+    line-height: 1.3;
+  }
+  
+  .my-why-section h3 {
     font-size: 1.5rem;
   }
   
+  .my-why-content p {
+    font-size: 0.85rem;
+    line-height: 1.4;
+  }
+  
   .photo-item.large-photo {
-    max-width: 280px;
+    max-width: 250px;
   }
   
   .photo-placeholder {
-    height: 220px;
+    height: 180px;
+  }
+  
+  .carousel-slide {
+    width: 150px;
+  }
+  
+  .carousel-track {
+    gap: 0.6rem;
+    width: calc(150px * 10 + 0.6rem * 10);
+  }
+  
+  @keyframes carousel-scroll {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(calc(-150px * 5 - 0.6rem * 5));
+    }
   }
   
   .resume-container {
-    padding: 1.5rem;
+    padding: 1rem;
   }
   
   .resume-title {
-    font-size: 1.6rem;
+    font-size: 1.4rem;
   }
   
   .resume-iframe {
-    height: 400px;
+    height: 300px;
   }
   
   .resume-actions {
     flex-direction: column;
     align-items: center;
+    gap: 0.8rem;
   }
   
   .download-button,
   .view-button {
     width: 100%;
-    max-width: 250px;
+    max-width: 200px;
     justify-content: center;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
   }
   
   .photo-caption {
-    font-size: 0.8rem;
+    font-size: 0.75rem;
   }
   
   .resume-btn {
-    padding: 0.8rem 1.5rem;
-    font-size: 1rem;
+    padding: 0.7rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  
+  .education-section h3,
+  .research-section h3,
+  .goals-section h3,
+  .fun-section h3,
+  .research-papers-section h3 {
+    font-size: 1.2rem;
+  }
+  
+  .paper-item h4 {
+    font-size: 0.8rem;
+    line-height: 1.2;
+  }
+  
+  .paper-item p {
+    font-size: 0.7rem;
+  }
+  
+  .me-polaroid {
+    max-width: 200px;
+    margin: 0.5rem auto 0;
+  }
+  
+  .me-photo-placeholder {
+    height: 180px;
+  }
+  
+  .me-caption {
+    font-size: 0.8rem;
   }
 }
