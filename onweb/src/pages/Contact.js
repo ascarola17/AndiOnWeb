@@ -57,6 +57,13 @@ const Contact = () => {
         reply_to: formData.email
       };
 
+      // Debug: Log the configuration
+      console.log('EmailJS Config:', {
+        serviceId: process.env.REACT_APP_EMAILJS_SERVICE_ID || emailjsConfig.serviceId,
+        templateId: process.env.REACT_APP_EMAILJS_TEMPLATE_ID || emailjsConfig.templateId,
+        publicKey: process.env.REACT_APP_EMAILJS_PUBLIC_KEY || emailjsConfig.publicKey
+      });
+
       // Send email using EmailJS
       await emailjs.send(
         process.env.REACT_APP_EMAILJS_SERVICE_ID || emailjsConfig.serviceId, 
@@ -76,7 +83,23 @@ const Contact = () => {
       
     } catch (error) {
       console.error('Error sending email:', error);
-      setError('Failed to send message. Please try again or contact me directly.');
+      console.error('Error details:', {
+        status: error.status,
+        text: error.text,
+        message: error.message
+      });
+      
+      let errorMessage = 'Failed to send message. Please try again or contact me directly.';
+      
+      if (error.status === 400) {
+        errorMessage = 'Invalid configuration. Please check your EmailJS setup.';
+      } else if (error.status === 401) {
+        errorMessage = 'Authentication failed. Please check your EmailJS keys.';
+      } else if (error.status === 403) {
+        errorMessage = 'Access denied. Please check your EmailJS permissions.';
+      }
+      
+      setError(errorMessage);
       setIsLoading(false);
     }
   };
