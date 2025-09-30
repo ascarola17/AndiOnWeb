@@ -36,58 +36,81 @@ const About = () => {
             <div className="card-subtitle">CS Student @ UTEP </div>
           </div>
           <div className="card-content">
-            <p>Pursuing B.S. in Computer Science with a minor in Math, Fast-Track to M.S. in Software Engineering.</p>
-            <p><strong>Researcher @ Keck Center</strong></p>
-            <p>Sole software dev on multiple Raspberry Pi–based DAQ systems for fluid diagnostics research. I design full-stack web platforms, real-time data pipelines, and calibration tools.</p>
-            <p><strong>Always Building + Always Moving</strong></p>
-            <p>Whether it's full-stack apps, AI pipelines, or just climbing harder routes at the gym, I bring the same energy to every challenge.</p>
+            <p>Pursuing B.S. in Computer Science with a minor in Math, Fast-Track to M.S. in Software Engineering. Future PHD student.</p>
+            <div className="card-subtitle">Researcher @ Keck Center</div>
+            <p>Software dev working on everything, from flow rate sensors to fiber detection... I make machines smarter, one dataset at a time.</p>
+            <div className="card-subtitle">Always Building + Always Moving</div>
+            <p>Whether it's full-stack apps, AI pipelines, or taking on a new PR at the gym, I bring the same energy to every challenge.</p>
           </div>
         </div>
         
         <div className="my-why-section">
-          <h3>💥 My Why</h3>
+          <h3>Why?</h3>
           <div className="my-why-content">
-            <p>Growing up, I was always the one fixing things, debugging everything from old phones to relationships. Tech became a way for me to build something mine — to create order out of chaos. Research gave it purpose. And now? I'm all in on using engineering to push boundaries and help others do the same.</p>
+            <p>I've always been that person who wants to know why something works — and then make it work better. I've Messed with tech since I was a kid, broke stuff just to fix it. Now I get to build things that actually help people, like systems that measure real-world flow, or tools that make sense of messy sensor data.</p>
+          </div>
+          
+          {/* Sticky Polaroid with Me image */}
+          <div className="me-polaroid">
+            <div className="me-photo-placeholder">
+              <img 
+                src={require('../images/Me.png')} 
+                alt="Andi Danielle Scarola"
+              />
+            </div>
+            <p className="me-caption">Andi Danielle Scarola</p>
           </div>
         </div>
       </div>
 
-      {/* Combined Education & Skills with Photo */}
+      {/* Education Section - Standalone */}
+      <div className="education-standalone reveal">
+        <div className="education-section">
+          <h3>Education</h3>
+          <div className="education-content">
+            <p>• B.S. in Computer Science — UTEP</p>
+            <p>• Minor in Mathematics</p>
+            <p>• Fast Track M.S. in Software Engineering</p>
+            <p>• GPA: 3.39</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Research Papers with Keck Photo */}
       <div className="content-row reveal">
         <div className="photo-item polaroid">
           <div className="photo-placeholder keck-photo">
             <img src={require('../images/keck.JPG')} alt="Keck Center Building" />
           </div>
-          <p className="photo-caption">Chum Bucket Lab</p>
+          <p className="photo-caption">The Keck</p>
         </div>
         
         <div className="text-content">
-          <div className="education-skills-container">
-            <div className="education-section">
-              <h3>Education</h3>
-              <div className="education-content">
-                <p>• B.S. in Computer Science — UTEP</p>
-                <p>• Minor in Mathematics</p>
-                <p>• Fast Track M.S. in Software Engineering</p>
-                <p>• GPA: 3.39</p>
+          <div className="research-papers-section">
+            <h3>Research Papers</h3>
+            <div className="papers-list">
+              <div className="paper-item">
+                <h4>Learning designs that empower: navigating sandbox data science at the intersection of computing, big data and social media</h4>
+                <p>Information and Learning Sciences • 2024 • Cited by 5</p>
+              </div>
+              <div className="paper-item">
+                <h4>Data and social worlds: How data science education supports civic participation and social discourse</h4>
+                <p>Proceedings of the International Society of the Learning Sciences • 2024 • Cited by 6</p>
+              </div>
+              <div className="paper-item">
+                <h4>Cultural Relevance for Epistemic Practice in High School Computational Data Mining</h4>
+                <p>IEEE Frontiers in Education • 2024 • Cited by 1</p>
               </div>
             </div>
-            
-            <div className="skills-section">
-              <h3>🧰 Skills</h3>
-              <div className="skills-grid">
-                <span className="skill-tag">JavaScript</span>
-                <span className="skill-tag">Python</span>
-                <span className="skill-tag">C</span>
-                <span className="skill-tag">React</span>
-                <span className="skill-tag">Node.js</span>
-                <span className="skill-tag">Flask</span>
-                <span className="skill-tag">CSS</span>
-                <span className="skill-tag">Git</span>
-                <span className="skill-tag">SQLite</span>
-                <span className="skill-tag">System Design</span>
-                <span className="skill-tag">Debugging</span>
-              </div>
+            <div className="scholar-link">
+              <a 
+                href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C44&q=Andi+Scarola&btnG=" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="scholar-button"
+              >
+                View All Papers on Google Scholar
+              </a>
             </div>
           </div>
         </div>
@@ -100,7 +123,7 @@ const About = () => {
           <div className="photo-placeholder keck-people-photo">
             <img src={require('../images/keck-people.jpg')} alt="Keck People" />
           </div>
-          <p className="photo-caption">Bikini Bottom Crew</p>
+          <p className="photo-caption">Keck's Finest</p>
         </div>
         
         <div className="text-content">
@@ -110,19 +133,22 @@ const About = () => {
             <div className="research-content">
               <div className="research-item">
                
-                <p>– Flask-powered sensor interfaces for hot-wire & pitot airflow tools</p>
-                <p>– Fiber segmentation using DeepLabV3+ + SAM</p>
-                <p>– Wrote Python data pipelines, web UIs, and Raspberry Pi control logic</p>
+                <p>– Developed calibration pages and control logic for hot-wire and pitot probe data acquisition systems</p>
+                <p>– Built real-time Flask dashboards for streaming sensor data and motor control</p>
+                <p>– Managed database integration, CSV logging, and multi-probe configuration across 3 web platforms</p>
+                <p>– Currently working on fiber segmentation pipelines: tiling, stitching, and angle analysis from SEM images</p>
               </div>
               <div className="research-item">
                 <h4>AI-EDGE (NSF/OSU)</h4>
-                <p>– Built real-time ASL interpreter with MediaPipe + LSTM</p>
-                <p>– GPT-2 Shakespeare model improved by 4%</p>
+                <p>– Built a real-time ASL interpreter using MediaPipe + LSTM for edge deployment</p>
+                <p>– Developed custom datasets and visual tools to evaluate live sign classification</p>
+                <p>– Led development of custom datasets, visualizations, and Colab demos for edge-device ML research</p>
               </div>
               <div className="research-item">
                 <h4>Hackathons</h4>
-                <p>– DUI Risk Radar (2nd @ BorderHacks)</p>
-                <p>– SnapMarket AI price matcher</p>
+                <p>– Fight Coach (The Biggest AI Hackathon @ UTEP - 2025)</p>
+                <p>– DUI Risk Radar (2nd @ BorderHacks - 2024)</p>
+                <p>– SnapMarket (Tik-Tok Hackathon - 2024)</p>
               </div>
             </div>
           </div>
@@ -134,21 +160,21 @@ const About = () => {
         <div className="text-content">
           <div className="goals-fun-side-by-side">
             <div className="goals-section">
-              <h3>🎯 Goals</h3>
+              <h3>Goals</h3>
               <div className="goals-content">
-                <p>• Earn a PhD in CS or Engineering</p>
-                <p>• Become a Full-Stack Lead or Embedded Systems Engineer</p>
+                <p>• Earn a PhD in Computer Science</p>
+                <p>• Become a Software Engineer</p>
                 <p>• Build tools that bridge research + real-world use</p>
                 <p>• Stay consistent in health, climbing, and learning</p>
               </div>
             </div>
             
             <div className="fun-section">
-              <h3>💥 Fun Stuff</h3>
-              <div className="fun-content">
-                <p>Loves: Rock Climbing 🧗, Pickleball 🏓, Lifting 🏋️, Tinkering with Raspberry Pi</p>
-                <p>Motto: "Somewhere between a Git commit and Goo Lagoon…"</p>
-              </div>
+            <h3>Life outside the shell</h3>
+            <div className="fun-content">
+              <p>Rock walls, pickleball courts, and the gym that’s where I yearn to be. When I’m not building, I’m moving.</p>
+              <p>Motto: Not everything has to be perfect to be real.</p>
+            </div>
             </div>
           </div>
         </div>
@@ -157,14 +183,14 @@ const About = () => {
           <div className="photo-placeholder gym-photo">
             <img src={require('../images/Gym.png')} alt="Gym Workout" />
           </div>
-          <p className="photo-caption">Larry's Gym</p>
+          <p className="photo-caption">My Happy Place</p>
         </div>
       </div>
 
       {/* Photo Carousel */}
       <div className="photo-carousel reveal">
         <div className="carousel-title-container">
-          <h3 className="carousel-title">More Adventures in Bikini Bottom</h3>
+          <h3 className="carousel-title">What’s Been Brewing</h3>
         </div>
         <div className="carousel-container">
           <div className="carousel-track">
@@ -214,6 +240,15 @@ const About = () => {
               </div>
             </div>
             
+            <div className="carousel-slide">
+              <div className="photo-item polaroid">
+                <div className="photo-placeholder fivek-photo">
+                  <img src={require('../images/5k.JPG')} alt="5K Run" />
+                </div>
+                <p className="photo-caption">Goo Lagoon 5K</p>
+              </div>
+            </div>
+            
             {/* Duplicate set for seamless loop */}
             <div className="carousel-slide">
               <div className="photo-item polaroid">
@@ -257,6 +292,15 @@ const About = () => {
                   <img src={require('../images/Pinball.JPG')} alt="Pinball" />
                 </div>
                 <p className="photo-caption">Goo Lagoon Arcade</p>
+              </div>
+            </div>
+            
+            <div className="carousel-slide">
+              <div className="photo-item polaroid">
+                <div className="photo-placeholder fivek-photo">
+                  <img src={require('../images/5k.JPG')} alt="5K Run" />
+                </div>
+                <p className="photo-caption">Goo Lagoon 5K</p>
               </div>
             </div>
           </div>

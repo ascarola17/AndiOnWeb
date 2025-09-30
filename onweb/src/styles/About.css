@@ -32,7 +32,7 @@
   align-items: flex-start;
   gap: 3rem;
   max-width: 1000px;
-  margin: 0 auto 4rem;
+  margin: 0 auto -6rem;
   justify-content: center;
 }
 
@@ -51,9 +51,9 @@
 .about-card {
   position: relative;
   z-index: 10;
-  background: rgba(255, 255, 136, 0.6);
+  background: rgba(135, 206, 235, 0.85);
   backdrop-filter: blur(10px);
-  border: 2px solid #FFD700;
+  border: 2px solid #4682B4;
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -73,7 +73,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, #FFD700, #FFA500, #FFD700);
+  background: linear-gradient(45deg, #4682B4, #5F9EA0, #4682B4);
   border-radius: 10px;
   z-index: -1;
   opacity: 0.3;
@@ -82,7 +82,7 @@
 .about-card:hover {
   transform: rotate(0deg) scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
-  background: rgba(255, 255, 136, 0.95);
+  background: rgba(135, 206, 235, 0.95);
 }
 
 @keyframes float {
@@ -92,15 +92,23 @@
 
 .about-card h1 {
   margin: 0 0 1rem 0;
-  font-size: 1.8rem;
+  font-size: 2.2rem;
   color: #333;
   text-align: center;
+}
+
+.card-subtitle {
+  margin: 0.5rem 0;
+  color: #555;
+  font-size: 0.9rem;
+  text-align: center;
+  font-weight: bold;
 }
 
 .about-card p {
   margin: 0.5rem 0;
   color: #555;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-align: center;
 }
 
@@ -110,11 +118,11 @@
   z-index: 10;
   display: flex;
   align-items: flex-start;
-  gap: 3rem;
-  max-width: 1200px;
+  gap: 2rem;
+  max-width: 1000px;
   margin: 0 auto 4rem;
   justify-content: center;
-  min-height: 300px;
+  min-height: 350px;
 }
 
 .content-row.reverse {
@@ -147,9 +155,9 @@
 .goals-fun-side-by-side .goals-section,
 .goals-fun-side-by-side .fun-section {
   flex: 1;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(135, 206, 235, 0.5);
   backdrop-filter: blur(10px);
-  border: 2px solid #4169E1;
+  border: 2px solid #4682B4;
   border-radius: 8px;
   padding: 1.2rem;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
@@ -160,7 +168,25 @@
 .goals-fun-side-by-side .fun-section:hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-  background: rgba(255, 255, 255, 0.8);
+  background: rgba(135, 206, 235, 0.7);
+}
+
+/* Education Standalone Section */
+.education-standalone {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: flex-start;
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.education-standalone .education-section {
+  max-width: 350px;
+  margin: 0;
+  transform: rotate(-2deg);
+  animation: pulse 4s ease-in-out infinite;
 }
 
 /* Education and Skills Container */
@@ -237,7 +263,7 @@
 }
 
 .carousel-title-container {
-  background: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.7);
   border: 2px solid #4169E1;
   border-radius: 15px;
   padding: 0.8rem 1.5rem;
@@ -268,10 +294,10 @@
 
 .carousel-track {
   display: flex;
-  animation: carousel-scroll 30s linear infinite;
+  animation: carousel-scroll 40s linear infinite;
   gap: 2rem;
   padding: 1rem;
-  width: calc(250px * 8 + 2rem * 8); /* Width for 8 slides */
+  width: calc(250px * 10 + 2rem * 10); /* Width for 10 slides (5 original + 5 duplicates) */
 }
 
 .carousel-slide {
@@ -284,7 +310,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-250px * 4 - 2rem * 4)); /* Move by exactly 4 slides */
+    transform: translateX(calc(-250px * 5 - 2rem * 5)); /* Move by exactly 5 slides */
   }
 }
 
@@ -303,20 +329,20 @@
 }
 
 .resume-container {
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.4);
   backdrop-filter: blur(10px);
-  border: 2px solid #4169E1;
-  border-radius: 15px;
-  padding: 2rem;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: 1px solid #4169E1;
+  border-radius: 10px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
   text-align: center;
   transition: all 0.3s ease;
 }
 
 .resume-container:hover {
   transform: translateY(-5px);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
-  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 .resume-title {
@@ -387,15 +413,15 @@
 }
 
 .view-button {
-  background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
-  color: #333;
-  box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+  background: linear-gradient(135deg, #4169E1 0%, #6495ED 100%);
+  color: white;
+  box-shadow: 0 4px 15px rgba(65, 105, 225, 0.3);
 }
 
 .view-button:hover {
-  background: linear-gradient(135deg, #FFA500 0%, #FFD700 100%);
+  background: linear-gradient(135deg, #6495ED 0%, #4169E1 100%);
   transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4);
+  box-shadow: 0 6px 20px rgba(65, 105, 225, 0.4);
 }
 
 /* Polaroid Gallery Grid */
@@ -413,11 +439,11 @@
 /* Individual Polaroids */
 .photo-item.polaroid {
   background: white;
-  padding: 0.8rem 0.8rem 2.5rem 0.8rem;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  padding: 1rem 1rem 3rem 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   transform: rotate(var(--rotation, 0deg));
   transition: all 0.3s ease;
-  max-width: 250px;
+  max-width: 320px;
   margin: 0 auto;
   position: relative;
 }
@@ -472,7 +498,7 @@
 
 .photo-placeholder {
   width: 100%;
-  height: 280px;
+  height: 320px;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -539,13 +565,17 @@
   background: linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%);
 }
 
-/* Skills Sticky Note */
-.skills-section {
+.fivek-photo {
+  background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
+}
+
+/* Research Papers Sticky Note */
+.research-papers-section {
   position: relative;
   z-index: 10;
-  background: rgba(255, 182, 193, 0.8);
+  background: rgba(173, 216, 230, 0.5);
   backdrop-filter: blur(10px);
-  border: 2px solid #FF69B4;
+  border: 2px solid #4682B4;
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -556,10 +586,10 @@
   animation: bounce 3s ease-in-out infinite;
 }
 
-.skills-section:hover {
+.research-papers-section:hover {
   transform: rotate(0deg) scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 182, 193, 0.9);
+  background: rgba(173, 216, 230, 0.7);
 }
 
 @keyframes bounce {
@@ -567,34 +597,74 @@
   50% { transform: rotate(1deg) translateY(-5px); }
 }
 
-.skills-section h3 {
+.research-papers-section h3 {
   margin: 0 0 1rem 0;
-  font-size: 1.2rem;
-  color: #8B008B;
+  font-size: 1.6rem;
+  color: #4682B4;
   text-align: center;
 }
 
-.skills-grid {
+.papers-list {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  justify-content: center;
+  flex-direction: column;
+  gap: 0.8rem;
 }
 
-.skill-tag {
+.paper-item {
   background: white;
-  color: #8B008B;
-  padding: 0.3rem 0.8rem;
-  border-radius: 15px;
-  font-size: 0.8rem;
-  font-weight: bold;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  padding: 0.8rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  border-left: 4px solid #4682B4;
 }
 
-.skill-tag:hover {
-  background: #FFE4E1;
-  transform: scale(1.1);
+.paper-item:hover {
+  background: #E6F3FF;
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.paper-item h4 {
+  margin: 0 0 0.3rem 0;
+  font-size: 0.9rem;
+  color: #4682B4;
+  font-weight: bold;
+  line-height: 1.3;
+}
+
+.paper-item p {
+  margin: 0;
+  font-size: 0.8rem;
+  color: #666;
+  font-style: italic;
+}
+
+.scholar-link {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.scholar-button {
+  display: inline-block;
+  background: linear-gradient(135deg, #4682B4 0%, #5F9EA0 100%);
+  color: white;
+  text-decoration: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: bold;
+  box-shadow: 0 3px 10px rgba(70, 130, 180, 0.3);
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+}
+
+.scholar-button:hover {
+  background: linear-gradient(135deg, #5F9EA0 0%, #4682B4 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(70, 130, 180, 0.4);
+  color: white;
+  text-decoration: none;
 }
 
 /* Goals and Fun Container */
@@ -659,7 +729,7 @@
 .education-section {
   position: relative;
   z-index: 10;
-  background: rgba(230, 230, 250, 0.8);
+  background: rgba(230, 230, 250, 0.5);
   backdrop-filter: blur(10px);
   border: 2px solid #9370DB;
   border-radius: 8px;
@@ -675,7 +745,7 @@
 .education-section:hover {
   transform: rotate(0deg) scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-  background: rgba(230, 230, 250, 0.9);
+  background: rgba(230, 230, 250, 0.7);
 }
 
 @keyframes pulse {
@@ -685,7 +755,7 @@
 
 .education-section h3 {
   margin: 0 0 1rem 0;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: #9370DB;
   text-align: center;
 }
@@ -696,7 +766,7 @@
   padding: 0.3rem 0.8rem;
   margin: 0.2rem 0;
   border-radius: 10px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-weight: bold;
   text-align: left;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -721,7 +791,7 @@
 .research-section {
   position: relative;
   z-index: 10;
-  background: rgba(240, 248, 255, 0.6);
+  background: rgba(240, 248, 255, 0.4);
   backdrop-filter: blur(10px);
   border: 2px solid #4169E1;
   border-radius: 8px;
@@ -736,7 +806,7 @@
 .research-section:hover {
   transform: rotate(0deg) scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-  background: rgba(240, 248, 255, 0.9);
+  background: rgba(240, 248, 255, 0.6);
 }
 
 @keyframes wiggle {
@@ -747,7 +817,7 @@
 
 .research-section h3 {
   margin: 0 0 0.8rem 0;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: #4169E1;
   text-align: center;
 }
@@ -767,13 +837,18 @@
   font-weight: bold;
 }
 
+.research-subtitle {
+  color: #4169E1;
+  font-weight: bold;
+}
+
 .research-item p {
   background: white;
   color: #4169E1;
   padding: 0.2rem 0.6rem;
   margin: 0.1rem 0;
   border-radius: 8px;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: bold;
   text-align: left;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
@@ -789,7 +864,7 @@
 .goals-section {
   position: relative;
   z-index: 10;
-  background: rgba(135, 206, 235, 0.8);
+  background: rgba(135, 206, 235, 0.5);
   backdrop-filter: blur(10px);
   border: 2px solid #4682B4;
   border-radius: 8px;
@@ -804,7 +879,7 @@
 .goals-section:hover {
   transform: rotate(0deg) scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-  background: rgba(135, 206, 235, 0.9);
+  background: rgba(135, 206, 235, 0.7);
 }
 
 @keyframes sway {
@@ -814,9 +889,27 @@
 
 .goals-section h3 {
   margin: 0 0 1rem 0;
-  font-size: 1.2rem;
+  font-size: 1.6rem;
   color: #4682B4;
   text-align: center;
+}
+
+.goals-content p {
+  background: white;
+  color: #4682B4;
+  padding: 0.5rem 0.8rem;
+  margin: 0.3rem 0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.goals-content p:hover {
+  background: #E6F3FF;
+  transform: translateX(5px);
 }
 
 .goals-list {
@@ -847,9 +940,9 @@
 .fun-section {
   position: relative;
   z-index: 10;
-  background: rgba(255, 248, 220, 0.8);
+  background: rgba(255, 218, 185, 0.5);
   backdrop-filter: blur(10px);
-  border: 2px solid #DAA520;
+  border: 2px solid #FF8C00;
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
@@ -862,7 +955,7 @@
 .fun-section:hover {
   transform: rotate(0deg) scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-  background: rgba(255, 248, 220, 0.9);
+  background: rgba(255, 218, 185, 0.7);
 }
 
 @keyframes glow {
@@ -874,9 +967,9 @@
 .my-why-section {
   position: relative;
   z-index: 10;
-  background: rgba(255, 182, 193, 0.6);
+  background: rgba(230, 230, 250, 0.85);
   backdrop-filter: blur(10px);
-  border: 2px solid #FF69B4;
+  border: 2px solid #9370DB;
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
@@ -896,7 +989,7 @@
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(45deg, #FF69B4, #FFB6C1, #FF69B4);
+  background: linear-gradient(45deg, #9370DB, #DDA0DD, #9370DB);
   border-radius: 10px;
   z-index: -1;
   opacity: 0.3;
@@ -905,7 +998,7 @@
 .my-why-section:hover {
   transform: rotate(0deg) scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.25);
-  background: rgba(255, 182, 193, 0.95);
+  background: rgba(230, 230, 250, 0.95);
 }
 
 @keyframes sparkle {
@@ -915,8 +1008,8 @@
 
 .my-why-section h3 {
   margin: 0 0 1rem 0;
-  font-size: 1.8rem;
-  color: #8B008B;
+  font-size: 2.2rem;
+  color: #9370DB;
   text-align: center;
   font-weight: bold;
 }
@@ -924,26 +1017,102 @@
 .my-why-content p {
   margin: 0.5rem 0;
   color: #555;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-align: left;
   line-height: 1.6;
   font-weight: normal;
 }
 
+/* Me Polaroid - Sticky Style */
+.me-polaroid {
+  position: sticky;
+  top: 100px;
+  background: white;
+  padding: 1rem 1rem 3rem 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  transform: rotate(-3deg);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  max-width: 280px;
+  margin: 1rem auto 0;
+  z-index: 15;
+  animation: stickyFloat 4s ease-in-out infinite;
+  border: 2px solid #FF69B4;
+  border-radius: 4px;
+  isolation: isolate;
+}
+
+.me-polaroid:hover {
+  transform: rotate(0deg) scale(1.08);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  z-index: 20;
+}
+
+@keyframes stickyFloat {
+  0%, 100% { 
+    transform: rotate(-3deg) translateY(0px); 
+  }
+  50% { 
+    transform: rotate(-3deg) translateY(-8px); 
+  }
+}
+
+.me-photo-placeholder {
+  width: 100%;
+  height: 250px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  background: white;
+  overflow: hidden;
+  position: relative;
+  border: 1px solid #e0e0e0;
+  isolation: isolate;
+}
+
+.me-photo-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 2px;
+  transition: transform 0.3s ease;
+  filter: none;
+  background: white;
+  isolation: isolate;
+  position: relative;
+  z-index: 1;
+}
+
+.me-photo-placeholder:hover img {
+  transform: scale(1.05);
+}
+
+.me-caption {
+  margin: 0.5rem 0 0 0;
+  font-size: 0.9rem;
+  color: #333;
+  text-align: center;
+  font-weight: bold;
+  font-family: 'Kalam', cursive, 'Comic Sans MS', cursive;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  line-height: 1.2;
+}
+
 .fun-section h3 {
   margin: 0 0 1rem 0;
-  font-size: 1.2rem;
-  color: #DAA520;
+  font-size: 1.6rem;
+  color: #FF8C00;
   text-align: center;
 }
 
 .fun-content p {
   background: white;
-  color: #DAA520;
+  color: #FF8C00;
   padding: 0.5rem 0.8rem;
   margin: 0.5rem 0;
   border-radius: 10px;
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: bold;
   text-align: left;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -951,7 +1120,7 @@
 }
 
 .fun-content p:hover {
-  background: #FFFACD;
+  background: #FFE4B5;
   transform: translateX(5px);
 }
 
@@ -1065,7 +1234,7 @@
   
   .carousel-track {
     gap: 1rem;
-    width: calc(200px * 8 + 1rem * 8);
+    width: calc(200px * 10 + 1rem * 10);
   }
   
   @keyframes carousel-scroll {
@@ -1073,7 +1242,7 @@
       transform: translateX(0);
     }
     100% {
-      transform: translateX(calc(-200px * 4 - 1rem * 4));
+      transform: translateX(calc(-200px * 5 - 1rem * 5));
     }
   }
   
@@ -1097,12 +1266,18 @@
   .about-card,
   .education-section,
   .research-section,
-  .skills-section,
+  .research-papers-section,
   .goals-section,
   .fun-section,
   .my-why-section {
     max-width: 100%;
     margin-bottom: 0;
+  }
+  
+  .education-standalone .education-section {
+    max-width: 100%;
+    transform: none;
+    animation: none;
   }
   
   .photo-item.large-photo {
@@ -1111,7 +1286,7 @@
   }
   
   .photo-placeholder {
-    height: 200px;
+    height: 250px;
   }
   
   .goals-fun-container {
@@ -1135,7 +1310,7 @@
   .about-card,
   .education-section,
   .research-section,
-  .skills-section,
+  .research-papers-section,
   .goals-section,
   .fun-section,
   .my-why-section {
@@ -1151,7 +1326,7 @@
   }
   
   .photo-placeholder {
-    height: 180px;
+    height: 220px;
   }
   
   .resume-container {

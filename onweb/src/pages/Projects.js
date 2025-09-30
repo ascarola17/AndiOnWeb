@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import '../styles/Projects.css';
-import KarenTV from '../images/ProjectsKaren.png';
 
 const Projects = () => {
-  const [hovered, setHovered] = useState(false);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
@@ -65,54 +63,48 @@ const Projects = () => {
       <BubbleTransition />
 
       <div className="background-container">
-        {/* Stitched TV container - video integrated into screen */}
+        {/* TV Container - relative positioned */}
         <div className="tv-container">
+          {/* TV Screen Area - positioned relative to TV image */}
           <div 
             className="tv-screen-area"
-            onMouseEnter={() => setHovered(true)}
-            onMouseLeave={() => setHovered(false)}
           >
-            {/* Project info overlay */}
-            {hovered && (
-              <div className="project-info top-info">
-                <h2>{currentProject.title}</h2>
-                <p>{currentProject.description}</p>
-                <a
-                  href={currentProject.githubLink}
-                  target="_blank"
-                  rel="noreferrer"
-                >
-                  View on GitHub →
-                </a>
-              </div>
+            {currentProject.isLocalVideo ? (
+              <video
+                className="demo-video"
+                src={currentProject.videoUrl}
+                autoPlay
+                muted
+                loop
+                playsInline
+                controls={false}
+              >
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <iframe
+                className="demo-video"
+                src={currentProject.videoUrl}
+                title={currentProject.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              ></iframe>
             )}
-
-            {/* Video stitched into screen */}
-            <div className="video-stitched">
-              {currentProject.isLocalVideo ? (
-                <video
-                  className="demo-video"
-                  src={currentProject.videoUrl}
-                  autoPlay
-                  muted
-                  loop
-                  playsInline
-                  controls={false}
-                >
-                  Your browser does not support the video tag.
-                </video>
-              ) : (
-                <iframe
-                  className="demo-video"
-                  src={currentProject.videoUrl}
-                  title={currentProject.title}
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              )}
-            </div>
           </div>
+        </div>
+
+        {/* Always visible Now Playing popup */}
+        <div className="now-playing-popup">
+          <h2>{currentProject.title}</h2>
+          <p>{currentProject.description}</p>
+          <a
+            href={currentProject.githubLink}
+            target="_blank"
+            rel="noreferrer"
+          >
+            View on GitHub →
+          </a>
         </div>
 
         {/* TV Controls */}

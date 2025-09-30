@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import '../styles/BubbleTransition.css';
 
-const BubbleTransition = ({ textId = 'pageText', delay = 3000 }) => {
+const BubbleTransition = ({ textId = 'pageText' }) => {
     useEffect(() => {
     const transition = document.getElementById('bubbleTransition');
     const text = document.getElementById(textId);
@@ -14,7 +14,7 @@ const BubbleTransition = ({ textId = 'pageText', delay = 3000 }) => {
 
         const size = Math.random() * 80 + 40; // 20–70px
         const left = Math.random() * 100;
-        const delay = Math.random() * 4;
+        const bubbleDelay = Math.random() * 4;
         const baseSize = Math.random() * 50 + 20;
         const duration = 10 / baseSize + 1.5; // smaller bubbles = faster
         const bottom = Math.random() * -100;
@@ -23,7 +23,7 @@ const BubbleTransition = ({ textId = 'pageText', delay = 3000 }) => {
         bubble.style.height = `${size}px`;
         bubble.style.left = `${left}%`;
         bubble.style.bottom = `${bottom}px`;
-        bubble.style.animationDelay = `${Math.random() * 1.5}s`;
+        bubble.style.animationDelay = `${bubbleDelay}s`;
         bubble.style.animationDuration = `${duration}s`;
         bubble.style.top = `${Math.random() * 50 + 100}vh`; // 100–150vh (below screen)
         bubble.style.opacity = `${Math.random() * 0.5 + 0.4}`; // 0.4–0.9
@@ -41,7 +41,7 @@ setTimeout(() => {
   if (transition) transition.classList.add('fade-out');
 }, 1500); // bubbles fade slightly after
 
-}, []);
+}, [textId]);
 return <div className="bubble-transition" id="bubbleTransition"></div>;
 };
 
