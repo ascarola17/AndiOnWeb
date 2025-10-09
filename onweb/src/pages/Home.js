@@ -20,15 +20,27 @@ const Home = () => {
           <h1 className="home-title">
             Hi, I'm <span className="name-highlight">Andi!</span>
           </h1>
-          <p className="home-subtitle">Somewhere between a Git commit and Goo Lagoon...</p>
+          <p className="home-subtitle">
+            Somewhere between a Git commit and Goo Lagoon...
+          </p>
           <button className="home-button" onClick={() => navigate('/about')}>
             Dive In!
           </button>
         </div>
 
-      <LazyImage className="home-character" src={andiCharacter} alt="Andi - character" />
-      <LazyImage className="karen-img" src={karenCharacter} alt="Karen from SpongeBob" />
-
+        {/* Wrapped characters inside a responsive container */}
+        <div className="character-wrapper">
+          <LazyImage
+            className="home-character"
+            src={andiCharacter}
+            alt="Andi - character"
+          />
+          <LazyImage
+            className="karen-img"
+            src={karenCharacter}
+            alt="Karen from SpongeBob"
+          />
+        </div>
       </main>
     </div>
   );
