@@ -303,6 +303,22 @@
 .carousel-slide {
   flex-shrink: 0;
   width: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: transform 0.3s ease;
+}
+
+.carousel-slide .lazy-image-container {
+  min-height: 200px;
+  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+  border-radius: 4px;
+  width: 100%;
+}
+
+.carousel-slide img {
+  transition: opacity 0.5s ease-in-out;
 }
 
 @keyframes carousel-scroll {
@@ -314,9 +330,24 @@
   }
 }
 
-/* Pause carousel on hover */
+/* Focus image on hover - keep animation running */
 .photo-carousel:hover .carousel-track {
-  animation-play-state: paused;
+  animation-play-state: running;
+}
+
+.photo-carousel:hover .carousel-slide {
+  transform: scale(1.05);
+  transition: transform 0.3s ease;
+  z-index: 10;
+}
+
+.photo-carousel:hover .carousel-slide .photo-item {
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+  transition: box-shadow 0.3s ease;
+}
+
+.carousel-slide {
+  cursor: pointer;
 }
 
 /* Resume Section */
@@ -1235,6 +1266,10 @@
     width: 180px;
   }
   
+  .carousel-slide .lazy-image-container {
+    min-height: 150px;
+  }
+  
   .carousel-track {
     gap: 0.8rem;
     width: calc(180px * 10 + 0.8rem * 10);
@@ -1409,6 +1444,10 @@
   
   .carousel-slide {
     width: 150px;
+  }
+  
+  .carousel-slide .lazy-image-container {
+    min-height: 120px;
   }
   
   .carousel-track {

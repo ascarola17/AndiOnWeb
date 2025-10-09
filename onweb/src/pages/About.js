@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
+import LazyImage from '../components/LazyImage';
 import '../styles/About.css';
 
 // Import all images
@@ -65,9 +66,10 @@ const About = () => {
           {/* Sticky Polaroid with Me image */}
           <div className="me-polaroid">
             <div className="me-photo-placeholder">
-              <img 
+              <LazyImage 
                 src={meImage} 
                 alt="Andi Danielle Scarola"
+                className="me-image"
               />
             </div>
             <p className="me-caption">Andi Danielle Scarola</p>
@@ -92,7 +94,7 @@ const About = () => {
       <div className="content-row reveal">
         <div className="photo-item polaroid">
           <div className="photo-placeholder keck-photo">
-            <img src={keckImage} alt="Keck Center Building" />
+            <LazyImage src={keckImage} alt="Keck Center Building" />
           </div>
           <p className="photo-caption">The Keck</p>
         </div>
@@ -133,7 +135,7 @@ const About = () => {
       <div className="content-row reveal">
         <div className="photo-item polaroid">
           <div className="photo-placeholder keck-people-photo">
-            <img src={keckPeopleImage} alt="Keck People" />
+            <LazyImage src={keckPeopleImage} alt="Keck People" />
           </div>
           <p className="photo-caption">Keck's Finest</p>
         </div>
@@ -193,7 +195,7 @@ const About = () => {
         
         <div className="photo-item polaroid">
           <div className="photo-placeholder gym-photo">
-            <img src={gymImage} alt="Gym Workout" />
+            <LazyImage src={gymImage} alt="Gym Workout" />
           </div>
           <p className="photo-caption">My Happy Place</p>
         </div>
@@ -210,7 +212,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder climbing-photo">
-                  <img src={climbImage} alt="Rock Climbing" />
+                  <LazyImage src={climbImage} alt="Rock Climbing" />
                 </div>
                 <p className="photo-caption">Sandy's Rock Wall</p>
               </div>
@@ -219,7 +221,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder funny-gym-photo">
-                  <img src={funnyGymImage} alt="Funny Gym" />
+                  <LazyImage src={funnyGymImage} alt="Funny Gym" />
                 </div>
                 <p className="photo-caption">Gym Shenanigans</p>
               </div>
@@ -228,7 +230,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder friends-photo">
-                  <img src={friendsImage} alt="Friends" />
+                  <LazyImage src={friendsImage} alt="Friends" />
                 </div>
                 <p className="photo-caption">Bikini Bottom Friends</p>
               </div>
@@ -237,7 +239,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder laser-tag-photo">
-                  <img src={laserTagImage} alt="Laser Tag" />
+                  <LazyImage src={laserTagImage} alt="Laser Tag" />
                 </div>
                 <p className="photo-caption">Jellyfish Fields</p>
               </div>
@@ -246,7 +248,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder pinball-photo">
-                  <img src={pinballImage} alt="Pinball" />
+                  <LazyImage src={pinballImage} alt="Pinball" />
                 </div>
                 <p className="photo-caption">Goo Lagoon Arcade</p>
               </div>
@@ -255,7 +257,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder fivek-photo">
-                  <img src={fiveKImage} alt="5K Run" />
+                  <LazyImage src={fiveKImage} alt="5K Run" />
                 </div>
                 <p className="photo-caption">Goo Lagoon 5K</p>
               </div>
@@ -265,7 +267,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder climbing-photo">
-                  <img src={climbImage} alt="Rock Climbing" />
+                  <LazyImage src={climbImage} alt="Rock Climbing" />
                 </div>
                 <p className="photo-caption">Sandy's Rock Wall</p>
               </div>
@@ -274,7 +276,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder funny-gym-photo">
-                  <img src={funnyGymImage} alt="Funny Gym" />
+                  <LazyImage src={funnyGymImage} alt="Funny Gym" />
                 </div>
                 <p className="photo-caption">Gym Shenanigans</p>
               </div>
@@ -283,7 +285,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder friends-photo">
-                  <img src={friendsImage} alt="Friends" />
+                  <LazyImage src={friendsImage} alt="Friends" />
                 </div>
                 <p className="photo-caption">Bikini Bottom Friends</p>
               </div>
@@ -292,7 +294,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder laser-tag-photo">
-                  <img src={laserTagImage} alt="Laser Tag" />
+                  <LazyImage src={laserTagImage} alt="Laser Tag" />
                 </div>
                 <p className="photo-caption">Jellyfish Fields</p>
               </div>
@@ -301,7 +303,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder pinball-photo">
-                  <img src={pinballImage} alt="Pinball" />
+                  <LazyImage src={pinballImage} alt="Pinball" />
                 </div>
                 <p className="photo-caption">Goo Lagoon Arcade</p>
               </div>
@@ -310,7 +312,7 @@ const About = () => {
             <div className="carousel-slide">
               <div className="photo-item polaroid">
                 <div className="photo-placeholder fivek-photo">
-                  <img src={fiveKImage} alt="5K Run" />
+                  <LazyImage src={fiveKImage} alt="5K Run" />
                 </div>
                 <p className="photo-caption">Goo Lagoon 5K</p>
               </div>

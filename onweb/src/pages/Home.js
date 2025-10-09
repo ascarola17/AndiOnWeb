@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import BubbleTransition from '../components/BubbleTransition';
+import LazyImage from '../components/LazyImage';
 import '../styles/Home.css';
 import background from '../images/bm.png';
 import andiCharacter from '../images/AndiBob.png';
@@ -11,7 +12,7 @@ const Home = () => {
 
   return (
     <div className="home-wrapper">
-      <img src={background} alt="Bikini Bottom Background" className="bg-img" />
+      <LazyImage src={background} alt="Bikini Bottom Background" className="bg-img" />
       <BubbleTransition textId="homeText" delay={3000} />
 
       <main>
@@ -25,8 +26,8 @@ const Home = () => {
           </button>
         </div>
 
-      <img className="home-character" src={andiCharacter} alt="Andi - character" />
-      <img className="karen-img" src={karenCharacter} alt="Karen from SpongeBob" />
+      <LazyImage className="home-character" src={andiCharacter} alt="Andi - character" />
+      <LazyImage className="karen-img" src={karenCharacter} alt="Karen from SpongeBob" />
 
       </main>
     </div>
