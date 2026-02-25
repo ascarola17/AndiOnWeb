@@ -31,19 +31,30 @@
    accurate regardless of how wide the container gets.
    Tweak --screen-* to re-align if the TV image ever changes.     */
 .tv-container {
-  /* Screen cutout — calibrated for ProjectsKaren.png */
-  --screen-top:  40%;
-  --screen-left: 50%;
-  --screen-tx:  -40%;   /* translateX offset so anchor is inside the screen */
-  --screen-ty:  -50%;   /* translateY offset */
-  --screen-w:    42.5%; /* screen width as % of container */
-  --screen-rot:  5.5deg; /* match the slight TV tilt in the image */
+  /*
+   * Screen cutout — calibrated for ProjectsKaren.png
+   * --screen-top  / --screen-left  → where the CENTER of the screen sits,
+   *                                   expressed as % of the rendered TV image.
+   * --screen-w                     → screen width as % of the TV image width.
+   * --screen-rot                   → tilt angle of the TV screen in the image.
+   *
+   * To re-calibrate: open ProjectsKaren.png in any image editor, find the
+   * pixel coordinates of the screen centre and image W×H, then:
+   *   --screen-left = cx/W * 100%
+   *   --screen-top  = cy/H * 100%
+   *   --screen-w    = screen_width_px/W * 100%
+   */
+  --screen-top:  40%;    /* centre of TV screen, % of image height */
+  --screen-left: 54%;    /* centre of TV screen, % of image width  */
+  --screen-w:    42.5%;  /* screen width as % of image width        */
+  --screen-rot:  5.5deg; /* screen tilt to match the TV image angle  */
 
   position: absolute;
   bottom: 0;
   left: 35%;
   transform: translateX(-50%);
-  width: clamp(800px, 90vw, 1400px);
+  /* No hard minimum — avoids horizontal overflow on 769-900 px viewports */
+  width: min(88vw, 1400px);
   z-index: 1;
   pointer-events: none; /* let clicks pass through to TV screen area */
 }
@@ -65,8 +76,12 @@
   position: absolute;
   top:   var(--screen-top);
   left:  var(--screen-left);
-  transform: translate(var(--screen-tx), var(--screen-ty))
-             rotate(var(--screen-rot));
+  /*
+   * translate(-50%, -50%) centres the mask on the (left, top) anchor point.
+   * This is the standard "centre on a known coordinate" trick — easy to reason
+   * about: just set --screen-left/top to where you want the screen centre.
+   */
+  transform: translate(-50%, -50%) rotate(var(--screen-rot));
   width: var(--screen-w);
   aspect-ratio: 4 / 3;
 
@@ -84,14 +99,18 @@
   box-shadow: 0 0 28px rgba(0, 255, 255, 0.55);
 }
 
-/* Demo content — fills the mask completely */
+/* Demo content — fills the mask completely.
+   position: absolute + inset: 0 guarantees the iframe always covers the
+   full mask regardless of browser quirks with aspect-ratio + % heights. */
 .demo-video,
 .demo-image {
-  display: block;
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   border: none;
+  display: block;
 }
 
 /* ── Now Playing popup ─────────────────────────────────────────────

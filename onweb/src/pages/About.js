@@ -1,20 +1,15 @@
 import React, { useEffect } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import LazyImage from '../components/LazyImage';
+import polaroids from '../data/polaroids';
 import '../styles/About.css';
 import { RESUME_PATH, RESUME_LAST_UPDATED, RESUME_DOWNLOAD_NAME } from '../config/resumeConfig';
 
-// Import all images
+// Static images used outside the carousel
 import meImage from '../images/Me.png';
 import keckImage from '../images/keck.JPG';
 import keckPeopleImage from '../images/keck-people.jpg';
-import gymImage from '../images/Gym.png';
-import climbImage from '../images/Climb.jpg';
-import funnyGymImage from '../images/FunnyGym.JPG';
-import friendsImage from '../images/Friends.JPG';
-import laserTagImage from '../images/LaserTag.JPG';
-import pinballImage from '../images/Pinball.JPG';
-import fiveKImage from '../images/5k.JPG'; 
+import gymImage from '../images/Gym.png'; 
 
 const About = () => {
   useEffect(() => {
@@ -228,122 +223,30 @@ const About = () => {
         </div>
       </div>
 
-      {/* Photo Carousel */}
+      {/* Photo Carousel
+          ──────────────────────────────────────────────────────
+          To add a photo:
+            1. Drop the file into /public/polaroids/
+            2. Add one entry to src/data/polaroids.js
+          That’s it — no changes needed here.
+          ────────────────────────────────────────────────────── */}
       <div className="photo-carousel reveal">
         <div className="carousel-title-container">
           <h3 className="carousel-title">What’s Been Brewing</h3>
         </div>
         <div className="carousel-container">
           <div className="carousel-track">
-            {/* First set of photos */}
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder climbing-photo">
-                  <LazyImage src={climbImage} alt="Rock Climbing" />
+            {/* Duplicate the array for a seamless infinite loop */}
+            {[...polaroids, ...polaroids].map((photo, i) => (
+              <div className="carousel-slide" key={i}>
+                <div className="photo-item polaroid">
+                  <div className="photo-placeholder">
+                    <LazyImage src={photo.src} alt={photo.alt} />
+                  </div>
+                  <p className="photo-caption">{photo.caption}</p>
                 </div>
-                <p className="photo-caption">Sandy's Rock Wall</p>
               </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder funny-gym-photo">
-                  <LazyImage src={funnyGymImage} alt="Funny Gym" />
-                </div>
-                <p className="photo-caption">Gym Shenanigans</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder friends-photo">
-                  <LazyImage src={friendsImage} alt="Friends" />
-                </div>
-                <p className="photo-caption">Bikini Bottom Friends</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder laser-tag-photo">
-                  <LazyImage src={laserTagImage} alt="Laser Tag" />
-                </div>
-                <p className="photo-caption">Jellyfish Fields</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder pinball-photo">
-                  <LazyImage src={pinballImage} alt="Pinball" />
-                </div>
-                <p className="photo-caption">Goo Lagoon Arcade</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder fivek-photo">
-                  <LazyImage src={fiveKImage} alt="5K Run" />
-                </div>
-                <p className="photo-caption">Goo Lagoon 5K</p>
-              </div>
-            </div>
-            
-            {/* Duplicate set for seamless loop */}
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder climbing-photo">
-                  <LazyImage src={climbImage} alt="Rock Climbing" />
-                </div>
-                <p className="photo-caption">Sandy's Rock Wall</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder funny-gym-photo">
-                  <LazyImage src={funnyGymImage} alt="Funny Gym" />
-                </div>
-                <p className="photo-caption">Gym Shenanigans</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder friends-photo">
-                  <LazyImage src={friendsImage} alt="Friends" />
-                </div>
-                <p className="photo-caption">Bikini Bottom Friends</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder laser-tag-photo">
-                  <LazyImage src={laserTagImage} alt="Laser Tag" />
-                </div>
-                <p className="photo-caption">Jellyfish Fields</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder pinball-photo">
-                  <LazyImage src={pinballImage} alt="Pinball" />
-                </div>
-                <p className="photo-caption">Goo Lagoon Arcade</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder fivek-photo">
-                  <LazyImage src={fiveKImage} alt="5K Run" />
-                </div>
-                <p className="photo-caption">Goo Lagoon 5K</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
