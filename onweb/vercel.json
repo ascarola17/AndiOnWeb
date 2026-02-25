@@ -16,20 +16,11 @@
       ]
     },
     {
-      "source": "/(.*\\.pdf)",
+      "source": "/(.*).pdf",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "public, max-age=86400, stale-while-revalidate=3600"
-        }
-      ]
-    },
-    {
-      "source": "/(.*\\.(png|jpg|jpeg|webp|avif|gif|svg|ico))",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=2592000, stale-while-revalidate=86400"
         }
       ]
     }
