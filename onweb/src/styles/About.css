@@ -379,9 +379,17 @@
 .resume-title {
   font-size: 2rem;
   color: #4169E1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.25rem;
   font-family: 'Kalam', cursive, 'Comic Sans MS', cursive;
   font-weight: bold;
+}
+
+.resume-last-updated {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 0 0 1.25rem 0;
+  font-style: italic;
+  letter-spacing: 0.3px;
 }
 
 .resume-preview {

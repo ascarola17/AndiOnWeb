@@ -125,24 +125,38 @@ video.demo-video {
   text-decoration: none;
   font-weight: bold;
 }
+/* Static image fallback (for projects without a YouTube video) */
+.demo-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  border-radius: 2px;
+}
+
 /* Separate Now Playing popup - completely independent */
 .now-playing-popup {
   position: fixed;
   top: 350px;
   right: 20px;
-  width: 320px;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(10, 20, 30, 0.9));
+  width: 340px;
+  background: linear-gradient(145deg, rgba(4, 12, 24, 0.96), rgba(8, 20, 40, 0.96));
   color: #fff;
-  padding: 18px;
-  font-size: 0.9rem;
+  padding: 20px;
+  font-size: 0.88rem;
   z-index: 5;
   transition: all 0.3s ease;
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 255, 255, 0.08);
-  max-height: 350px;
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 255, 255, 0.22);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    0 0 18px rgba(0, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  max-height: 420px;
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 255, 0.3) transparent;
   animation: slideInFromRight 0.3s ease-out;
 }
 
@@ -230,6 +244,62 @@ video.demo-video {
   opacity: 1;
 }
 
+/* ── Project bullet layout ─────────────────────────────────── */
+.project-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 14px 0 12px;
+}
+
+.bullet-row {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.bullet-label {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+  color: #00ffff;
+  opacity: 0.75;
+}
+
+.bullet-text {
+  font-size: 0.84rem;
+  color: #dce8f0;
+  line-height: 1.45;
+}
+
+.tech-text {
+  font-family: 'Courier New', monospace;
+  font-size: 0.78rem;
+  color: #a8d8ea;
+  letter-spacing: 0.3px;
+}
+
+.bullet-list {
+  margin: 2px 0 0 0;
+  padding-left: 1.1rem;
+  list-style: disc;
+  color: #dce8f0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.bullet-list li {
+  margin-bottom: 3px;
+}
+
+.project-links {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 4px;
+}
+
 /* Responsive positioning for TV container */
 @media (max-width: 768px) {
   .tv-container {
@@ -237,34 +307,35 @@ video.demo-video {
     bottom: 0;
     left: 25%;
   }
-  
+
   .tv-screen-area {
     width: 48%;
     top: 55%;
     transform: translate(-50%, -50%) rotate(3.5deg);
   }
-  
+
   .now-playing-popup {
     top: 250px;
-    width: 280px;
+    width: calc(100vw - 20px);
+    max-width: 300px;
     right: 10px;
-    padding: 15px;
-    font-size: 0.85rem;
+    padding: 14px;
+    font-size: 0.82rem;
+    max-height: 320px;
   }
-  
+
   .now-playing-popup h2 {
-    font-size: 1.1rem;
-    margin-bottom: 12px;
+    font-size: 1rem;
+    margin-bottom: 10px;
   }
-  
-  .now-playing-popup p {
-    margin: 12px 0;
-    font-size: 0.8rem;
+
+  .bullet-list {
+    font-size: 0.78rem;
   }
-  
+
   .now-playing-popup a {
     padding: 6px 12px;
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 }
 
@@ -274,34 +345,40 @@ video.demo-video {
     bottom: 0;
     left: 20%;
   }
-  
+
   .tv-screen-area {
     width: 50%;
     top: 50%;
     transform: translate(-50%, -50%) rotate(3.0deg);
   }
-  
+
   .now-playing-popup {
     top: 200px;
-    width: 250px;
+    width: calc(100vw - 16px);
+    max-width: 270px;
     right: 8px;
-    padding: 12px;
-    font-size: 0.8rem;
+    padding: 11px;
+    font-size: 0.78rem;
+    max-height: 280px;
   }
-  
+
   .now-playing-popup h2 {
-    font-size: 1rem;
-    margin-bottom: 10px;
+    font-size: 0.92rem;
+    margin-bottom: 8px;
   }
-  
-  .now-playing-popup p {
-    margin: 10px 0;
-    font-size: 0.75rem;
+
+  .bullet-label {
+    font-size: 0.6rem;
   }
-  
+
+  .bullet-list,
+  .bullet-text {
+    font-size: 0.74rem;
+  }
+
   .now-playing-popup a {
     padding: 5px 10px;
-    font-size: 0.75rem;
+    font-size: 0.73rem;
   }
 }
 

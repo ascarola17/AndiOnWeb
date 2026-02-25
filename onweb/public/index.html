@@ -9,9 +9,17 @@
     <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
 
-    <!-- SpongeBob Vibes Font -->
+    <!-- Preconnect to Google Fonts CDN — eliminates connection latency on font load -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!--
+      SpongeBob Vibes Fonts
+      display=swap ensures text is visible while the custom font loads (avoids FOIT).
+      Luckiest Guy is the hero heading font; loading it here keeps it above the fold.
+    -->
     <link
-      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&family=Kalam:wght@400;700&family=Poppins:wght@400;600;700&display=swap"
       rel="stylesheet"
     />
 

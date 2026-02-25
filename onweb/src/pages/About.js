@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import LazyImage from '../components/LazyImage';
 import '../styles/About.css';
+import { RESUME_PATH, RESUME_LAST_UPDATED, RESUME_DOWNLOAD_NAME } from '../config/resumeConfig';
 
 // Import all images
 import meImage from '../images/Me.png';
@@ -322,32 +323,38 @@ const About = () => {
       </div>
 
 
-      {/* Resume Section */}
+      {/* Resume Section
+          ──────────────────────────────────────────────────────
+          To swap the resume: replace /public/AndiScarola_Resume.pdf
+          then update RESUME_LAST_UPDATED in src/config/resumeConfig.js
+          ────────────────────────────────────────────────────── */}
       <div className="resume-section reveal">
         <div className="resume-container">
           <h3 className="resume-title">My Resume</h3>
+          <p className="resume-last-updated">Last updated: {RESUME_LAST_UPDATED}</p>
           <div className="resume-preview">
-            <iframe 
-              src="/AndiScarola_Resume.pdf#toolbar=0&navpanes=0&scrollbar=0"
+            <iframe
+              src={`${RESUME_PATH}#toolbar=0&navpanes=0&scrollbar=0`}
               className="resume-iframe"
               title="Resume Preview"
+              loading="lazy"
             />
           </div>
           <div className="resume-actions">
-            <a 
-              href="/AndiScarola_Resume.pdf" 
-              download="AndiScarola_Resume.pdf"
+            <a
+              href={RESUME_PATH}
+              download={RESUME_DOWNLOAD_NAME}
               className="download-button"
             >
-              Download Resume
+              ⬇ Download Resume
             </a>
-            <a 
-              href="/AndiScarola_Resume.pdf" 
-              target="_blank" 
+            <a
+              href={RESUME_PATH}
+              target="_blank"
               rel="noopener noreferrer"
               className="view-button"
             >
-              View Full Size
+              ↗ View Full Size
             </a>
           </div>
         </div>
