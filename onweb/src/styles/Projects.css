@@ -16,23 +16,30 @@
   z-index: 0;
 }
 
-/* TV Container - positioned on floor, bigger size, moved toward wall */
+/* TV Container — anchored to the bottom of the scene.
+   The <img> inside determines natural height; screen area is
+   absolutely positioned on top using % values so it scales. */
 .tv-container {
   position: absolute;
   bottom: 0;
   left: 35%;
   transform: translateX(-50%);
   width: clamp(800px, 90vw, 1400px);
-  aspect-ratio: 16 / 10;
-  background-image: url('../images/ProjectsKaren.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center bottom;
   z-index: 1;
   pointer-events: none;
 }
 
-/* TV Screen Area - positioned behind the screen cutout */
+/* TV image — base layer; sets the container's height naturally */
+.tv-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* TV Screen Area — sits on top of the TV image like a real screen.
+   Position/size are % of .tv-container, matching the screen cutout. */
 .tv-screen-area {
   position: absolute;
   top: 40%;

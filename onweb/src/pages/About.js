@@ -91,6 +91,32 @@ const About = () => {
         </div>
       </div>
 
+      {/* Current Research — Keck Center */}
+      <div className="current-research-standalone reveal">
+        <div className="current-research-card">
+          <h3>Current Research</h3>
+          <div className="current-research-label">W.M. Keck Center for 3D Innovation @ UTEP</div>
+          <div className="current-research-body">
+            <p>
+              I'm part of a research group studying 3D-printed ceramics and fiber-based manufacturing —
+              investigating process behavior through real-time sensor data and SEM imaging.
+            </p>
+            <p>
+              My role is the CS side of things: I build the tools that let the lab actually use its data.
+              That means sensor integration, data pipelines, process automation, and image analysis tooling —
+              so researchers can spend less time wrangling numbers and more time doing science.
+            </p>
+            <div className="research-chips">
+              <span>Sensor Integration</span>
+              <span>Data Pipelines</span>
+              <span>Process Automation</span>
+              <span>SEM Image Analysis</span>
+              <span>Flask Dashboards</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Research Papers with Keck Photo */}
       <div className="content-row reveal">
         <div className="photo-item polaroid">
