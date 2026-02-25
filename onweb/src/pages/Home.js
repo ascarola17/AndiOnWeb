@@ -12,7 +12,8 @@ const Home = () => {
 
   return (
     <div className="home-wrapper">
-      <LazyImage src={background} alt="Bikini Bottom Background" className="bg-img" />
+      {/* Hero background — eager=true so it loads immediately, no pop-in */}
+      <LazyImage src={background} alt="Bikini Bottom Background" className="bg-img" eager={true} />
       <BubbleTransition textId="homeText" delay={3000} />
 
       <main>
@@ -28,17 +29,19 @@ const Home = () => {
           </button>
         </div>
 
-        {/* Wrapped characters inside a responsive container */}
+        {/* Characters — above the fold, load eagerly */}
         <div className="character-wrapper">
           <LazyImage
             className="home-character"
             src={andiCharacter}
             alt="Andi - character"
+            eager={true}
           />
           <LazyImage
             className="karen-img"
             src={karenCharacter}
             alt="Karen from SpongeBob"
+            eager={true}
           />
         </div>
       </main>

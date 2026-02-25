@@ -1,19 +1,15 @@
 import React, { useEffect } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import LazyImage from '../components/LazyImage';
+import polaroids from '../data/polaroids';
 import '../styles/About.css';
+import { RESUME_PATH, RESUME_LAST_UPDATED, RESUME_DOWNLOAD_NAME } from '../config/resumeConfig';
 
-// Import all images
+// Static images used outside the carousel
 import meImage from '../images/Me.png';
 import keckImage from '../images/keck.JPG';
 import keckPeopleImage from '../images/keck-people.jpg';
-import gymImage from '../images/Gym.png';
-import climbImage from '../images/Climb.jpg';
-import funnyGymImage from '../images/FunnyGym.JPG';
-import friendsImage from '../images/Friends.JPG';
-import laserTagImage from '../images/LaserTag.JPG';
-import pinballImage from '../images/Pinball.JPG';
-import fiveKImage from '../images/5k.JPG'; 
+import gymImage from '../images/Gym.png'; 
 
 const About = () => {
   useEffect(() => {
@@ -86,6 +82,32 @@ const About = () => {
             <p>• Minor in Mathematics</p>
             <p>• Fast Track M.S. in Software Engineering</p>
             <p>• GPA: 3.39</p>
+          </div>
+        </div>
+      </div>
+
+      {/* Current Research — Keck Center */}
+      <div className="current-research-standalone reveal">
+        <div className="current-research-card">
+          <h3>Current Research</h3>
+          <div className="current-research-label">W.M. Keck Center for 3D Innovation @ UTEP</div>
+          <div className="current-research-body">
+            <p>
+              I'm part of a research group studying 3D-printed ceramics and fiber-based manufacturing —
+              investigating process behavior through real-time sensor data and SEM imaging.
+            </p>
+            <p>
+              My role is the CS side of things: I build the tools that let the lab actually use its data.
+              That means sensor integration, data pipelines, process automation, and image analysis tooling —
+              so researchers can spend less time wrangling numbers and more time doing science.
+            </p>
+            <div className="research-chips">
+              <span>Sensor Integration</span>
+              <span>Data Pipelines</span>
+              <span>Process Automation</span>
+              <span>SEM Image Analysis</span>
+              <span>Flask Dashboards</span>
+            </div>
           </div>
         </div>
       </div>
@@ -201,153 +223,67 @@ const About = () => {
         </div>
       </div>
 
-      {/* Photo Carousel */}
+      {/* Photo Carousel
+          ──────────────────────────────────────────────────────
+          To add a photo:
+            1. Drop the file into /public/polaroids/
+            2. Add one entry to src/data/polaroids.js
+          That’s it — no changes needed here.
+          ────────────────────────────────────────────────────── */}
       <div className="photo-carousel reveal">
         <div className="carousel-title-container">
           <h3 className="carousel-title">What’s Been Brewing</h3>
         </div>
         <div className="carousel-container">
           <div className="carousel-track">
-            {/* First set of photos */}
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder climbing-photo">
-                  <LazyImage src={climbImage} alt="Rock Climbing" />
+            {/* Duplicate the array for a seamless infinite loop */}
+            {[...polaroids, ...polaroids].map((photo, i) => (
+              <div className="carousel-slide" key={i}>
+                <div className="photo-item polaroid">
+                  <div className="photo-placeholder">
+                    <LazyImage src={photo.src} alt={photo.alt} />
+                  </div>
+                  <p className="photo-caption">{photo.caption}</p>
                 </div>
-                <p className="photo-caption">Sandy's Rock Wall</p>
               </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder funny-gym-photo">
-                  <LazyImage src={funnyGymImage} alt="Funny Gym" />
-                </div>
-                <p className="photo-caption">Gym Shenanigans</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder friends-photo">
-                  <LazyImage src={friendsImage} alt="Friends" />
-                </div>
-                <p className="photo-caption">Bikini Bottom Friends</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder laser-tag-photo">
-                  <LazyImage src={laserTagImage} alt="Laser Tag" />
-                </div>
-                <p className="photo-caption">Jellyfish Fields</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder pinball-photo">
-                  <LazyImage src={pinballImage} alt="Pinball" />
-                </div>
-                <p className="photo-caption">Goo Lagoon Arcade</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder fivek-photo">
-                  <LazyImage src={fiveKImage} alt="5K Run" />
-                </div>
-                <p className="photo-caption">Goo Lagoon 5K</p>
-              </div>
-            </div>
-            
-            {/* Duplicate set for seamless loop */}
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder climbing-photo">
-                  <LazyImage src={climbImage} alt="Rock Climbing" />
-                </div>
-                <p className="photo-caption">Sandy's Rock Wall</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder funny-gym-photo">
-                  <LazyImage src={funnyGymImage} alt="Funny Gym" />
-                </div>
-                <p className="photo-caption">Gym Shenanigans</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder friends-photo">
-                  <LazyImage src={friendsImage} alt="Friends" />
-                </div>
-                <p className="photo-caption">Bikini Bottom Friends</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder laser-tag-photo">
-                  <LazyImage src={laserTagImage} alt="Laser Tag" />
-                </div>
-                <p className="photo-caption">Jellyfish Fields</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder pinball-photo">
-                  <LazyImage src={pinballImage} alt="Pinball" />
-                </div>
-                <p className="photo-caption">Goo Lagoon Arcade</p>
-              </div>
-            </div>
-            
-            <div className="carousel-slide">
-              <div className="photo-item polaroid">
-                <div className="photo-placeholder fivek-photo">
-                  <LazyImage src={fiveKImage} alt="5K Run" />
-                </div>
-                <p className="photo-caption">Goo Lagoon 5K</p>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </div>
 
 
-      {/* Resume Section */}
+      {/* Resume Section
+          ──────────────────────────────────────────────────────
+          To swap the resume: replace /public/AndiScarola_Resume.pdf
+          then update RESUME_LAST_UPDATED in src/config/resumeConfig.js
+          ────────────────────────────────────────────────────── */}
       <div className="resume-section reveal">
         <div className="resume-container">
           <h3 className="resume-title">My Resume</h3>
+          <p className="resume-last-updated">Last updated: {RESUME_LAST_UPDATED}</p>
           <div className="resume-preview">
-            <iframe 
-              src="/AndiScarola_Resume.pdf#toolbar=0&navpanes=0&scrollbar=0"
+            <iframe
+              src={`${RESUME_PATH}#toolbar=0&navpanes=0&scrollbar=0`}
               className="resume-iframe"
               title="Resume Preview"
+              loading="lazy"
             />
           </div>
           <div className="resume-actions">
-            <a 
-              href="/AndiScarola_Resume.pdf" 
-              download="AndiScarola_Resume.pdf"
+            <a
+              href={RESUME_PATH}
+              download={RESUME_DOWNLOAD_NAME}
               className="download-button"
             >
-              Download Resume
+              ⬇ Download Resume
             </a>
-            <a 
-              href="/AndiScarola_Resume.pdf" 
-              target="_blank" 
+            <a
+              href={RESUME_PATH}
+              target="_blank"
               rel="noopener noreferrer"
               className="view-button"
             >
-              View Full Size
+              ↗ View Full Size
             </a>
           </div>
         </div>

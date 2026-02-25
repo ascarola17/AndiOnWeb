@@ -1,188 +1,172 @@
+/* ═══════════════════════════════════════════════════════════════════
+   Projects — SpongeBob TV Demo
+   Layout:
+     Desktop (>768px) → TV anchored bottom-left of scene; popup +
+                         controls fixed to the right side of viewport
+     Mobile  (≤768px) → vertical stack: TV → info card → controls;
+                         everything is in-flow (no fixed positioning)
+   ═══════════════════════════════════════════════════════════════════ */
+
 .projects-wrapper {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  background-color: #000000;
-  overflow: hidden;
+  background-color: #000;
+  overflow-x: hidden; /* prevent horizontal scroll; allow vertical */
 }
+
 .background-container {
   position: relative;
   width: 100%;
   height: 100vh;
-  background-image: url('../images/Bp.png'); /* or ProjectBg if you want dynamic imports */
+  background-image: url('../images/Bp.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  z-index: 0;
 }
 
-/* TV Container - positioned on floor, bigger size, moved toward wall */
+/* ── TV Container ──────────────────────────────────────────────────
+   CSS custom properties define the screen cutout position.
+   All values are % of the rendered .tv-container box, so they stay
+   accurate regardless of how wide the container gets.
+   Tweak --screen-* to re-align if the TV image ever changes.     */
 .tv-container {
+  /*
+   * Screen cutout — calibrated for ProjectsKaren.png
+   * --screen-top  / --screen-left  → where the CENTER of the screen sits,
+   *                                   expressed as % of the rendered TV image.
+   * --screen-w                     → screen width as % of the TV image width.
+   * --screen-rot                   → tilt angle of the TV screen in the image.
+   *
+   * To re-calibrate: open ProjectsKaren.png in any image editor, find the
+   * pixel coordinates of the screen centre and image W×H, then:
+   *   --screen-left = cx/W * 100%
+   *   --screen-top  = cy/H * 100%
+   *   --screen-w    = screen_width_px/W * 100%
+   */
+  --screen-top:  40%;    /* centre of TV screen, % of image height */
+  --screen-left: 54%;    /* centre of TV screen, % of image width  */
+  --screen-w:    42.5%;  /* screen width as % of image width        */
+  --screen-rot:  5.5deg; /* screen tilt to match the TV image angle  */
+
   position: absolute;
   bottom: 0;
   left: 35%;
   transform: translateX(-50%);
-  width: clamp(800px, 90vw, 1400px);
-  aspect-ratio: 16 / 10;
-  background-image: url('../images/ProjectsKaren.png');
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center bottom;
+  /* No hard minimum — avoids horizontal overflow on 769-900 px viewports */
+  width: min(88vw, 1400px);
   z-index: 1;
-  pointer-events: none;
+  pointer-events: none; /* let clicks pass through to TV screen area */
 }
 
-/* TV Screen Area - positioned behind the screen cutout */
+/* TV image — base layer. Its natural aspect ratio sets container height,
+   so every % position on .tv-screen-area maps to exact image pixels.  */
+.tv-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ── Screen Mask (the overlay) ─────────────────────────────────────
+   Positioned with CSS variables so it tracks the image at any size.
+   overflow: hidden is the critical rule — the demo can never escape. */
 .tv-screen-area {
   position: absolute;
-  top: 40%;
-  left: 50%;
-  transform: translate(-40%, -50%) rotate(5.5deg);
-  width: 42.5%;
+  top:   var(--screen-top);
+  left:  var(--screen-left);
+  /*
+   * translate(-50%, -50%) centres the mask on the (left, top) anchor point.
+   * This is the standard "centre on a known coordinate" trick — easy to reason
+   * about: just set --screen-left/top to where you want the screen centre.
+   */
+  transform: translate(-50%, -50%) rotate(var(--screen-rot));
+  width: var(--screen-w);
   aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-radius: 8px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  background: transparent;
-  border: 4px solid #4682B4;
-  z-index: 10;
-  pointer-events: auto;
-}
 
-/* Video inside TV screen area */
-.demo-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  border-radius: 2px;
-  position: relative;
-  z-index: 11;
+  overflow: hidden;            /* demo stays inside — no spill */
+  border-radius: 6px;          /* soften screen corners slightly */
+  border: 3px solid #4682B4;   /* TV-screen blue border */
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.4);
+
+  z-index: 10;
+  pointer-events: auto;        /* re-enable so the iframe is interactive */
+  transition: box-shadow 0.3s ease;
 }
 
 .tv-screen-area:hover {
-  box-shadow: 0 0 25px rgba(0, 255, 255, 0.6);
+  box-shadow: 0 0 28px rgba(0, 255, 255, 0.55);
 }
 
-.video-border {
-  background-color: black;
-  border-radius: 10px;
-  padding: 3px;
-  height: 100%;
-  box-sizing: border-box;
-}
-
-.video-wrapper {
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  overflow: hidden;
-  position: relative;
-}
-
-.demo-video {
+/* Demo content — fills the mask completely.
+   position: absolute + inset: 0 guarantees the iframe always covers the
+   full mask regardless of browser quirks with aspect-ratio + % heights. */
+.demo-video,
+.demo-image {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border: none;
   display: block;
 }
 
-/* Local video specific styling */
-video.demo-video {
-  background-color: #000;
-  border-radius: 12px;
-}
-
-.project-info {
-  position: absolute;
-  bottom: -150px;
-  left: 0;
-  width: 100%;
-  background: rgba(0, 0, 0, 0.85);
-  color: #fff;
-  padding: 16px;
-  font-size: 0.95rem;
-  transition: bottom 0.3s ease;
-  z-index: 12;
-}
-
-.tv-screen:hover .project-info {
-  bottom: 0;
-}
-
-.project-info h2 {
-  margin: 0;
-  font-size: 1.2rem;
-  color: #00ffff;
-}
-
-.project-info p {
-  margin: 8px 0;
-}
-
-.project-info a {
-  color: #ffd700;
-  text-decoration: none;
-  font-weight: bold;
-}
-/* Separate Now Playing popup - completely independent */
+/* ── Now Playing popup ─────────────────────────────────────────────
+   Desktop: fixed panel on the right side of the viewport.
+   Mobile:  overridden to position: relative (in-flow card).         */
 .now-playing-popup {
   position: fixed;
-  top: 350px;
+  top: 90px;
   right: 20px;
   width: 320px;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(10, 20, 30, 0.9));
-  color: #fff;
-  padding: 18px;
-  font-size: 0.9rem;
-  z-index: 5;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(12px);
-  border-radius: 12px;
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5), 0 0 15px rgba(0, 255, 255, 0.08);
-  max-height: 350px;
+  max-height: calc(100vh - 160px);
   overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 255, 255, 0.3) transparent;
+
+  background: linear-gradient(145deg, rgba(4, 12, 24, 0.96), rgba(8, 20, 40, 0.96));
+  color: #fff;
+  padding: 20px;
+  font-size: 0.88rem;
+  z-index: 20;
+  backdrop-filter: blur(14px);
+  border-radius: 14px;
+  border: 1px solid rgba(0, 255, 255, 0.22);
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.6),
+    0 0 18px rgba(0, 255, 255, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
   animation: slideInFromRight 0.3s ease-out;
 }
 
 @keyframes slideInFromRight {
-  from {
-    transform: translateX(100%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+  from { transform: translateX(110%); opacity: 0; }
+  to   { transform: translateX(0);    opacity: 1; }
 }
 
 .now-playing-popup h2 {
-  margin: 0 0 15px 0;
-  font-size: 1.3rem;
+  margin: 0 0 12px;
+  font-size: 1.1rem;
   color: #00ffff;
   text-align: center;
   text-transform: uppercase;
-  letter-spacing: 2px;
-  border-bottom: 2px solid #00ffff;
+  letter-spacing: 1.5px;
+  border-bottom: 1px solid rgba(0, 255, 255, 0.35);
   padding-bottom: 8px;
-  position: relative;
-  text-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
+  text-shadow: 0 0 10px rgba(0, 255, 255, 0.4);
 }
 
 .now-playing-popup h2::before {
-  content: "▶";
-  margin-right: 8px;
-  font-size: 0.9em;
-  color: #00ffff;
-  animation: pulse 2s infinite;
+  content: "▶ ";
+  font-size: 0.8em;
+  animation: pulse-icon 2s infinite;
 }
 
 .now-playing-popup h2::after {
-  content: "●";
-  margin-left: 8px;
-  font-size: 0.6em;
-  color: #00ffff;
+  content: " ●";
+  font-size: 0.55em;
   animation: blink 1.5s infinite;
 }
 
@@ -191,198 +175,60 @@ video.demo-video {
   51%, 100% { opacity: 0.3; }
 }
 
+@keyframes pulse-icon {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0.45; }
+}
+
 .now-playing-popup p {
-  margin: 15px 0;
-  line-height: 1.5;
-  color: #e0e0e0;
-  text-align: justify;
+  margin: 12px 0;
+  line-height: 1.6;
+  color: #dce8f0;
 }
 
 .now-playing-popup a {
+  display: block;
+  margin-top: 14px;
+  padding: 8px 16px;
   color: #00ffff;
   text-decoration: none;
   font-weight: bold;
-  display: inline-block;
-  margin-top: 12px;
-  padding: 8px 16px;
-  background: rgba(0, 255, 255, 0.08);
-  border: 1px solid rgba(0, 255, 255, 0.2);
-  border-radius: 15px;
-  transition: all 0.3s ease;
+  font-size: 0.83rem;
   text-align: center;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 0.85rem;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  background: rgba(0, 255, 255, 0.08);
+  border: 1px solid rgba(0, 255, 255, 0.25);
+  border-radius: 20px;
+  box-sizing: border-box;
+  transition: all 0.25s ease;
 }
 
 .now-playing-popup a:hover {
-  color: #fff;
-  background: rgba(0, 255, 255, 0.15);
+  background: rgba(0, 255, 255, 0.18);
   border-color: #00ffff;
   transform: translateY(-1px);
-  box-shadow: 0 3px 8px rgba(0, 255, 255, 0.2);
-  text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+  box-shadow: 0 3px 8px rgba(0, 255, 255, 0.25);
 }
 
-.tv-screen:hover .top-info {
-  opacity: 1;
-}
-
-/* Responsive positioning for TV container */
-@media (max-width: 768px) {
-  .tv-container {
-    width: min(90vw, 800px);
-    bottom: 0;
-    left: 25%;
-  }
-  
-  .tv-screen-area {
-    width: 48%;
-    top: 55%;
-    transform: translate(-50%, -50%) rotate(3.5deg);
-  }
-  
-  .now-playing-popup {
-    top: 250px;
-    width: 280px;
-    right: 10px;
-    padding: 15px;
-    font-size: 0.85rem;
-  }
-  
-  .now-playing-popup h2 {
-    font-size: 1.1rem;
-    margin-bottom: 12px;
-  }
-  
-  .now-playing-popup p {
-    margin: 12px 0;
-    font-size: 0.8rem;
-  }
-  
-  .now-playing-popup a {
-    padding: 6px 12px;
-    font-size: 0.8rem;
-  }
-}
-
-@media (max-width: 480px) {
-  .tv-container {
-    width: min(85vw, 600px);
-    bottom: 0;
-    left: 20%;
-  }
-  
-  .tv-screen-area {
-    width: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%) rotate(3.0deg);
-  }
-  
-  .now-playing-popup {
-    top: 200px;
-    width: 250px;
-    right: 8px;
-    padding: 12px;
-    font-size: 0.8rem;
-  }
-  
-  .now-playing-popup h2 {
-    font-size: 1rem;
-    margin-bottom: 10px;
-  }
-  
-  .now-playing-popup p {
-    margin: 10px 0;
-    font-size: 0.75rem;
-  }
-  
-  .now-playing-popup a {
-    padding: 5px 10px;
-    font-size: 0.75rem;
-  }
-}
-
-@media (max-width: 360px) {
-  .tv-container {
-    width: min(80vw, 500px);
-    bottom: 0;
-    left: 15%;
-  }
-  
-  .tv-screen-area {
-    width: 52%;
-    top: 45%;
-    transform: translate(-50%, -50%) rotate(2.5deg);
-  }
-  
-  .now-playing-popup {
-    top: 180px;
-    width: 220px;
-    right: 5px;
-    padding: 10px;
-    font-size: 0.75rem;
-  }
-  
-  .now-playing-popup h2 {
-    font-size: 0.9rem;
-    margin-bottom: 8px;
-  }
-  
-  .now-playing-popup p {
-    margin: 8px 0;
-    font-size: 0.7rem;
-  }
-  
-  .now-playing-popup a {
-    padding: 4px 8px;
-    font-size: 0.7rem;
-  }
-}
-
-@media (min-width: 769px) and (max-width: 1200px) {
-  .tv-container {
-    width: min(85vw, 1200px);
-    bottom: 0;
-    left: 32%;
-  }
-  
-  .tv-screen-area {
-    width: 42%;
-    top: 40%;
-    left: 50%;
-    transform: translate(-40%, -50%) rotate(5.1deg);
-  }
-}
-
-/* iPad-specific alignment */
-@media (min-width: 768px) and (max-width: 1024px) {
-  .tv-screen-area {
-    width: 41%;
-    top: 40%;
-    left: 50%;
-    transform: translate(-40%, -50%) rotate(5.0deg);
-  }
-}
-
-/* TV Controls - Themed */
+/* ── TV Controls ───────────────────────────────────────────────────
+   Desktop: fixed bottom-right pill.
+   Mobile:  overridden to in-flow below the info card.              */
 .tv-controls {
   position: fixed;
-  bottom: 50px;
+  bottom: 24px;
   right: 20px;
   display: flex;
   align-items: center;
-  gap: 15px;
-  z-index: 8;
-  background: linear-gradient(135deg, rgba(0, 0, 0, 0.8), rgba(20, 20, 40, 0.8));
-  padding: 12px 20px;
+  gap: 12px;
+  z-index: 20;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.85), rgba(20, 20, 40, 0.85));
+  padding: 10px 18px;
   border-radius: 25px;
   backdrop-filter: blur(15px);
   border: 1px solid rgba(0, 255, 255, 0.2);
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  width: 320px;
+  width: 280px;
   justify-content: center;
 }
 
@@ -390,16 +236,15 @@ video.demo-video {
   background: linear-gradient(135deg, rgba(0, 255, 255, 0.1), rgba(0, 200, 200, 0.2));
   border: 1px solid rgba(0, 255, 255, 0.3);
   color: #00ffff;
-  width: 40px;
-  height: 40px;
+  width: 38px;
+  height: 38px;
   border-radius: 50%;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 15px;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all 0.3s ease;
-  box-shadow: 0 2px 8px rgba(0, 255, 255, 0.1);
+  transition: all 0.25s ease;
   position: relative;
   overflow: hidden;
 }
@@ -407,17 +252,13 @@ video.demo-video {
 .tv-btn::before {
   content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: left 0.5s ease;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.4s ease;
 }
 
-.tv-btn:hover::before {
-  left: 100%;
-}
+.tv-btn:hover::before { transform: translateX(100%); }
 
 .tv-btn:hover {
   background: linear-gradient(135deg, rgba(0, 255, 255, 0.3), rgba(0, 200, 200, 0.4));
@@ -437,92 +278,192 @@ video.demo-video {
 .play-pause-btn:hover {
   background: linear-gradient(135deg, rgba(0, 255, 255, 0.4), rgba(0, 200, 200, 0.5)) !important;
   border-color: #00ffff !important;
-  box-shadow: 0 4px 12px rgba(0, 255, 255, 0.4) !important;
   color: #fff !important;
 }
 
 @keyframes pulse {
-  0%, 100% {
-    box-shadow: 0 2px 8px rgba(0, 255, 255, 0.2);
-  }
-  50% {
-    box-shadow: 0 4px 12px rgba(0, 255, 255, 0.4);
-  }
+  0%, 100% { box-shadow: 0 2px 8px rgba(0, 255, 255, 0.2); }
+  50%       { box-shadow: 0 4px 15px rgba(0, 255, 255, 0.5); }
 }
 
 .project-indicator {
   color: #00ffff;
   font-weight: bold;
-  font-size: 14px;
-  min-width: 60px;
+  font-size: 13px;
+  min-width: 52px;
   text-align: center;
   background: rgba(0, 255, 255, 0.1);
-  padding: 6px 12px;
-  border-radius: 15px;
+  padding: 5px 10px;
+  border-radius: 12px;
   border: 1px solid rgba(0, 255, 255, 0.2);
   text-shadow: 0 0 5px rgba(0, 255, 255, 0.3);
 }
 
-/* Responsive TV Controls */
-@media (max-width: 768px) {
-  .tv-controls {
-    bottom: 25px;
-    right: 10px;
-    width: 260px;
-    gap: 10px;
-    padding: 8px 12px;
+/* ══════════════════════════════════════════════════════════════════
+   RESPONSIVE BREAKPOINTS
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Tablet / medium desktop ──────────────────────────────────────── */
+@media (min-width: 769px) and (max-width: 1200px) {
+  .tv-container {
+    width: min(85vw, 1100px);
+    left: 32%;
+    --screen-w:   42%;
+    --screen-rot: 5.1deg;
   }
-  
+
+  .now-playing-popup {
+    width: 280px;
+    font-size: 0.84rem;
+  }
+
+  .tv-controls {
+    width: 260px;
+  }
+}
+
+/* iPad portrait ─────────────────────────────────────────────────── */
+@media (min-width: 768px) and (max-width: 1024px) {
+  .tv-container {
+    --screen-w:   41%;
+    --screen-rot: 5.0deg;
+  }
+}
+
+/* Mobile ≤768px — vertical stack ───────────────────────────────────
+   Everything switches to in-flow. TV → card → controls stacked.
+   The screen overlay % values stay the same because they are always
+   relative to the rendered TV image, not the viewport.              */
+@media (max-width: 768px) {
+  .background-container {
+    height: auto;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 72px 14px 32px; /* top clears navbar; bottom breathing room */
+    box-sizing: border-box;
+  }
+
+  /* TV: relative so it flows with siblings */
+  .tv-container {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    transform: none;
+    width: min(96vw, 440px);
+    margin: 0 auto;
+    /* Screen % vars unchanged — still accurate relative to the img */
+  }
+
+  /* Info card: in-flow, full container width */
+  .now-playing-popup {
+    position: relative;
+    top: auto;
+    right: auto;
+    width: 100%;
+    max-width: 440px;
+    max-height: none;
+    margin: 14px auto 0;
+    animation: none; /* no translateX slide-in — would go off-screen */
+    padding: 16px;
+    font-size: 0.84rem;
+  }
+
+  .now-playing-popup h2 {
+    font-size: 1rem;
+  }
+
+  /* Controls: in-flow, centered pill */
+  .tv-controls {
+    position: relative;
+    bottom: auto;
+    right: auto;
+    width: min(96vw, 300px);
+    margin: 14px auto 0;
+    padding: 8px 14px;
+    gap: 10px;
+  }
+
   .tv-btn {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     font-size: 13px;
   }
-  
+
   .project-indicator {
     font-size: 11px;
-    min-width: 45px;
+    min-width: 44px;
     padding: 4px 8px;
   }
 }
 
+/* Small phones ≤480px ──────────────────────────────────────────── */
 @media (max-width: 480px) {
-  .tv-controls {
-    bottom: 20px;
-    right: 8px;
-    width: 220px;
-    gap: 8px;
-    padding: 6px 10px;
+  .background-container {
+    padding: 65px 10px 24px;
   }
-  
+
+  .tv-container {
+    width: min(98vw, 360px);
+    --screen-w: 43%;
+  }
+
+  .now-playing-popup {
+    padding: 14px;
+    font-size: 0.81rem;
+  }
+
+  .now-playing-popup h2 {
+    font-size: 0.95rem;
+  }
+
+  .tv-controls {
+    width: min(98vw, 260px);
+    gap: 8px;
+    padding: 7px 10px;
+  }
+
   .tv-btn {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     font-size: 12px;
   }
-  
+
   .project-indicator {
     font-size: 10px;
-    min-width: 40px;
-    padding: 3px 6px;
+    min-width: 38px;
   }
 }
 
+/* Very small phones ≤360px ─────────────────────────────────────── */
 @media (max-width: 360px) {
-  .tv-controls {
-    bottom: 15px;
-    right: 5px;
-    width: 200px;
-    gap: 6px;
-    padding: 5px 8px;
+  .background-container {
+    padding: 60px 8px 20px;
   }
-  
+
+  .tv-container {
+    width: 100%;
+    --screen-w: 44%;
+  }
+
+  .now-playing-popup {
+    padding: 12px;
+    font-size: 0.78rem;
+  }
+
+  .tv-controls {
+    width: 100%;
+    gap: 6px;
+    padding: 6px 8px;
+  }
+
   .tv-btn {
-    width: 26px;
-    height: 26px;
+    width: 28px;
+    height: 28px;
     font-size: 11px;
   }
-  
+
   .project-indicator {
     font-size: 9px;
     min-width: 35px;

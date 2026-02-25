@@ -129,6 +129,32 @@
   width: 100%;
 }
 
+/* Resume CTA button — distinct from nav links */
+.navbar-resume-btn {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 0.88rem;
+  letter-spacing: 0.4px;
+  color: #000;
+  background: #FFD700;
+  padding: 0.45rem 1rem;
+  border-radius: 20px;
+  border: 2px solid #FFD700;
+  transition: all 0.25s ease;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.35);
+}
+
+.navbar-resume-btn:hover {
+  background: transparent;
+  color: #FFD700;
+  box-shadow: 0 4px 16px rgba(255, 215, 0, 0.45);
+  transform: translateY(-1px);
+}
+
 /* Mobile Menu Toggle */
 .mobile-menu-toggle {
   display: none;
@@ -209,6 +235,25 @@
   color: #FFD700;
   background: rgba(255, 215, 0, 0.15);
   border-left: 4px solid #FFD700;
+}
+
+/* Mobile resume button — in the dropdown menu */
+.mobile-resume-btn {
+  display: block;
+  padding: 1rem 2rem;
+  color: #FFD700;
+  text-decoration: none;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  letter-spacing: 0.4px;
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  transition: all 0.3s ease;
+}
+
+.mobile-resume-btn:hover {
+  background: rgba(255, 215, 0, 0.1);
+  padding-left: 2.5rem;
 }
 
 /* Animations */

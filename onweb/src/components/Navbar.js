@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { RESUME_PATH, RESUME_LAST_UPDATED } from '../config/resumeConfig';
 import '../styles/Navbar.css';
 
 const Navbar = () => {
@@ -57,14 +58,23 @@ const Navbar = () => {
             <span className="link-text">Projects</span>
             <span className="link-underline"></span>
           </Link>
-          <Link 
-            className={`navbar-link ${location.pathname === '/contact' ? 'active' : ''}`} 
+          <Link
+            className={`navbar-link ${location.pathname === '/contact' ? 'active' : ''}`}
             to="/contact"
             onClick={closeMobileMenu}
           >
             <span className="link-text">Contact</span>
             <span className="link-underline"></span>
           </Link>
+          <a
+            className="navbar-resume-btn"
+            href={RESUME_PATH}
+            target="_blank"
+            rel="noopener noreferrer"
+            title={`Last updated: ${RESUME_LAST_UPDATED}`}
+          >
+            Resume ↗
+          </a>
         </div>
 
         <button 
@@ -100,13 +110,22 @@ const Navbar = () => {
         >
           Projects
         </Link>
-        <Link 
-          className={`mobile-link ${location.pathname === '/contact' ? 'active' : ''}`} 
+        <Link
+          className={`mobile-link ${location.pathname === '/contact' ? 'active' : ''}`}
           to="/contact"
           onClick={closeMobileMenu}
         >
           Contact
         </Link>
+        <a
+          className="mobile-resume-btn"
+          href={RESUME_PATH}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={closeMobileMenu}
+        >
+          Resume ↗
+        </a>
       </div>
     </nav>
   );

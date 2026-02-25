@@ -189,6 +189,95 @@
   animation: pulse 4s ease-in-out infinite;
 }
 
+/* ── Current Research standalone block ─────────────────────────── */
+.current-research-standalone {
+  position: relative;
+  z-index: 10;
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  padding: 0 1rem;
+}
+
+.current-research-card {
+  background: rgba(230, 240, 255, 0.65);
+  backdrop-filter: blur(10px);
+  border: 2px solid #4169E1;
+  border-radius: 10px;
+  padding: 1.6rem 2rem;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.12);
+  transform: rotate(0.8deg);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  animation: sway 6s ease-in-out infinite;
+}
+
+.current-research-card:hover {
+  transform: rotate(0deg) scale(1.01);
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.18);
+}
+
+.current-research-card h3 {
+  font-size: 1.4rem;
+  color: #1a1a2e;
+  margin: 0 0 0.25rem;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+.current-research-label {
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #4169E1;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+  font-family: 'Comic Sans MS', cursive;
+}
+
+.current-research-body p {
+  margin: 0 0 0.85rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: #1a1a2e;
+}
+
+.research-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 0.5rem;
+}
+
+.research-chips span {
+  background: rgba(65, 105, 225, 0.12);
+  border: 1px solid rgba(65, 105, 225, 0.35);
+  color: #1a1a6e;
+  border-radius: 20px;
+  padding: 0.28rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  font-family: 'Courier New', monospace;
+  transition: background 0.2s ease;
+}
+
+.research-chips span:hover {
+  background: rgba(65, 105, 225, 0.25);
+}
+
+@media (max-width: 768px) {
+  .current-research-card {
+    padding: 1.2rem 1.4rem;
+    transform: rotate(0deg);
+  }
+
+  .current-research-card h3 {
+    font-size: 1.2rem;
+  }
+
+  .current-research-body p {
+    font-size: 0.88rem;
+  }
+}
+
 /* Education and Skills Container */
 .education-skills-container {
   display: flex;
@@ -379,9 +468,17 @@
 .resume-title {
   font-size: 2rem;
   color: #4169E1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.25rem;
   font-family: 'Kalam', cursive, 'Comic Sans MS', cursive;
   font-weight: bold;
+}
+
+.resume-last-updated {
+  font-size: 0.8rem;
+  color: #888;
+  margin: 0 0 1.25rem 0;
+  font-style: italic;
+  letter-spacing: 0.3px;
 }
 
 .resume-preview {
