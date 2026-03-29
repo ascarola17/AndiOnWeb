@@ -31,6 +31,8 @@ const isSafe = (msg) => {
 };
 
 const isPortfolioRelated = (msg) => {
+  const m = msg.toLowerCase().trim();
+  if (m.length < 15) return true;
   const allowed = [
     'project',
     'skill',
@@ -59,20 +61,31 @@ const isPortfolioRelated = (msg) => {
     'who',
     'what',
     'how',
-    'where',
-    'background',
-    'research',
     'github',
-    'linkedin',
+    'hello',
+    'hi',
+    'hey',
+    'thanks',
+    'cool',
+    'nice',
+    'tell me',
+    'show',
   ];
-  const m = msg.toLowerCase();
   return allowed.some((word) => m.includes(word));
 };
 
+const offTopicResponses = [
+  'Stick to the portfolio stuff — ask me about my projects or skills 🌊',
+  "That's not really my lane — I'm here to talk about Andi's work 🧽",
+  'Nice try! Ask me something about my projects or background instead 🔒',
+  'I only know Andi things — try asking about skills or experience 🤙',
+];
+
+const pickOffTopicResponse = () =>
+  offTopicResponses[Math.floor(Math.random() * offTopicResponses.length)];
+
 const UNSAFE_REPLY =
   "That's not something I share publicly — ask me about my projects or skills instead 🌊";
-const PORTFOLIO_SCOPE_REPLY =
-  "I can only answer questions about Andi's portfolio, projects, and background 🌊 Try asking about skills, projects, or experience.";
 const SLOW_DOWN_REPLY = "Slow down! I'm just a portfolio bot 🧽";
 const RATE_LIMIT_REPLY =
   "You've asked a lot of questions! Check out my full portfolio or hit the contact page to keep the convo going 👀";
@@ -168,6 +181,7 @@ const AskAndi = () => {
       setInput('');
       setUserSendCount(nextCount);
       burstTimestampsRef.current.push(now);
+      setMessages((prev) => [...prev, { role: 'user', content: trimmed }]);
       scheduleTypingReply(SLOW_DOWN_REPLY, nextCount);
       return;
     }
@@ -177,17 +191,17 @@ const AskAndi = () => {
     setInput('');
     setUserSendCount(nextCount);
 
+    setMessages((prev) => [...prev, { role: 'user', content: trimmed }]);
+
     if (!isSafe(trimmed)) {
       scheduleTypingReply(UNSAFE_REPLY, nextCount);
       return;
     }
 
     if (!isPortfolioRelated(trimmed)) {
-      scheduleTypingReply(PORTFOLIO_SCOPE_REPLY, nextCount);
+      scheduleTypingReply(pickOffTopicResponse(), nextCount);
       return;
     }
-
-    setMessages((prev) => [...prev, { role: 'user', text: trimmed }]);
 
     abortRef.current?.abort();
     const ac = new AbortController();
@@ -272,7 +286,7 @@ const AskAndi = () => {
                 key={`${msg.role}-${i}`}
                 className={msg.role === 'user' ? 'message-user' : 'message-andi'}
               >
-                {msg.text}
+                {msg.content ?? msg.text}
               </div>
             ))}
             {isTyping && (
