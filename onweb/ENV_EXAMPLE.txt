@@ -5,3 +5,7 @@
 REACT_APP_EMAILJS_SERVICE_ID=your_service_id_here
 REACT_APP_EMAILJS_TEMPLATE_ID=your_template_id_here
 REACT_APP_EMAILJS_PUBLIC_KEY=your_public_key_here
+
+# Ask Andi / Anthropic (serverless proxy only — NOT for .env in the repo)
+# Set ANTHROPIC_KEY in the Vercel project dashboard (Settings → Environment Variables).
+# Do not use REACT_APP_* for the API secret.

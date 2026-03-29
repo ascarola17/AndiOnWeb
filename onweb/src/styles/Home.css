@@ -15,6 +15,16 @@
   z-index: 1;
 }
 
+.home-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+  mix-blend-mode: overlay;
+}
+
 /* Background image */
 .bg-img {
   position: absolute;
@@ -102,6 +112,18 @@
   75% { transform: rotate(-0.5deg); }
   100% { transform: rotate(0deg); }
 }
+
+@keyframes jellyfishFloat {
+  0%   { transform: translateY(0px) rotate(0deg); opacity: 0.85; }
+  25%  { transform: translateY(-18px) rotate(3deg); opacity: 1; }
+  50%  { transform: translateY(-8px) rotate(-2deg); opacity: 0.9; }
+  75%  { transform: translateY(-22px) rotate(2deg); opacity: 1; }
+  100% { transform: translateY(0px) rotate(0deg); opacity: 0.85; }
+}
+
+.jellyfish-1 { animation: jellyfishFloat 4s ease-in-out infinite; }
+.jellyfish-2 { animation: jellyfishFloat 5.2s ease-in-out infinite 0.8s; }
+.jellyfish-3 { animation: jellyfishFloat 3.8s ease-in-out infinite 1.5s; }
 
 /* Karen Animations */
 @keyframes karenBounce {

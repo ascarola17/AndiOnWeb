@@ -18,6 +18,10 @@
   animation-fill-mode: forwards;
 }
 
+@media (max-width: 768px) {
+  .bubble { animation-duration: calc(var(--bubble-duration, 1s) * 0.7); }
+}
+
 @keyframes bubbleRise {
   from {
     transform: translateY(0);

@@ -2,12 +2,20 @@
 
 ## Steps to Deploy on Vercel
 
-1. **Make sure you have the `vercel.json` file** (already created) with the following content:
+1. **Make sure you have the `vercel.json` file** (already created). It should:
+   - Declare the **`api/chat.js`** serverless function (with a sensible `maxDuration`).
+   - Use a rewrite so **`/api/*`** is **not** sent to `index.html` (SPA fallback only applies to other paths):
+
 ```json
 {
+  "functions": {
+    "api/chat.js": {
+      "maxDuration": 30
+    }
+  },
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!api/).*)",
       "destination": "/index.html"
     }
   ]
@@ -42,12 +50,16 @@ The contact form uses EmailJS for sending emails. To configure it:
    - The app will use the fallback values if environment variables aren't set
 
 2. **For Vercel Production:**
-   - Go to your Vercel project settings
+   - Go to your Vercel project settings → **Environment Variables**
    - Add these environment variables:
      - `REACT_APP_EMAILJS_SERVICE_ID`
      - `REACT_APP_EMAILJS_TEMPLATE_ID` 
      - `REACT_APP_EMAILJS_PUBLIC_KEY`
+   - For the **Ask Andi** chat (Anthropic proxy in `api/chat.js`), add:
+     - **`ANTHROPIC_KEY`** — your Anthropic API secret (server-side only; do **not** prefix with `REACT_APP_`)
    - Redeploy your project
+
+**Note:** The Ask Andi widget calls **`POST /api/chat`**. That route is implemented by Vercel’s **`api/chat.js`** function. Local **`npm start`** does not run that function; use **`vercel dev`** from the `onweb` folder if you need the chat against a local API, or test chat on the deployed preview/production URL.
 
 ## If deployment still fails:
 

@@ -108,6 +108,27 @@
   box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
 }
 
+.nav-link.active,
+.navbar-link.active {
+  position: relative;
+}
+
+.nav-link.active::after,
+.navbar-link.active::after {
+  content: '🍔';
+  position: absolute;
+  bottom: -18px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.85rem;
+  animation: bounce 1s ease-in-out infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateX(-50%) translateY(0); }
+  50%       { transform: translateX(-50%) translateY(-4px); }
+}
+
 .link-underline {
   position: absolute;
   bottom: 0;

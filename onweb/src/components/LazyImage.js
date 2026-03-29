@@ -1,57 +1,35 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const LazyImage = ({ 
-  src, 
-  alt, 
-  className = '', 
-  ...props 
-}) => {
+const LazyImage = ({ src, alt, className = '', style = {}, ...props }) => {
   const [isInView, setIsInView] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const imgRef = useRef();
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { 
-        threshold: 0.1,
-        rootMargin: '50px' // Start loading 50px before image comes into view
-      }
-    );
-
-    if (imgRef.current) {
-      observer.observe(imgRef.current);
+    if ('loading' in HTMLImageElement.prototype) {
+      setIsInView(true);
+      return;
     }
-
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setIsInView(true); observer.disconnect(); } },
+      { threshold: 0.1, rootMargin: '100px' }
+    );
+    if (imgRef.current) observer.observe(imgRef.current);
     return () => observer.disconnect();
   }, []);
 
-  const handleLoad = () => {
-    setIsLoaded(true);
-  };
-
   return (
-    <div ref={imgRef} className={className} {...props}>
-      {isInView && (
-        <img
-          src={src}
-          alt={alt}
-          onLoad={handleLoad}
-          style={{
-            width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            opacity: isLoaded ? 1 : 0,
-            transition: 'opacity 0.5s ease-in-out'
-          }}
-        />
-      )}
-    </div>
+    <img
+      ref={imgRef}
+      src={isInView ? src : undefined}
+      alt={alt}
+      className={className}
+      loading="lazy"
+      decoding="async"
+      onLoad={() => setIsLoaded(true)}
+      style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 0.4s ease-in-out', ...style }}
+      {...props}
+    />
   );
 };
 
