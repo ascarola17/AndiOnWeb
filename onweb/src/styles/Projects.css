@@ -124,7 +124,7 @@
 
 .portal-window {
   position: absolute;
-  top: 18%;
+  top: 12%;
   left: 34%;
   margin-left: -5%;
   width: min(50vw, 760px);
@@ -490,15 +490,50 @@
 }
 
 @media (max-width: 768px) {
+  .projects-wrapper {
+    overflow-x: hidden;
+    overflow-y: auto;
+    min-height: 100svh;
+    -webkit-overflow-scrolling: touch;
+  }
+
   .lab-stage {
-    transform: translateX(-8%);
+    transform: none;
+    min-height: 0;
+    overflow: visible;
+  }
+
+  .lab-stage-parallax {
+    min-height: 0;
+  }
+
+  .background-container {
+    position: relative;
+    min-height: 100svh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding:
+      max(8px, env(safe-area-inset-top, 0px))
+      max(10px, env(safe-area-inset-right, 0px))
+      max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px))
+      max(10px, env(safe-area-inset-left, 0px));
+    gap: 0.65rem;
+    overflow: visible;
+    box-sizing: border-box;
   }
 
   .portal-window {
-    left: 50%;
-    transform: translateX(-50%);
-    top: 22%;
-    width: min(88vw, 720px);
+    position: relative;
+    left: auto !important;
+    top: auto !important;
+    margin-left: 0 !important;
+    transform: none !important;
+    width: min(92vw, 100%);
+    max-width: 520px;
+    flex-shrink: 0;
+    order: 0;
   }
 
   .portal-watermark {
@@ -507,19 +542,82 @@
     bottom: 7%;
   }
 
+  .portal-hud {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    max-width: 36rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+    padding: 0 max(6px, env(safe-area-inset-left, 0px)) 0 max(6px, env(safe-area-inset-right, 0px));
+    box-sizing: border-box;
+    pointer-events: none;
+    order: 0;
+  }
+
+  .hud-title {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: 100%;
+    margin: 0.1rem 0 0.35rem;
+    padding: 0 6px;
+    text-align: center;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  }
+
   .hud-desc {
-    max-width: 60ch;
-    font-size: 0.65rem;
+    position: relative;
+    bottom: auto;
+    left: auto;
+    right: auto;
+    max-width: 100%;
+    width: 100%;
+    margin: 0 0 0.6rem;
+    padding: 0 8px;
+    text-align: center;
+    font-size: clamp(0.72rem, 2.8vw, 0.88rem);
+    line-height: 1.5;
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
   }
 
   .hud-github {
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
+    position: relative;
+    bottom: auto;
+    left: auto !important;
+    right: auto !important;
+    transform: none !important;
+    margin: 0 0 0.35rem;
+    padding: 10px 14px;
     text-align: center;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    box-sizing: border-box;
+    pointer-events: auto;
   }
 
-  .swipe-hint { display: block; }
+  .swipe-hint {
+    display: block;
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
+    margin: 0 auto;
+    padding: 0 10px 4px;
+    text-align: center;
+    max-width: 22rem;
+    line-height: 1.35;
+    order: 1;
+  }
 
   .formula-droplet {
     width: 16px;
@@ -527,14 +625,23 @@
   }
 
   .formula-rail {
+    position: relative;
+    left: auto;
+    bottom: auto;
+    transform: none;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
-    width: min(220px, 72vw);
-    max-width: min(220px, 72vw);
-    gap: 10px 12px;
+    align-items: flex-start;
+    width: 100%;
+    max-width: min(320px, 94vw);
+    margin: 0.15rem auto 0;
+    padding: 8px 6px max(10px, env(safe-area-inset-bottom, 0px));
+    gap: 10px 11px;
     row-gap: 12px;
+    box-sizing: border-box;
+    order: 2;
   }
 
   .formula-slot {
@@ -546,22 +653,64 @@
 }
 
 @media (max-width: 480px) {
+  .background-container {
+    padding:
+      max(6px, env(safe-area-inset-top, 0px))
+      max(8px, env(safe-area-inset-right, 0px))
+      max(14px, calc(env(safe-area-inset-bottom, 0px) + 10px))
+      max(8px, env(safe-area-inset-left, 0px));
+    gap: 0.55rem;
+  }
+
   .portal-window {
-    top: 24%;
-    width: min(92vw, 520px);
+    width: min(94vw, 100%);
+    max-width: 430px;
   }
-  .hud-title { font-size: 1.2rem; }
+
+  .hud-title {
+    font-size: clamp(1rem, 5vw, 1.35rem);
+    letter-spacing: 1px;
+  }
+
   .hud-desc {
-    font-size: 0.65rem;
-    bottom: clamp(88px, 12vh, 120px);
+    font-size: clamp(0.68rem, 3.4vw, 0.82rem);
+    padding: 0 6px;
   }
+
   .hud-github {
-    bottom: clamp(88px, 12vh, 120px);
-    left: 50%;
-    right: auto;
-    transform: translateX(-50%);
+    font-size: 0.75rem;
+    padding: 10px 12px;
   }
-  .lab-stamp { display: none; }
+
+  .formula-rail {
+    max-width: min(300px, 96vw);
+    gap: 8px 10px;
+    padding-bottom: max(8px, env(safe-area-inset-bottom, 0px));
+  }
+
+  .formula-slot-num {
+    font-size: 0.52rem;
+  }
+
+  .lab-stamp {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+  .hud-title {
+    font-size: 0.95rem;
+  }
+
+  .hud-desc {
+    font-size: 0.66rem;
+  }
+
+  .formula-rail {
+    max-width: 100%;
+    padding-left: 4px;
+    padding-right: 4px;
+  }
 }
 
 .plankton-toast {
@@ -625,6 +774,6 @@
 
 @media (prefers-reduced-motion: reduce) and (max-width: 768px) {
   .lab-stage {
-    transform: translateX(-8%) !important;
+    transform: none !important;
   }
 }

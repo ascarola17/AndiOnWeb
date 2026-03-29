@@ -10,6 +10,31 @@ const GREETING_TEXT =
 
 const API_ERROR_FALLBACK = 'Something glitched in the lab — try again 🧪';
 
+const knowledge = {
+  projects:
+    "I build a mix of AI, computer vision, and real-world software projects. A lot of my work sits at the intersection of research and engineering, like fiber orientation analysis for ceramic micrographs, AI secretary workflows, and tools that turn messy data into something useful.",
+  skills:
+    "My strongest skills are in Python, JavaScript, AI workflows, computer vision, and full-stack building. I'm comfortable going from idea to working prototype, whether that means training models, building FastAPI apps, wiring up databases, or deploying systems with Docker.",
+  internship:
+    "I've done research-heavy work through UTEP and the Keck Center, where I've contributed software and AI work tied to real engineering problems. I'm especially interested in internships and roles where I can apply AI, vision, automation, or product thinking to something that actually matters.",
+  resume:
+    "My resume reflects a blend of software engineering, applied AI, research, and startup-minded building. I like showing projects that prove I can code, think through ambiguity, and ship things that connect technical work to real outcomes.",
+  contact:
+    "You can reach out if you want to talk about internships, research, startups, or just something cool you saw on my portfolio. I'm always open to genuine conversations, especially around AI, software, and building interesting things.",
+  school:
+    "I'm at UTEP in El Paso studying computer science, and I recently switched my master's focus to AI. That shift felt natural because a lot of the work I care about most already lives in machine learning, automation, and intelligent systems.",
+  spongebob:
+    "Yes, the SpongeBob section is intentional. I like having some personality in my portfolio because I'm serious about my work, but I'm not trying to sound like a robot while doing it.",
+  about:
+    "I'm Andi, a builder who likes turning ambitious ideas into real systems. A lot of my work comes from curiosity, but I care just as much about execution, polish, and making sure what I build is actually useful.",
+  hobbies:
+    "Outside of coding, I'm into the gym, content ideas, startup conversations, and thinking through big-picture life stuff. I also like photography, creative projects, and anything that mixes ambition with personality.",
+  experience:
+    "My experience spans research, software development, AI experimentation, and technical problem-solving across different kinds of projects. I've worked on things like computer vision pipelines, embedded-style systems, backend tools, and startup concepts, so I'm used to learning fast and figuring things out.",
+  default:
+    "I'm probably the best source here if you want to know what I've built, what I'm into, or where I'm headed. Ask me about projects, AI, school, experience, or anything on the site and I'll keep it real.",
+};
+
 const isSafe = (msg) => {
   const blocked = [
     'salary',
@@ -58,6 +83,8 @@ const isPortfolioRelated = (msg) => {
     'python',
     'react',
     'hobby',
+    'hobbies',
+    'photography',
     'about',
     'who',
     'what',
@@ -99,7 +126,7 @@ async function fetchChatReply(userMessage, signal) {
     method: 'POST',
     signal,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ message: userMessage }),
+    body: JSON.stringify({ message: userMessage, knowledge }),
   });
 
   const data = await response.json().catch(() => ({}));

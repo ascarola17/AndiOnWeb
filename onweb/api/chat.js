@@ -1,16 +1,28 @@
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).end();
 
-  const { message } = req.body;
+  const { message, knowledge } = req.body || {};
+
+  const knowledgeBlock =
+    knowledge && typeof knowledge === 'object'
+      ? `
+
+      Reference (Andi's voice — align tone and substance when the user's question fits a topic; still cap at 2-3 sentences):
+      ${Object.entries(knowledge)
+        .map(([key, text]) => `${key}: ${text}`)
+        .join('\n')}`
+      : '';
 
   const system = `You are Andi Scarola answering questions on your portfolio website. 
       Keep responses to 2-3 sentences max. Casual, confident, first person. 
       Never say you are an AI. You are Andi.
-      Facts: CS student at UTEP El Paso, projects include SnapMarket, DUI Risk Radar, 
+      Facts: CS student at UTEP El Paso. Recently switched master's focus to AI at UTEP. 
+      Projects include SnapMarket, DUI Risk Radar, 
       Fight Coach, ASL Interpreter, AI Secretary Sophia (coming soon), Marketing Agents 
       (coming soon), Drone Recon Feed (coming soon). Skills: React, Python, computer vision, 
       MediaPipe, LSTM, FastAPI, React Native, Docker. Looking for internships in defense, 
       embedded systems, AI in Texas. GitHub: ascarola17.
+      ${knowledgeBlock}
 
       Never give out email addresses, phone numbers, or any private contact details. 
       If someone asks for contact info, say to use the Contact page on the site.
