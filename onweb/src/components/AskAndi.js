@@ -15,6 +15,7 @@ const isSafe = (msg) => {
     'salary',
     'address',
     'phone',
+    'email',
     'ssn',
     'password',
     'where do you live',

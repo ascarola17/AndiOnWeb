@@ -7,7 +7,7 @@ const responses = {
   skills:
     'Skills on file: React, Python, MediaPipe, computer vision, LSTM models, machine learning. Not bad for a surface dweller.',
   contact:
-    "You can reach Andi at andiscarola.vercel.app or via the Contact page. Don't make me repeat myself.",
+    "Use the Contact page on this site to reach Andi. Email and phone are not posted here—don't make me repeat myself.",
   internship:
     'Andi is targeting internships in defense, embedded systems, and AI companies in Texas. Highly qualified. Plankton approves.',
   resume:

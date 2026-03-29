@@ -1,9 +1,8 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import LazyImage from '../components/LazyImage';
 import '../styles/About.css';
-
-// Import all images
+import aboutBackgroundPng from '../images/about.png';
 import meImage from '../images/Me.png';
 import keckImage from '../images/keck.JPG';
 import keckPeopleImage from '../images/keck-people.jpg';
@@ -13,9 +12,14 @@ import funnyGymImage from '../images/FunnyGym.JPG';
 import friendsImage from '../images/Friends.JPG';
 import laserTagImage from '../images/LaserTag.JPG';
 import pinballImage from '../images/Pinball.JPG';
-import fiveKImage from '../images/5k.JPG'; 
+import fiveKImage from '../images/5k.JPG';
+
+const publicUrl = process.env.PUBLIC_URL || '';
+const resumePdfUrl = `${publicUrl}/AndiScarola_Resume.pdf`;
 
 const About = () => {
+  const [aboutBgLoaded, setAboutBgLoaded] = useState(false);
+
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll('.reveal'));
     const observer = new IntersectionObserver(
@@ -43,9 +47,25 @@ const About = () => {
   return (
     <div className="about-container">
       <BubbleTransition textId="aboutText" delay={3000} />
-      
-      {/* About Background Image */}
-      <div className="about-background"></div>
+
+      <img
+        className="about-bg-img"
+        src={`${publicUrl}/images/about.webp`}
+        alt=""
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+        onLoad={() => setAboutBgLoaded(true)}
+        onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = aboutBackgroundPng;
+          setAboutBgLoaded(true);
+        }}
+        style={{
+          opacity: aboutBgLoaded ? 1 : 0,
+          transition: 'opacity 0.4s ease-in-out',
+        }}
+      />
       
       {/* Clean & Sleek About Me Section */}
       
@@ -349,21 +369,21 @@ const About = () => {
             <h3 className="resume-title">My Resume</h3>
             <div className="resume-preview">
               <iframe 
-                src="/AndiScarola_Resume.pdf#toolbar=0&navpanes=0&scrollbar=0"
+                src={`${resumePdfUrl}#toolbar=0&navpanes=0&scrollbar=0`}
                 className="resume-iframe"
                 title="Resume Preview"
               />
             </div>
             <div className="resume-actions">
               <a 
-                href="/AndiScarola_Resume.pdf" 
+                href={resumePdfUrl} 
                 download="AndiScarola_Resume.pdf"
                 className="download-button"
               >
                 Download Resume
               </a>
               <a 
-                href="/AndiScarola_Resume.pdf" 
+                href={resumePdfUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="view-button"
@@ -371,6 +391,9 @@ const About = () => {
                 View Full Size
               </a>
             </div>
+            <p className="resume-contact-note" role="note">
+              📧 Email &amp; phone available upon request
+            </p>
           </div>
         </div>
       </div>

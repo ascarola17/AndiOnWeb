@@ -189,6 +189,11 @@ const Contact = () => {
       {/* Contact Info */}
       <div className="contact-info reveal">
         <h3>Other Ways to Reach Me</h3>
+        <p className="contact-direct-hint">
+          <span className="contact-direct-label">Email:</span> Available upon request
+          <br />
+          <span className="contact-direct-label">Phone:</span> Available upon request
+        </p>
         <div className="contact-methods">
           <a 
             href="https://www.linkedin.com/in/andi-scarola/" 

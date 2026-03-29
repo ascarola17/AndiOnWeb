@@ -204,6 +204,18 @@
   font-weight: bold;
 }
 
+.contact-direct-hint {
+  font-size: 0.9rem;
+  color: rgba(44, 62, 80, 0.65);
+  line-height: 1.6;
+  margin: 0 0 1.25rem;
+}
+
+.contact-direct-label {
+  font-weight: 600;
+  color: rgba(44, 62, 80, 0.85);
+}
+
 .contact-methods {
   display: flex;
   justify-content: center;

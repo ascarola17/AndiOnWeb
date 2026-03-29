@@ -10,18 +10,17 @@
   padding: 6rem 1rem 8rem;
 }
 
-/* About Background Image */
-.about-background {
+/* About background (full-bleed <img>, same idea as Home .bg-img) */
+.about-bg-img {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-image: url('../images/about.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  object-fit: cover;
+  object-position: center;
   z-index: -1;
+  pointer-events: none;
 }
 
 /* About Me and My Why Row */
@@ -415,6 +414,14 @@
   justify-content: center;
   margin-top: 1.5rem;
   flex-wrap: wrap;
+}
+
+.resume-contact-note {
+  width: 100%;
+  margin: 0.75rem 0 0;
+  font-size: 0.85rem;
+  color: rgba(0, 0, 0, 0.5);
+  line-height: 1.4;
 }
 
 .download-button,

@@ -1,5 +1,5 @@
 /**
- * Converts Home hero PNGs to WebP in public/images/ for preload + faster LCP.
+ * Converts Home hero + About background PNGs to WebP in public/images/ for preload + faster LCP.
  * Run: npm run build:images
  * Requires: npm install sharp --save-dev
  */
@@ -22,7 +22,7 @@ const outDir = path.join(root, 'public', 'images');
 
 async function main() {
   fs.mkdirSync(outDir, { recursive: true });
-  const files = ['bm.png', 'AndiBob.png', 'Karen.png'];
+  const files = ['bm.png', 'AndiBob.png', 'Karen.png', 'about.png'];
   for (const f of files) {
     const inp = path.join(srcDir, f);
     if (!fs.existsSync(inp)) {
