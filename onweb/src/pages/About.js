@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import LazyImage from '../components/LazyImage';
 import '../styles/About.css';
@@ -16,9 +16,57 @@ import fiveKImage from '../images/5k.JPG';
 
 const publicUrl = process.env.PUBLIC_URL || '';
 const resumePdfUrl = `${publicUrl}/AndiScarola_Resume.pdf`;
+const aboutWebp = (stem) => `${publicUrl}/images/${stem}.webp`;
+
+const CAROUSEL_SLIDES = [
+  {
+    stem: 'climb',
+    src: climbImage,
+    alt: 'Rock Climbing',
+    caption: "Sandy's Rock Wall",
+    photoClass: 'climbing-photo',
+  },
+  {
+    stem: 'funnygym',
+    src: funnyGymImage,
+    alt: 'Funny Gym',
+    caption: 'Gym Shenanigans',
+    photoClass: 'funny-gym-photo',
+  },
+  {
+    stem: 'friends',
+    src: friendsImage,
+    alt: 'Friends',
+    caption: 'Bikini Bottom Friends',
+    photoClass: 'friends-photo',
+  },
+  {
+    stem: 'lasertag',
+    src: laserTagImage,
+    alt: 'Laser Tag',
+    caption: 'Jellyfish Fields',
+    photoClass: 'laser-tag-photo',
+  },
+  {
+    stem: 'pinball',
+    src: pinballImage,
+    alt: 'Pinball',
+    caption: 'Goo Lagoon Arcade',
+    photoClass: 'pinball-photo',
+  },
+  {
+    stem: '5k',
+    src: fiveKImage,
+    alt: '5K Run',
+    caption: 'Goo Lagoon 5K',
+    photoClass: 'fivek-photo',
+  },
+];
 
 const About = () => {
   const [aboutBgLoaded, setAboutBgLoaded] = useState(false);
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const carouselContainerRef = useRef(null);
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll('.reveal'));
@@ -44,6 +92,44 @@ const About = () => {
     document.querySelectorAll('.fade-in-section').forEach(el => observer.observe(el));
     return () => observer.disconnect();
   }, []);
+
+  useEffect(() => {
+    const container = carouselContainerRef.current;
+    if (!container) return;
+    const slides = container.querySelectorAll('[data-carousel-track-index]');
+    if (!slides.length) return;
+
+    const pickBest = () => {
+      const cR = container.getBoundingClientRect();
+      let bestLogical = 0;
+      let bestOverlap = -1;
+      slides.forEach((el) => {
+        const logical = Number(el.dataset.carouselTrackIndex) % CAROUSEL_SLIDES.length;
+        const r = el.getBoundingClientRect();
+        const w = Math.max(0, Math.min(r.right, cR.right) - Math.max(r.left, cR.left));
+        const h = Math.max(0, Math.min(r.bottom, cR.bottom) - Math.max(r.top, cR.top));
+        const overlap = w * h;
+        if (overlap > bestOverlap) {
+          bestOverlap = overlap;
+          bestLogical = logical;
+        }
+      });
+      if (bestOverlap > 0) setCurrentSlide(bestLogical);
+    };
+
+    const observer = new IntersectionObserver(pickBest, {
+      root: container,
+      threshold: [0, 0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 1],
+    });
+    slides.forEach((el) => observer.observe(el));
+    pickBest();
+    const id = window.setInterval(pickBest, 250);
+    return () => {
+      window.clearInterval(id);
+      observer.disconnect();
+    };
+  }, []);
+
   return (
     <div className="about-container">
       <BubbleTransition textId="aboutText" delay={3000} />
@@ -95,8 +181,9 @@ const About = () => {
             {/* Sticky Polaroid with Me image */}
             <div className="me-polaroid">
               <div className="me-photo-placeholder">
-                <LazyImage 
-                  src={meImage} 
+                <LazyImage
+                  webpSrc={aboutWebp('me')}
+                  src={meImage}
                   alt="Andi Danielle Scarola"
                   className="me-image"
                 />
@@ -127,7 +214,11 @@ const About = () => {
         <div className="content-row reveal">
           <div className="photo-item polaroid">
             <div className="photo-placeholder keck-photo">
-              <LazyImage src={keckImage} alt="Keck Center Building" />
+              <LazyImage
+                webpSrc={aboutWebp('keck')}
+                src={keckImage}
+                alt="Keck Center Building"
+              />
             </div>
             <p className="photo-caption">The Keck</p>
           </div>
@@ -170,7 +261,11 @@ const About = () => {
         <div className="content-row reveal">
           <div className="photo-item polaroid">
             <div className="photo-placeholder keck-people-photo">
-              <LazyImage src={keckPeopleImage} alt="Keck People" />
+              <LazyImage
+                webpSrc={aboutWebp('keck-people')}
+                src={keckPeopleImage}
+                alt="Keck People"
+              />
             </div>
             <p className="photo-caption">Keck's Finest</p>
           </div>
@@ -232,7 +327,11 @@ const About = () => {
           
           <div className="photo-item polaroid">
             <div className="photo-placeholder gym-photo">
-              <LazyImage src={gymImage} alt="Gym Workout" />
+              <LazyImage
+                webpSrc={aboutWebp('gym')}
+                src={gymImage}
+                alt="Gym Workout"
+              />
             </div>
             <p className="photo-caption">My Happy Place</p>
           </div>
@@ -245,117 +344,41 @@ const About = () => {
           <div className="carousel-title-container">
             <h3 className="carousel-title">What’s Been Brewing</h3>
           </div>
-          <div className="carousel-container">
+          <div className="carousel-container" ref={carouselContainerRef}>
             <div className="carousel-track">
-              {/* First set of photos */}
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder climbing-photo">
-                    <LazyImage src={climbImage} alt="Rock Climbing" />
-                  </div>
-                  <p className="photo-caption">Sandy's Rock Wall</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder funny-gym-photo">
-                    <LazyImage src={funnyGymImage} alt="Funny Gym" />
-                  </div>
-                  <p className="photo-caption">Gym Shenanigans</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder friends-photo">
-                    <LazyImage src={friendsImage} alt="Friends" />
-                  </div>
-                  <p className="photo-caption">Bikini Bottom Friends</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder laser-tag-photo">
-                    <LazyImage src={laserTagImage} alt="Laser Tag" />
-                  </div>
-                  <p className="photo-caption">Jellyfish Fields</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder pinball-photo">
-                    <LazyImage src={pinballImage} alt="Pinball" />
-                  </div>
-                  <p className="photo-caption">Goo Lagoon Arcade</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder fivek-photo">
-                    <LazyImage src={fiveKImage} alt="5K Run" />
-                  </div>
-                  <p className="photo-caption">Goo Lagoon 5K</p>
-                </div>
-              </div>
-              
-              {/* Duplicate set for seamless loop */}
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder climbing-photo">
-                    <LazyImage src={climbImage} alt="Rock Climbing" />
-                  </div>
-                  <p className="photo-caption">Sandy's Rock Wall</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder funny-gym-photo">
-                    <LazyImage src={funnyGymImage} alt="Funny Gym" />
-                  </div>
-                  <p className="photo-caption">Gym Shenanigans</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder friends-photo">
-                    <LazyImage src={friendsImage} alt="Friends" />
-                  </div>
-                  <p className="photo-caption">Bikini Bottom Friends</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder laser-tag-photo">
-                    <LazyImage src={laserTagImage} alt="Laser Tag" />
-                  </div>
-                  <p className="photo-caption">Jellyfish Fields</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder pinball-photo">
-                    <LazyImage src={pinballImage} alt="Pinball" />
-                  </div>
-                  <p className="photo-caption">Goo Lagoon Arcade</p>
-                </div>
-              </div>
-              
-              <div className="carousel-slide">
-                <div className="photo-item polaroid">
-                  <div className="photo-placeholder fivek-photo">
-                    <LazyImage src={fiveKImage} alt="5K Run" />
-                  </div>
-                  <p className="photo-caption">Goo Lagoon 5K</p>
-                </div>
-              </div>
+              {[0, 1].flatMap((setIdx) =>
+                CAROUSEL_SLIDES.map((slide, i) => {
+                  const index = setIdx * CAROUSEL_SLIDES.length + i;
+                  return (
+                    <div
+                      key={`carousel-${setIdx}-${slide.stem}`}
+                      className="carousel-slide"
+                      data-carousel-track-index={index}
+                    >
+                      <div className="photo-item polaroid">
+                        <div className={`photo-placeholder ${slide.photoClass}`}>
+                          <LazyImage
+                            webpSrc={aboutWebp(slide.stem)}
+                            src={slide.src}
+                            alt={slide.alt}
+                            loading={
+                              index % CAROUSEL_SLIDES.length === currentSlide
+                                ? 'eager'
+                                : 'lazy'
+                            }
+                            fetchPriority={
+                              index % CAROUSEL_SLIDES.length === currentSlide
+                                ? 'high'
+                                : 'auto'
+                            }
+                          />
+                        </div>
+                        <p className="photo-caption">{slide.caption}</p>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
             </div>
           </div>
         </div>
