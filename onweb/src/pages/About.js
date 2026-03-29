@@ -190,6 +190,7 @@ const CAROUSEL_SLIDES = [
     src: redBull,
     caption: 'Fueled up for another double shift 🥤',
     photoClass: 'carousel-life-photo',
+    className: 'redbull-slide',
   },
   {
     stem: 'rockclimb',
@@ -386,7 +387,7 @@ const About = () => {
                   <div className="education-content">
                     <p>• B.S. in Computer Science — UTEP</p>
                     <p>• Minor in Mathematics</p>
-                    <p>• Fast Track M.S. in Software Engineering</p>
+                    <p>• Fast Track M.S. in Artificial Intelligence</p>
                     <p>• GPA: 3.39</p>
                   </div>
                 </div>
@@ -542,7 +543,7 @@ const About = () => {
                   return (
                     <div
                       key={`carousel-${setIdx}-${slide.stem}`}
-                      className="carousel-slide"
+                      className={['carousel-slide', slide.className].filter(Boolean).join(' ')}
                       data-carousel-track-index={index}
                     >
                       <div className="photo-item polaroid">

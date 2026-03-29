@@ -90,8 +90,13 @@
 }
 
 .education-research-keck-left .research-papers-section {
-  margin: 0;
-  max-width: 600px;
+  margin-left: 0;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 0;
+  max-width: 480px;
+  width: 100%;
+  align-self: flex-start;
 }
 
 .education-research-keck-right {
@@ -422,7 +427,7 @@
 
 .carousel-slide .lazy-image-container {
   min-height: 200px;
-  background: linear-gradient(135deg, #f0f0f0 0%, #e0e0e0 100%);
+  background: transparent;
   border-radius: 4px;
   width: 100%;
 }
@@ -662,14 +667,23 @@
 }
 
 /* After .photo-placeholder img + higher specificity so carousel slides (incl. 5k) aren’t overridden */
+.carousel-slide .photo-placeholder {
+  background: transparent;
+}
+
 .carousel-slide img {
   width: 100%;
   height: 220px;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
-  background: #f5f5f5;
+  background: transparent;
   border-radius: 8px;
   transition: opacity 0.5s ease-in-out;
+}
+
+.redbull-slide img {
+  object-fit: contain;
+  background: #f5f5f5;
 }
 
 .keck-photo img,
@@ -762,7 +776,7 @@
 }
 
 .carousel-life-photo {
-  background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+  background: transparent;
   height: 200px;
 }
 
@@ -776,16 +790,20 @@
   border-radius: 8px;
   padding: 1.5rem clamp(1.35rem, 4vw, 2.25rem);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
+  max-width: 480px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   box-sizing: border-box;
-  transform: rotate(1deg);
+  transform: none;
   transform-origin: center center;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  margin: 0 auto 4rem;
-  animation: bounce 3s ease-in-out infinite;
+  margin-left: 0;
+  margin-right: auto;
+  margin-top: 0;
+  margin-bottom: 4rem;
+  align-self: flex-start;
 }
 
 /* Wrapper in About.js: heading + .papers-list + .scholar-link — centered as one block inside the card. */
@@ -803,7 +821,7 @@
 }
 
 .research-papers-section:hover {
-  transform: rotate(0deg) scale(1.05);
+  transform: scale(1.05);
   box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
   background: rgba(173, 216, 230, 0.7);
 }
@@ -1530,9 +1548,23 @@
     min-height: 150px;
   }
 
-  .carousel-slide .photo-placeholder img,
+  .carousel-slide img {
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .redbull-slide img {
+    object-fit: contain;
+  }
+
   .carousel-slide .lazy-image {
     height: 180px;
+  }
+
+  .keck-photo,
+  .keck-people-photo {
+    width: 100%;
+    height: 220px;
   }
   
   .carousel-track {
@@ -1624,6 +1656,11 @@
 
   .research-papers-section {
     padding: 1rem clamp(0.85rem, 3.2vw, 1.2rem);
+  }
+
+  /* Desktop translateX nudge hurts readability on narrow cards */
+  .research-papers-inner {
+    transform: none;
   }
   
   .education-standalone .education-section {

@@ -519,21 +519,18 @@
       max(10px, env(safe-area-inset-right, 0px))
       max(16px, calc(env(safe-area-inset-bottom, 0px) + 12px))
       max(10px, env(safe-area-inset-left, 0px));
-    gap: 0.65rem;
+    gap: 1rem;
     overflow: visible;
     box-sizing: border-box;
   }
 
   .portal-window {
     position: relative;
-    left: auto !important;
-    top: auto !important;
-    margin-left: 0 !important;
-    transform: none !important;
-    width: min(92vw, 100%);
-    max-width: 520px;
-    flex-shrink: 0;
-    order: 0;
+    top: auto;
+    left: auto;
+    transform: none;
+    width: 90vw;
+    margin: 0 auto;
   }
 
   .portal-watermark {
@@ -551,6 +548,7 @@
     flex-direction: column;
     align-items: center;
     flex-shrink: 0;
+    margin-top: 0.35rem;
     padding: 0 max(6px, env(safe-area-inset-left, 0px)) 0 max(6px, env(safe-area-inset-right, 0px));
     box-sizing: border-box;
     pointer-events: none;
@@ -562,7 +560,7 @@
     top: auto;
     left: auto;
     width: 100%;
-    margin: 0.1rem 0 0.35rem;
+    margin: 0.35rem 0 0.35rem;
     padding: 0 6px;
     text-align: center;
     box-sizing: border-box;
@@ -659,12 +657,13 @@
       max(8px, env(safe-area-inset-right, 0px))
       max(14px, calc(env(safe-area-inset-bottom, 0px) + 10px))
       max(8px, env(safe-area-inset-left, 0px));
-    gap: 0.55rem;
+    gap: 0.95rem;
   }
 
   .portal-window {
     width: min(94vw, 100%);
     max-width: 430px;
+    margin-bottom: 0.55rem;
   }
 
   .hud-title {
