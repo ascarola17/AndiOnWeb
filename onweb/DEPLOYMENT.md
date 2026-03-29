@@ -61,6 +61,23 @@ The contact form uses EmailJS for sending emails. To configure it:
 
 **Note:** The Ask Andi widget calls **`POST /api/chat`**. That route is implemented by Vercel’s **`api/chat.js`** function. Local **`npm start`** does not run that function; use **`vercel dev`** from the `onweb` folder if you need the chat against a local API, or test chat on the deployed preview/production URL.
 
+## Home page hero images (WebP)
+
+The home background and character art use **`public/images/*.webp`**, generated from PNGs in **`src/images/`**.
+
+- **Automatic:** `npm run build` runs **`prebuild`**, which executes **`node scripts/convert-home-images.js`** (requires **`sharp`** in `devDependencies`).
+- **Manual only:** `npm run build:images`
+- **One-off CLI (if you prefer not to use the script):**
+  ```bash
+  cd onweb
+  npx sharp-cli --input src/images/bm.png --output public/images/bm.webp
+  npx sharp-cli --input src/images/AndiBob.png --output public/images/AndiBob.webp
+  npx sharp-cli --input src/images/Karen.png --output public/images/Karen.webp
+  ```
+  (Or use any Sharp-based converter; quality ~82 WebP is a good default.)
+
+Commit the generated **`public/images/*.webp`** files if you want preloads to work without running the script on every clone (optional).
+
 ## If deployment still fails:
 
 1. Check the Vercel build logs for specific errors

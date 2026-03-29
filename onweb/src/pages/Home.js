@@ -1,14 +1,18 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import BubbleTransition from '../components/BubbleTransition';
-import LazyImage from '../components/LazyImage';
 import '../styles/Home.css';
-import background from '../images/bm.png';
-import andiCharacter from '../images/AndiBob.png';
-import karenCharacter from '../images/Karen.png';
+import backgroundPng from '../images/bm.png';
+import andiPng from '../images/AndiBob.png';
+import karenPng from '../images/Karen.png';
+
+const publicUrl = process.env.PUBLIC_URL || '';
 
 const Home = () => {
   const navigate = useNavigate();
+  const [bgLoaded, setBgLoaded] = useState(false);
+  const [andiLoaded, setAndiLoaded] = useState(false);
+  const [karenLoaded, setKarenLoaded] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -22,7 +26,21 @@ const Home = () => {
 
   return (
     <div className="home-wrapper">
-      <LazyImage src={background} alt="Bikini Bottom Background" className="bg-img" />
+      <img
+        className="bg-img"
+        src={`${publicUrl}/images/bm.webp`}
+        alt="Bikini Bottom Background"
+        loading="eager"
+        fetchPriority="high"
+        decoding="async"
+        onLoad={() => setBgLoaded(true)}
+        onError={(e) => {
+          e.currentTarget.onerror = null;
+          e.currentTarget.src = backgroundPng;
+          setBgLoaded(true);
+        }}
+        style={{ opacity: bgLoaded ? 1 : 0, transition: 'opacity 0.4s ease-in-out' }}
+      />
       <BubbleTransition textId="homeText" delay={3000} />
 
       <main>
@@ -42,17 +60,34 @@ const Home = () => {
           </button>
         </div>
 
-        {/* Wrapped characters inside a responsive container */}
         <div className="character-wrapper">
-          <LazyImage
+          <img
             className="home-character"
-            src={andiCharacter}
+            src={`${publicUrl}/images/AndiBob.webp`}
             alt="Andi - character"
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setAndiLoaded(true)}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = andiPng;
+              setAndiLoaded(true);
+            }}
+            style={{ opacity: andiLoaded ? 1 : 0, transition: 'opacity 0.4s ease-in-out' }}
           />
-          <LazyImage
+          <img
             className="karen-img"
-            src={karenCharacter}
+            src={`${publicUrl}/images/Karen.webp`}
             alt="Karen from SpongeBob"
+            loading="lazy"
+            decoding="async"
+            onLoad={() => setKarenLoaded(true)}
+            onError={(e) => {
+              e.currentTarget.onerror = null;
+              e.currentTarget.src = karenPng;
+              setKarenLoaded(true);
+            }}
+            style={{ opacity: karenLoaded ? 1 : 0, transition: 'opacity 0.4s ease-in-out' }}
           />
         </div>
       </main>

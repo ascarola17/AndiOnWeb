@@ -2,6 +2,8 @@ import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import '../styles/AskAndi.css';
 
 const TYPING_MS_UNSAFE = 800;
+const BURST_WINDOW_MS = 10000;
+const BURST_MAX_BEFORE_SLOW = 3;
 
 const GREETING_TEXT =
   "Hey! I'm Andi 🌊 Ask me about projects, the stack, internships, or why this site is SpongeBob-themed.";
@@ -28,13 +30,55 @@ const isSafe = (msg) => {
   return !blocked.some((word) => msg.toLowerCase().includes(word));
 };
 
+const isPortfolioRelated = (msg) => {
+  const allowed = [
+    'project',
+    'skill',
+    'intern',
+    'job',
+    'hire',
+    'school',
+    'utep',
+    'resume',
+    'contact',
+    'experience',
+    'build',
+    'code',
+    'tech',
+    'stack',
+    'andi',
+    'portfolio',
+    'spongebob',
+    'work',
+    'study',
+    'ai',
+    'python',
+    'react',
+    'hobby',
+    'about',
+    'who',
+    'what',
+    'how',
+    'where',
+    'background',
+    'research',
+    'github',
+    'linkedin',
+  ];
+  const m = msg.toLowerCase();
+  return allowed.some((word) => m.includes(word));
+};
+
 const UNSAFE_REPLY =
   "That's not something I share publicly — ask me about my projects or skills instead 🌊";
+const PORTFOLIO_SCOPE_REPLY =
+  "I can only answer questions about Andi's portfolio, projects, and background 🌊 Try asking about skills, projects, or experience.";
+const SLOW_DOWN_REPLY = "Slow down! I'm just a portfolio bot 🧽";
 const RATE_LIMIT_REPLY =
   "You've asked a lot of questions! Check out my full portfolio or hit the contact page to keep the convo going 👀";
 
 const MAX_INPUT = 150;
-const MAX_USER_SENDS = 10;
+const MAX_USER_SENDS = 8;
 
 async function fetchChatReply(userMessage, signal) {
   const response = await fetch('/api/chat', {
@@ -60,6 +104,7 @@ const AskAndi = () => {
   const listRef = useRef(null);
   const typingTimerRef = useRef(null);
   const abortRef = useRef(null);
+  const burstTimestampsRef = useRef([]);
 
   const [open, setOpen] = useState(false);
   const [input, setInput] = useState('');
@@ -91,31 +136,54 @@ const AskAndi = () => {
     scrollToBottom();
   }, [messages, open, isTyping, scrollToBottom]);
 
+  const scheduleTypingReply = useCallback((text, nextCount) => {
+    if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
+    setIsTyping(true);
+    typingTimerRef.current = setTimeout(() => {
+      typingTimerRef.current = null;
+      setIsTyping(false);
+      setMessages((prev) => {
+        let next = [...prev, { role: 'andi', text }];
+        if (nextCount >= MAX_USER_SENDS) {
+          next = [...next, { role: 'andi', text: RATE_LIMIT_REPLY }];
+        }
+        return next;
+      });
+      if (nextCount >= MAX_USER_SENDS) setInputDisabled(true);
+    }, TYPING_MS_UNSAFE);
+  }, []);
+
   const send = useCallback(async () => {
     if (inputDisabled || isTyping) return;
     const trimmed = input.trim();
     if (!trimmed || trimmed.length > MAX_INPUT) return;
     if (userSendCount >= MAX_USER_SENDS) return;
 
+    const now = Date.now();
+    burstTimestampsRef.current = burstTimestampsRef.current.filter(
+      (t) => now - t <= BURST_WINDOW_MS
+    );
+    if (burstTimestampsRef.current.length >= BURST_MAX_BEFORE_SLOW) {
+      const nextCount = userSendCount + 1;
+      setInput('');
+      setUserSendCount(nextCount);
+      burstTimestampsRef.current.push(now);
+      scheduleTypingReply(SLOW_DOWN_REPLY, nextCount);
+      return;
+    }
+    burstTimestampsRef.current.push(now);
+
     const nextCount = userSendCount + 1;
     setInput('');
     setUserSendCount(nextCount);
 
     if (!isSafe(trimmed)) {
-      if (typingTimerRef.current) clearTimeout(typingTimerRef.current);
-      setIsTyping(true);
-      typingTimerRef.current = setTimeout(() => {
-        typingTimerRef.current = null;
-        setIsTyping(false);
-        setMessages((prev) => {
-          let next = [...prev, { role: 'andi', text: UNSAFE_REPLY }];
-          if (nextCount >= MAX_USER_SENDS) {
-            next = [...next, { role: 'andi', text: RATE_LIMIT_REPLY }];
-          }
-          return next;
-        });
-        if (nextCount >= MAX_USER_SENDS) setInputDisabled(true);
-      }, TYPING_MS_UNSAFE);
+      scheduleTypingReply(UNSAFE_REPLY, nextCount);
+      return;
+    }
+
+    if (!isPortfolioRelated(trimmed)) {
+      scheduleTypingReply(PORTFOLIO_SCOPE_REPLY, nextCount);
       return;
     }
 
@@ -149,7 +217,7 @@ const AskAndi = () => {
       return next;
     });
     if (nextCount >= MAX_USER_SENDS) setInputDisabled(true);
-  }, [inputDisabled, isTyping, userSendCount, input]);
+  }, [inputDisabled, isTyping, userSendCount, input, scheduleTypingReply]);
 
   const onSubmit = (e) => {
     e.preventDefault();

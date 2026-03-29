@@ -1,6 +1,14 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const LazyImage = ({ src, alt, className = '', style = {}, ...props }) => {
+const LazyImage = ({
+  src,
+  alt,
+  className = '',
+  style = {},
+  loading: loadingProp,
+  fetchPriority,
+  ...props
+}) => {
   const [isInView, setIsInView] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const imgRef = useRef();
@@ -18,13 +26,16 @@ const LazyImage = ({ src, alt, className = '', style = {}, ...props }) => {
     return () => observer.disconnect();
   }, []);
 
+  const loadingAttr = loadingProp ?? 'lazy';
+
   return (
     <img
       ref={imgRef}
       src={isInView ? src : undefined}
       alt={alt}
       className={className}
-      loading="lazy"
+      loading={loadingAttr}
+      fetchPriority={fetchPriority}
       decoding="async"
       onLoad={() => setIsLoaded(true)}
       style={{ opacity: isLoaded ? 1 : 0, transition: 'opacity 0.4s ease-in-out', ...style }}

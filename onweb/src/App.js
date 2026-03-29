@@ -8,6 +8,7 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import Navbar from './components/Navbar'; // Import the Navbar component
 import AskAndi from './components/AskAndi';
+import FirstVisitSplash from './components/FirstVisitSplash';
 import GlobalStyle from './styles/GlobalStyles'; // Global styles
 
 function App() {
@@ -47,6 +48,7 @@ function App() {
 
   return (
     <>
+      <FirstVisitSplash />
       <GlobalStyle />
       <Router>
         <Navbar /> {/* Display the navbar at the top */}

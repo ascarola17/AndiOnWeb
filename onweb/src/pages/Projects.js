@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import '../styles/Projects.css';
+import labBackground from '../images/Bp.png';
 
 const Projects = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
@@ -141,7 +142,10 @@ const Projects = () => {
             transform: `translate3d(${parallax.x}px, ${parallax.y}px, 0) scale(1.02)`,
           }}
         >
-        <div className="background-container">
+        <div
+          className="background-container"
+          style={{ backgroundImage: `url(${labBackground})` }}
+        >
           <div className="ambient-bubbles" aria-hidden="true">
             {Array.from({ length: 12 }).map((_, i) => (
               <span key={i} className={`ambient-bubble b${i % 6}`} />

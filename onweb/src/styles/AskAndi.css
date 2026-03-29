@@ -1,7 +1,8 @@
 .ask-andi-window {
   position: fixed;
   bottom: 80px;
-  right: 20px;
+  left: 20px;
+  right: auto;
   width: 300px;
   height: 380px;
   background: rgba(8, 8, 20, 0.92);
@@ -244,7 +245,8 @@
 .ask-andi-trigger {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  left: 20px;
+  right: auto;
   width: 46px;
   height: 46px;
   border-radius: 50%;
@@ -286,15 +288,16 @@
 
 @media (max-width: 380px) {
   .ask-andi-window {
-    right: 12px;
     left: 12px;
+    right: 12px;
     width: auto;
     bottom: 76px;
     height: min(380px, 58vh);
   }
 
   .ask-andi-trigger {
-    right: 12px;
+    left: 12px;
+    right: auto;
     bottom: 16px;
   }
 }
