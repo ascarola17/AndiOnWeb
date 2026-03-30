@@ -1,14 +1,18 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import '../styles/Projects.css';
-import labBackground from '../images/Bp.png';
+import labBackground from '../images/Bp.jpeg';
 
 const Projects = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
   const [parallax, setParallax] = useState({ x: 0, y: 0 });
   const [lockedToast, setLockedToast] = useState(false);
-  const touchStart = useRef(null);
   const lockedToastTimer = useRef(null);
+  const carouselViewportRef = useRef(null);
+  const activeIndexRef = useRef(0);
+  const pendingEnterRef = useRef(null);
+  const [carouselViewportWidth, setCarouselViewportWidth] = useState(0);
+  const [cardMotionClass, setCardMotionClass] = useState('');
 
   const projects = [
     {
@@ -68,18 +72,109 @@ const Projects = () => {
       classifiedId: 'FILE-0112-DR',
       clearanceLevel: 'TOP SECRET',
       eta: 'FOOTAGE INCOMING',
-    }
+    },
   ];
 
   const currentProject = projects[currentProjectIndex];
+  const n = projects.length;
 
-  const goNext = useCallback(() => {
-    setCurrentProjectIndex((i) => (i + 1) % projects.length);
-  }, [projects.length]);
+  const scrollToIndex = useCallback((index) => {
+    const i = Math.max(0, Math.min(n - 1, index));
+    const root = carouselViewportRef.current;
+    if (!root) return;
+    const w = root.clientWidth;
+    if (w < 1) return;
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    root.scrollTo({ left: i * w, behavior: reduce ? 'auto' : 'smooth' });
+  }, [n]);
 
-  const goPrev = useCallback(() => {
-    setCurrentProjectIndex((i) => (i - 1 + projects.length) % projects.length);
-  }, [projects.length]);
+  const updateActiveFromScroll = useCallback(() => {
+    const root = carouselViewportRef.current;
+    if (!root) return;
+    const w = root.clientWidth;
+    if (w < 1) return;
+    const idx = Math.round(root.scrollLeft / w);
+    setCurrentProjectIndex(Math.max(0, Math.min(n - 1, idx)));
+  }, [n]);
+
+  useLayoutEffect(() => {
+    const root = carouselViewportRef.current;
+    if (!root) return;
+    const measure = () => {
+      const w = Math.round(root.clientWidth);
+      if (w > 0) setCarouselViewportWidth(w);
+    };
+    measure();
+    const id = requestAnimationFrame(measure);
+    const ro = new ResizeObserver(measure);
+    ro.observe(root);
+    return () => {
+      cancelAnimationFrame(id);
+      ro.disconnect();
+    };
+  }, []);
+
+  useLayoutEffect(() => {
+    const root = carouselViewportRef.current;
+    if (!root || carouselViewportWidth < 1) return;
+    root.scrollLeft = activeIndexRef.current * carouselViewportWidth;
+  }, [carouselViewportWidth]);
+
+  useEffect(() => {
+    const root = carouselViewportRef.current;
+    if (!root) return;
+    const onScroll = () => {
+      window.requestAnimationFrame(updateActiveFromScroll);
+    };
+    root.addEventListener('scroll', onScroll, { passive: true });
+    updateActiveFromScroll();
+    window.addEventListener('resize', onScroll, { passive: true });
+    return () => {
+      root.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+    };
+  }, [updateActiveFromScroll]);
+
+  useEffect(() => {
+    activeIndexRef.current = currentProjectIndex;
+  }, [currentProjectIndex]);
+
+  useEffect(() => {
+    const p = pendingEnterRef.current;
+    if (!p) return;
+    if (currentProjectIndex !== p.targetIndex) return;
+    pendingEnterRef.current = null;
+    const reduce =
+      typeof window !== 'undefined' &&
+      window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduce) return;
+    setCardMotionClass(p.dir === 'next' ? 'portal-card--enter-next' : 'portal-card--enter-prev');
+    const id = window.setTimeout(() => setCardMotionClass(''), 300);
+    return () => clearTimeout(id);
+  }, [currentProjectIndex]);
+
+  useEffect(() => {
+    const el = carouselViewportRef.current;
+    if (!el) return;
+    const onKeyDown = (e) => {
+      if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+      e.preventDefault();
+      const i = activeIndexRef.current;
+      if (e.key === 'ArrowLeft') {
+        if (i <= 0) return;
+        pendingEnterRef.current = { targetIndex: i - 1, dir: 'prev' };
+        scrollToIndex(i - 1);
+      } else {
+        if (i >= n - 1) return;
+        pendingEnterRef.current = { targetIndex: i + 1, dir: 'next' };
+        scrollToIndex(i + 1);
+      }
+    };
+    el.addEventListener('keydown', onKeyDown);
+    return () => el.removeEventListener('keydown', onKeyDown);
+  }, [scrollToIndex, n]);
 
   useEffect(() => {
     document.title = currentProject.isComingSoon
@@ -117,19 +212,119 @@ const Projects = () => {
     }, 2600);
   };
 
-  const onTouchStart = (e) => {
-    touchStart.current = e.touches[0].clientX;
+  const goCarouselPrev = () => {
+    if (currentProjectIndex <= 0) return;
+    const t = currentProjectIndex - 1;
+    pendingEnterRef.current = { targetIndex: t, dir: 'prev' };
+    scrollToIndex(t);
   };
 
-  const onTouchEnd = (e) => {
-    if (touchStart.current == null) return;
-    const endX = e.changedTouches[0].clientX;
-    const dx = endX - touchStart.current;
-    touchStart.current = null;
-    if (Math.abs(dx) < 50) return;
-    if (dx < 0) goNext();
-    else goPrev();
+  const goCarouselNext = () => {
+    if (currentProjectIndex >= n - 1) return;
+    const t = currentProjectIndex + 1;
+    pendingEnterRef.current = { targetIndex: t, dir: 'next' };
+    scrollToIndex(t);
   };
+
+  const onDotClick = (index) => {
+    if (projects[index].isComingSoon) flashLockedToast();
+    const cur = currentProjectIndex;
+    if (index !== cur) {
+      pendingEnterRef.current = {
+        targetIndex: index,
+        dir: index > cur ? 'next' : 'prev',
+      };
+    }
+    scrollToIndex(index);
+  };
+
+  const shouldLoadVideo = (index) => {
+    const d = Math.abs(index - currentProjectIndex);
+    return d <= 1;
+  };
+
+  const slideInlineStyle =
+    carouselViewportWidth > 0
+      ? {
+          flex: `0 0 ${carouselViewportWidth}px`,
+          width: carouselViewportWidth,
+          minWidth: carouselViewportWidth,
+        }
+      : undefined;
+
+  const renderProjectSlide = (project, index) => (
+    <article
+      key={`project-slide-${project.title}`}
+      className="projects-carousel-slide"
+      style={slideInlineStyle}
+      data-carousel-index={index}
+      aria-label={`${project.title}, project ${index + 1} of ${n}`}
+    >
+      <div className="portal-card-sway">
+        <div
+          className={[
+            'portal-card',
+            index === currentProjectIndex ? cardMotionClass : '',
+          ].filter(Boolean).join(' ')}
+        >
+        <div
+          className="portal-window"
+          aria-label={`${project.title} monitor`}
+        >
+          <div className="portal-window-screen">
+            {!project.isComingSoon && shouldLoadVideo(index) ? (
+              <iframe
+                className="portal-iframe"
+                src={project.videoUrl}
+                title={project.title}
+                frameBorder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allowFullScreen
+              />
+            ) : !project.isComingSoon ? (
+              <div className="portal-iframe-placeholder" aria-hidden="true" />
+            ) : (
+              <div className="portal-classified">
+                <div className="static-noise" />
+                <div className="static-scanlines" />
+                <div className="portal-classified-text">
+                  <div className="classified-stamp">CLASSIFIED</div>
+                  <p className="portal-classified-desc">{project.description}</p>
+                  <div className="classified-eta">
+                    <span className="status-blink">◉</span> {project.eta}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+          <span className="portal-watermark" aria-hidden="true">
+            PROPERTY OF PLANKTON LABS
+          </span>
+        </div>
+
+        <div className="portal-hud" data-project-slot={String(index)}>
+          <div className="hud-title">{project.title}</div>
+          <div className="portal-hud-row">
+            <div className="hud-desc-note">
+              <span className="hud-desc-tape" aria-hidden="true" />
+              <p className="hud-desc">{project.description}</p>
+            </div>
+            {project.githubLink && !project.isComingSoon && (
+              <a
+                href={project.githubLink}
+                target="_blank"
+                rel="noreferrer"
+                className="hud-github hud-github-pill"
+              >
+                source → github
+              </a>
+            )}
+          </div>
+        </div>
+        </div>
+      </div>
+    </article>
+  );
 
   return (
     <div className="projects-wrapper">
@@ -154,79 +349,123 @@ const Projects = () => {
 
           <p className="lab-stamp" aria-hidden="true">PROPERTY OF PLANKTON LABS</p>
 
-          <div
-            className="portal-window"
-            aria-label="Project monitor — swipe left or right to change project"
-            onTouchStart={onTouchStart}
-            onTouchEnd={onTouchEnd}
-          >
-            {!currentProject.isComingSoon ? (
-              <iframe
-                src={currentProject.videoUrl}
-                title={currentProject.title}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            ) : (
-              <div className="portal-classified">
-                <div className="static-noise" />
-                <div className="static-scanlines" />
-                <div className="portal-classified-text">
-                  <div className="classified-stamp">CLASSIFIED</div>
-                  <p className="portal-classified-desc">{currentProject.description}</p>
-                  <div className="classified-eta">
-                    <span className="status-blink">◉</span> {currentProject.eta}
-                  </div>
-                </div>
+          <div className="projects-carousel-shell">
+            <button
+              type="button"
+              className={[
+                'projects-carousel-arrow',
+                'projects-carousel-arrow--prev',
+                currentProjectIndex <= 0 ? 'is-dimmed' : '',
+              ].filter(Boolean).join(' ')}
+              onClick={goCarouselPrev}
+              disabled={currentProjectIndex <= 0}
+              aria-label="Previous project"
+              aria-disabled={currentProjectIndex <= 0}
+            >
+              <span className="projects-carousel-arrow-inner" aria-hidden="true">
+                <svg
+                  className="projects-carousel-arrow-svg"
+                  viewBox="0 0 56 72"
+                  width="30"
+                  height="40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M40 9C16 34 16 38 40 63"
+                    stroke="currentColor"
+                    strokeWidth="4.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    opacity="0.45"
+                  />
+                  <path
+                    d="M44 14L18 36L44 58"
+                    stroke="currentColor"
+                    strokeWidth="5.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </button>
+
+            <div
+              className="projects-carousel-viewport"
+              ref={carouselViewportRef}
+              tabIndex={0}
+              role="region"
+              aria-label="Project carousel"
+            >
+              <div className="projects-carousel-track">
+                {projects.map((p, i) => renderProjectSlide(p, i))}
               </div>
-            )}
-            <span className="portal-watermark" aria-hidden="true">
-              PROPERTY OF PLANKTON LABS
-            </span>
+            </div>
+
+            <button
+              type="button"
+              className={[
+                'projects-carousel-arrow',
+                'projects-carousel-arrow--next',
+                currentProjectIndex >= n - 1 ? 'is-dimmed' : '',
+              ].filter(Boolean).join(' ')}
+              onClick={goCarouselNext}
+              disabled={currentProjectIndex >= n - 1}
+              aria-label="Next project"
+              aria-disabled={currentProjectIndex >= n - 1}
+            >
+              <span className="projects-carousel-arrow-inner" aria-hidden="true">
+                <svg
+                  className="projects-carousel-arrow-svg"
+                  viewBox="0 0 56 72"
+                  width="30"
+                  height="40"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M16 9C40 34 40 38 16 63"
+                    stroke="currentColor"
+                    strokeWidth="4.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    opacity="0.45"
+                  />
+                  <path
+                    d="M12 14L38 36L12 58"
+                    stroke="currentColor"
+                    strokeWidth="5.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </span>
+            </button>
           </div>
 
-          <div className="portal-hud">
-            <div className="hud-title">{currentProject.title}</div>
-            <div className="hud-desc">{currentProject.description}</div>
-            {currentProject.githubLink && !currentProject.isComingSoon && (
-              <a
-                href={currentProject.githubLink}
-                target="_blank"
-                rel="noreferrer"
-                className="hud-github"
-              >
-                source → github
-              </a>
-            )}
-          </div>
-
-          <div className="formula-rail" role="tablist" aria-label="Formula trial slots">
+          <div
+            className="projects-carousel-dots"
+            role="tablist"
+            aria-label={`Choose project, ${currentProjectIndex + 1} of ${n}`}
+          >
             {projects.map((project, index) => (
               <button
-                key={index}
+                key={`dot-${project.title}`}
                 type="button"
                 role="tab"
                 aria-selected={index === currentProjectIndex}
+                aria-label={`${project.title}, project ${index + 1} of ${n}`}
                 className={[
-                  'formula-slot',
-                  index === currentProjectIndex ? 'active' : '',
-                  project.isComingSoon ? 'locked' : '',
+                  'projects-carousel-dot',
+                  index === currentProjectIndex ? 'is-active' : '',
+                  project.isComingSoon ? 'is-locked' : '',
                 ].filter(Boolean).join(' ')}
-                onClick={() => {
-                  if (project.isComingSoon) flashLockedToast();
-                  setCurrentProjectIndex(index);
-                }}
-                aria-label={project.title}
-              >
-                <span className="formula-tooltip" aria-hidden="true">{project.title}</span>
-                <span className="formula-droplet" aria-hidden="true" />
-                <span className="formula-slot-num">{index + 1}</span>
-              </button>
+                onClick={() => onDotClick(index)}
+              />
             ))}
           </div>
 
-          <p className="swipe-hint">Swipe the monitor to flip trials</p>
+          <p className="swipe-hint">Scroll or swipe sideways to browse projects</p>
 
           <div
             className={`plankton-toast${lockedToast ? ' plankton-toast--visible' : ''}`}

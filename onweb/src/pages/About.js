@@ -43,6 +43,62 @@ const publicUrl = process.env.PUBLIC_URL || '';
 const resumePdfUrl = `${publicUrl}/AndiScarola_Resume.pdf`;
 const aboutWebp = (stem) => `${publicUrl}/images/${stem}.webp`;
 
+/** Desktop-only subtle 3D tilt (CSS vars --tilt-x / --tilt-y); touch devices skip in handler. */
+function AboutCardTilt({ children, className = '' }) {
+  const ref = useRef(null);
+
+  const handleMove = (e) => {
+    if (
+      typeof window === 'undefined' ||
+      !window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    ) {
+      return;
+    }
+    const el = ref.current;
+    if (!el) return;
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    el.style.setProperty('--tilt-x', `${(-y * 6).toFixed(4)}deg`);
+    el.style.setProperty('--tilt-y', `${(x * 6).toFixed(4)}deg`);
+  };
+
+  const handleLeave = () => {
+    const el = ref.current;
+    if (!el) return;
+    el.style.setProperty('--tilt-x', '0deg');
+    el.style.setProperty('--tilt-y', '0deg');
+  };
+
+  return (
+    <div
+      ref={ref}
+      className={['about-tilt-host', className].filter(Boolean).join(' ')}
+      onMouseMove={handleMove}
+      onMouseLeave={handleLeave}
+    >
+      {children}
+    </div>
+  );
+}
+
+const RESEARCH_PAPERS = [
+  {
+    title:
+      'Learning designs that empower: navigating sandbox data science at the intersection of computing, big data and social media',
+    meta: 'Information and Learning Sciences • 2024 • Cited by 5',
+  },
+  {
+    title:
+      'Data and social worlds: How data science education supports civic participation and social discourse',
+    meta: 'Proceedings of the International Society for the Learning Sciences • 2024 • Cited by 6',
+  },
+  {
+    title: 'Cultural Relevance for Epistemic Practice in High School Computational Data Mining',
+    meta: 'IEEE Frontiers in Education • 2024 • Cited by 1',
+  },
+];
+
 const WHY_CARDS = [
   {
     title: 'Ship It Sandy-Style 💪',
@@ -64,7 +120,12 @@ const WHY_CARDS = [
 
 /** Original carousel order, then newer life photos (WebP stem = public/images/{stem}.webp). */
 const CAROUSEL_SLIDES = [
-  { stem: '5k', src: fiveKImage, caption: 'Goo Lagoon 5K', photoClass: 'fivek-photo' },
+  {
+    stem: '5k',
+    src: fiveKImage,
+    caption: 'Goo Lagoon 5K',
+    photoClass: 'fivek-photo carousel-life-photo',
+  },
   {
     stem: 'funnygym',
     src: funnyGymImage,
@@ -376,164 +437,23 @@ const About = () => {
         </div>
       </div>
 
-      {/* Left: Education + Research Papers stacked; right: Keck polaroid spans full left height */}
-      <div className="fade-in-section">
-        <div className="education-research-keck-row">
-          <div className="education-research-keck-columns reveal">
-            <div className="education-research-keck-left">
-              <div className="education-standalone">
-                <div className="education-section">
-                  <h3>Education</h3>
-                  <div className="education-content">
-                    <p>• B.S. in Computer Science — UTEP</p>
-                    <p>• Minor in Mathematics</p>
-                    <p>• Fast Track M.S. in Artificial Intelligence</p>
-                    <p>• GPA: 3.39</p>
-                  </div>
-                </div>
-              </div>
-              <div className="research-papers-section">
-                <div className="research-papers-inner">
-                  <h3>Research Papers</h3>
-                  <div className="papers-list">
-                    <div className="paper-item">
-                      <h4>Learning designs that empower: navigating sandbox data science at the intersection of computing, big data and social media</h4>
-                      <p>Information and Learning Sciences • 2024 • Cited by 5</p>
-                    </div>
-                    <div className="paper-item">
-                      <h4>Data and social worlds: How data science education supports civic participation and social discourse</h4>
-                      <p>Proceedings of the International Society of the Learning Sciences • 2024 • Cited by 6</p>
-                    </div>
-                    <div className="paper-item">
-                      <h4>Cultural Relevance for Epistemic Practice in High School Computational Data Mining</h4>
-                      <p>IEEE Frontiers in Education • 2024 • Cited by 1</p>
-                    </div>
-                  </div>
-                  <div className="scholar-link">
-                    <a 
-                      href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C44&q=Andi+Scarola&btnG=" 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="scholar-button"
-                    >
-                      View All Papers on Google Scholar
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="education-research-keck-right">
-              <div className="photo-item polaroid education-research-keck-polaroid">
-                <div className="photo-placeholder keck-photo">
-                  <img
-                    src={keckImage}
-                    alt="Keck Center Building"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                </div>
-                <p className="photo-caption">The Keck</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-
-      {/* Alternating Layout - Photo Left, Text Right */}
-      <div className="fade-in-section">
-        <div className="content-row">
-          <div className="content-left">
-            <div className="photo-item polaroid">
-              <div className="photo-placeholder keck-people-photo">
-                <img
-                  src={keckPeopleImage}
-                  alt="Keck People"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <p className="photo-caption">Keck's Finest</p>
-            </div>
-          </div>
-          <div className="content-right">
-            <div className="research-section">
-              <h3>Research & Experience</h3>
-              <h4 className="research-subtitle">W.M Keck Center for 3D Innovation</h4>
-              <div className="research-content">
-                <div className="research-item">
-                 
-                  <p>– Developed calibration pages and control logic for hot-wire and pitot probe data acquisition systems</p>
-                  <p>– Built real-time Flask dashboards for streaming sensor data and motor control</p>
-                  <p>– Managed database integration, CSV logging, and multi-probe configuration across 3 web platforms</p>
-                  <p>– Currently working on fiber segmentation pipelines: tiling, stitching, and angle analysis from SEM images</p>
-                </div>
-                <div className="research-item">
-                  <h4>AI-EDGE (NSF/OSU)</h4>
-                  <p>– Built a real-time ASL interpreter using MediaPipe + LSTM for edge deployment</p>
-                  <p>– Developed custom datasets and visual tools to evaluate live sign classification</p>
-                  <p>– Led development of custom datasets, visualizations, and Colab demos for edge-device ML research</p>
-                </div>
-                <div className="research-item">
-                  <h4>Hackathons</h4>
-                  <p>– Fight Coach (The Biggest AI Hackathon @ UTEP - 2025)</p>
-                  <p>– DUI Risk Radar (2nd @ BorderHacks - 2024)</p>
-                  <p>– SnapMarket (Tik-Tok Hackathon - 2024)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Combined Goals & Fun Stuff with Photo */}
-      <div className="fade-in-section">
-        <div className="content-row">
-          <div className="content-left">
-            <div className="goals-fun-stack">
-              <div className="goals-section">
-                <h3>Goals</h3>
-                <div className="goals-content">
-                  <p>• Earn a PhD in Computer Science</p>
-                  <p>• Become a Software Engineer</p>
-                  <p>• Build tools that bridge research + real-world use</p>
-                  <p>• Stay consistent in health, climbing, and learning</p>
-                </div>
-              </div>
-              
-              <div className="fun-section">
-                <h3>Life outside the shell</h3>
-                <div className="fun-content">
-                  <p>Rock walls, pickleball courts, and the gym that’s where I yearn to be. When I’m not building, I’m moving.</p>
-                  <p>Motto: Not everything has to be perfect to be real.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="content-right">
-            <div className="photo-item polaroid">
-              <div className="photo-placeholder gym-photo">
-                <img
-                  src={gymImage}
-                  alt="My Happy Place"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
-                  loading="lazy"
-                  decoding="async"
-                />
-              </div>
-              <p className="photo-caption">My Happy Place</p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Photo Carousel */}
+      {/* Photo Carousel — between intro/Why and Education/Keck */}
       <div className="fade-in-section">
         <div className="photo-carousel reveal">
-          <div className="carousel-title-container">
-            <h3 className="carousel-title">What’s Been Brewing</h3>
+          <div className="carousel-title-row">
+            <div className="carousel-title-container">
+              <h3 className="carousel-title">What’s Been Brewing</h3>
+            </div>
+            <div
+              className="carousel-scroll-cue"
+              role="note"
+              aria-label="More below — keep scrolling the page"
+            >
+              <span className="carousel-scroll-cue-arrow" aria-hidden="true">
+                ↓
+              </span>
+              <span className="carousel-scroll-cue-label">Keep scrolling</span>
+            </div>
           </div>
           <div className="carousel-container" ref={carouselContainerRef}>
             <div className="carousel-track">
@@ -575,6 +495,202 @@ const About = () => {
         </div>
       </div>
 
+      {/* Left: Education + Research Papers stacked; right: Keck polaroid spans full left height */}
+      <div className="fade-in-section">
+        <div className="education-research-keck-row">
+          <div className="education-research-keck-columns reveal">
+            <div className="education-research-keck-left">
+              <div className="education-standalone">
+                <div className="education-section">
+                  <h3>Education</h3>
+                  <div className="education-content">
+                    <p>• B.S. in Computer Science — UTEP</p>
+                    <p>• Minor in Mathematics</p>
+                    <p>• Fast Track M.S. in Artificial Intelligence</p>
+                    <p>• GPA: 3.39</p>
+                  </div>
+                </div>
+              </div>
+              <div className="research-papers-section">
+                <div className="research-papers-inner">
+                  <h3>Research Papers</h3>
+                  <div className="papers-list">
+                    {RESEARCH_PAPERS.map((paper) => (
+                      <AboutCardTilt key={paper.title} className="about-tilt-host--paper">
+                        <div className="paper-item">
+                          <h4>{paper.title}</h4>
+                          <p>{paper.meta}</p>
+                        </div>
+                      </AboutCardTilt>
+                    ))}
+                  </div>
+                  <div className="scholar-link">
+                    <a 
+                      href="https://scholar.google.com/scholar?hl=en&as_sdt=0%2C44&q=Andi+Scarola&btnG=" 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="scholar-button"
+                    >
+                      View All Papers on Google Scholar
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="education-research-keck-right">
+              <div className="photo-item polaroid education-research-keck-polaroid">
+                <div className="photo-placeholder keck-photo">
+                  <img
+                    src={keckImage}
+                    alt="Keck Center Building"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                </div>
+                <p className="photo-caption">The Keck</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      {/* 2×2 grid: Real | AI / Build | Photo */}
+      <div className="fade-in-section">
+        <div className="content-row content-row--research-experience">
+          <div className="research-grid-outer">
+            <div className="research-grid">
+              <div className="research-grid-cell">
+                <AboutCardTilt>
+                  <div className="research-section research-section--real-systems">
+                  <h3>Real Systems</h3>
+                  <p className="research-pillar-tagline">Systems that run in the real world</p>
+                  <div className="research-content">
+                    <div className="research-item">
+                      <h4 className="research-subtitle">W.M Keck Center for 3D Innovation</h4>
+                      <p>Developed calibration workflows and control logic for hot-wire and pitot probe data acquisition</p>
+                      <p>Built real-time Flask dashboards for live sensor streaming and motor control</p>
+                      <p>Integrated databases, CSV pipelines, and multi-probe configurations across multiple web platforms</p>
+                      <p>
+                        Currently working on a computer vision pipeline for fiber segmentation: tiling large SEM images,
+                        stitching outputs, and extracting orientation + angle metrics
+                      </p>
+                    </div>
+                  </div>
+                  </div>
+                </AboutCardTilt>
+              </div>
+
+              <div className="research-grid-cell">
+                <AboutCardTilt>
+                  <div className="research-section research-section--ai-cv">
+                  <h3>AI / Computer Vision</h3>
+                  <p className="research-pillar-tagline">AI that actually works live</p>
+                  <div className="research-content">
+                    <div className="research-item">
+                      <h4>AI-EDGE (NSF / OSU)</h4>
+                      <p>Built a real-time ASL interpreter using MediaPipe + LSTM designed for edge deployment</p>
+                      <p>Created custom datasets and evaluation tools to test live sign classification performance</p>
+                      <p>Designed visualizations and Colab demos to make edge ML systems easier to understand and showcase</p>
+                    </div>
+                  </div>
+                  </div>
+                </AboutCardTilt>
+              </div>
+
+              <div className="research-grid-cell">
+                <AboutCardTilt>
+                  <div className="research-section research-section--build-ship">
+                  <h3>Build / Ship</h3>
+                  <p className="research-pillar-tagline">Ideas shipped fast</p>
+                  <div className="research-content">
+                    <div className="research-item">
+                      <p>
+                        I love the push to ship — hackathon sprints, fast prototypes, and that startup-y energy when a small
+                        team actually moves.
+                      </p>
+                      <h4>Hackathons</h4>
+                      <p>
+                        Fight Coach — Biggest AI Hackathon @ UTEP (2025)
+                        <br />
+                        Built a real-time system focused on feedback and interaction
+                      </p>
+                      <p>
+                        DUI Risk Radar — 2nd Place @ BorderHacks (2024)
+                        <br />
+                        Developed a system to assess and visualize driving risk in real time
+                      </p>
+                      <p>
+                        SnapMarket — TikTok Hackathon (2024)
+                        <br />
+                        Built a rapid prototype around social-driven marketplace concepts
+                      </p>
+                    </div>
+                  </div>
+                  </div>
+                </AboutCardTilt>
+              </div>
+
+              <div className="research-grid-cell research-grid-cell--photo">
+                <div className="photo-item polaroid">
+                  <div className="photo-placeholder keck-people-photo">
+                    <img
+                      src={keckPeopleImage}
+                      alt="Keck People"
+                      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  </div>
+                  <p className="photo-caption">Keck's Finest</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Combined Goals & Fun Stuff with Photo */}
+      <div className="fade-in-section">
+        <div className="content-row reverse">
+          <div className="content-left">
+            <div className="goals-fun-stack">
+              <div className="goals-section">
+                <h3>Goals</h3>
+                <div className="goals-content">
+                  <p>• Earn a PhD in Computer Science</p>
+                  <p>• Become a Software Engineer</p>
+                  <p>• Build tools that bridge research + real-world use</p>
+                  <p>• Stay consistent in health, climbing, and learning</p>
+                </div>
+              </div>
+              
+              <div className="fun-section">
+                <h3>Life outside the shell</h3>
+                <div className="fun-content">
+                  <p>Rock walls, pickleball courts, and the gym that’s where I yearn to be. When I’m not building, I’m moving.</p>
+                  <p>Motto: Not everything has to be perfect to be real.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="content-right">
+            <div className="photo-item polaroid">
+              <div className="photo-placeholder gym-photo">
+                <img
+                  src={gymImage}
+                  alt="My Happy Place"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+              <p className="photo-caption">My Happy Place</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Resume Section */}
       <div className="fade-in-section">

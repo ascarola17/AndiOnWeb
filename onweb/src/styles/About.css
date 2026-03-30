@@ -5,9 +5,13 @@
   position: relative;
   min-height: 100vh;
   width: 100%;
-  overflow: hidden;
+  max-width: min(1400px, 90vw);
+  margin: 0 auto;
+  overflow-x: clip;
+  overflow-y: visible;
   font-family: 'Arial', sans-serif;
-  padding: 6rem 1rem 8rem;
+  padding: 6rem clamp(2.5rem, 5vw, 3.75rem) 8rem;
+  box-sizing: border-box;
 }
 
 /* About background (full-bleed <img>, same idea as Home .bg-img) */
@@ -27,18 +31,24 @@
 .about-why-row {
   position: relative;
   z-index: 10;
-  max-width: 1000px;
-  margin: 0 auto 2rem;
-  padding: 0 1rem;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto 2.5rem;
+  padding: 0;
 }
 
-/* Blue card + polaroid (left); purple Why (right), tops aligned */
+/* Blue card + polaroid (left); purple Why (right), tops aligned — block centered as a unit */
 .about-intro-columns {
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 2rem;
+  justify-content: center;
+  gap: 3rem;
   width: 100%;
+  max-width: min(1040px, 100%);
+  margin-left: auto;
+  margin-right: auto;
+  box-sizing: border-box;
 }
 
 .about-intro-left {
@@ -46,8 +56,9 @@
   flex-direction: column;
   align-items: center;
   gap: 1.5rem;
-  flex: 0 1 auto;
-  max-width: 400px;
+  flex: 0 0 auto;
+  max-width: 460px;
+  width: 100%;
 }
 
 .about-intro-left .about-card {
@@ -56,22 +67,31 @@
 }
 
 .about-intro-right {
-  flex: 1;
+  flex: 0 1 min(520px, 100%);
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.about-intro-right .my-why-section {
+  width: 100%;
+  max-width: 100%;
 }
 
 /* Left: Education + Research Papers stacked; right: normal polaroid, vertically balanced vs left stack */
 .education-research-keck-row {
-  max-width: 1000px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto 3rem;
-  padding: 0 1rem;
+  padding: 0;
 }
 
 .education-research-keck-columns {
   display: flex;
   flex-direction: row;
   align-items: stretch;
-  gap: 2rem;
+  gap: 3rem;
   width: 100%;
 }
 
@@ -100,7 +120,7 @@
 }
 
 .education-research-keck-right {
-  flex: 0 0 clamp(260px, 32vw, 340px);
+  flex: 0 0 clamp(340px, 42vw, 500px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -113,13 +133,13 @@
   flex: none;
   margin: 0;
   width: 100%;
-  max-width: 328px;
+  max-width: min(480px, 100%);
 }
 
 .education-research-keck-right .photo-placeholder.keck-photo {
   width: 100%;
-  max-width: 328px;
-  height: 300px;
+  max-width: 480px;
+  height: clamp(360px, 48vh, 460px);
 }
 
 .me-polaroid-outside {
@@ -154,7 +174,7 @@
   border-radius: 8px;
   padding: 1.5rem;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
-  max-width: 400px;
+  max-width: 440px;
   transform: rotate(-2deg);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   flex: 1;
@@ -214,10 +234,12 @@
   display: flex;
   flex-direction: row;
   align-items: flex-start;
-  gap: 2rem;
-  max-width: 1000px;
-  margin: 0 auto 3rem;
-  padding: 0 1rem;
+  gap: 3rem;
+  max-width: 100%;
+  width: 100%;
+  margin: 0 auto 4rem;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .content-left {
@@ -230,6 +252,126 @@
 
 .content-row.reverse {
   flex-direction: row-reverse;
+}
+
+/* Research 2×2 grid — equal square cells on desktop; single column on mobile */
+.content-row.content-row--research-experience {
+  align-items: stretch;
+  max-width: 100%;
+}
+
+.research-grid-outer {
+  flex: 1 1 100%;
+  width: 100%;
+  min-width: 0;
+}
+
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-rows: auto auto;
+  align-items: start;
+  gap: 1.1rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.research-grid-cell {
+  min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-self: start;
+  width: 100%;
+}
+
+.research-grid-cell .research-section {
+  flex: 0 0 auto;
+  min-height: 0;
+  max-width: none;
+  width: 100%;
+  margin-bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  padding: 1rem 0.75rem;
+  box-sizing: border-box;
+}
+
+.research-grid-cell .research-content {
+  flex: 0 1 auto;
+  min-height: 0;
+  width: 100%;
+  overflow-y: visible;
+  -webkit-overflow-scrolling: touch;
+}
+
+.research-grid-cell .research-item {
+  width: 100%;
+  max-width: 100%;
+}
+
+.research-grid-cell--photo {
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  min-height: 0;
+}
+
+.research-grid-cell--photo .photo-item.polaroid {
+  max-width: 100%;
+  max-height: 100%;
+  margin: 0;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.research-grid-cell--photo .keck-people-photo {
+  width: 100% !important;
+  max-width: min(100%, 420px);
+  aspect-ratio: 1 / 1;
+  height: auto !important;
+  max-height: min(100%, 420px);
+  box-sizing: border-box;
+}
+
+.research-grid-cell--photo .keck-people-photo img {
+  max-height: none;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+@media (min-width: 769px) {
+  .research-grid-cell--photo .photo-item.polaroid {
+    max-width: min(100%, 420px);
+  }
+}
+
+/* About card polish: tilt hosts + photo lift (no sibling dim / opacity) */
+.about-tilt-host {
+  --tilt-x: 0deg;
+  --tilt-y: 0deg;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  min-height: 0;
+  width: 100%;
+  height: auto;
+}
+
+.about-tilt-host--paper {
+  width: 100%;
+  max-width: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .research-grid-cell--photo:hover .photo-item.polaroid {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
+  }
 }
 
 .text-content {
@@ -291,9 +433,10 @@
   z-index: 10;
   display: flex;
   justify-content: flex-start;
-  max-width: 1000px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto 2rem;
-  padding: 0 1rem;
+  padding: 0;
 }
 
 .education-standalone .education-section {
@@ -371,9 +514,25 @@
 .photo-carousel {
   position: relative;
   z-index: 10;
-  margin: 4rem auto;
-  max-width: 1200px;
-  padding: 0 1rem;
+  margin: 2rem auto 3rem;
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.carousel-title-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem 1.35rem;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto 2rem;
+  padding: 0.35rem 0.5rem;
+  box-sizing: border-box;
 }
 
 .carousel-title-container {
@@ -381,13 +540,73 @@
   border: 2px solid #4169E1;
   border-radius: 15px;
   padding: 0.8rem 1.5rem;
-  margin: 0 auto 2rem;
+  margin: 0;
   box-shadow: 0 4px 15px rgba(65, 105, 225, 0.2);
   position: relative;
   display: inline-block;
   backdrop-filter: blur(10px);
   text-align: center;
   width: fit-content;
+  flex-shrink: 0;
+}
+
+/* Scrapbook “sticker” paired with the title chip — not plain floating text */
+.carousel-scroll-cue {
+  display: inline-flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.45rem;
+  margin: 0;
+  flex-shrink: 0;
+  background: rgba(255, 252, 238, 0.96);
+  border: 2.5px dashed rgba(65, 105, 225, 0.88);
+  border-radius: 999px;
+  box-shadow:
+    0 2px 0 rgba(53, 85, 196, 0.1),
+    0 6px 20px rgba(65, 105, 225, 0.24),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(8px);
+  font-family: 'Kalam', cursive, 'Comic Sans MS', cursive;
+  transform: rotate(2.5deg);
+  transform-origin: center center;
+  user-select: none;
+  white-space: nowrap;
+}
+
+.carousel-scroll-cue-label {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #3555c4;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.95);
+}
+
+.carousel-scroll-cue-arrow {
+  display: inline-block;
+  font-size: 1.55rem;
+  font-weight: 900;
+  line-height: 1;
+  color: #4169e1;
+  animation: carouselScrollHintBounce 1.2s ease-in-out infinite;
+}
+
+@keyframes carouselScrollHintBounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(6px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .carousel-scroll-cue-arrow {
+    animation: none;
+  }
 }
 
 .carousel-title {
@@ -412,12 +631,12 @@
   gap: 2rem;
   padding: 1rem;
   /* 29 slides × 2 (duplicate set for seamless loop) */
-  width: calc(250px * 58 + 2rem * 58);
+  width: calc(280px * 58 + 2rem * 58);
 }
 
 .carousel-slide {
   flex-shrink: 0;
-  width: 250px;
+  width: 280px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -426,7 +645,7 @@
 }
 
 .carousel-slide .lazy-image-container {
-  min-height: 200px;
+  min-height: 228px;
   background: transparent;
   border-radius: 4px;
   width: 100%;
@@ -437,7 +656,7 @@
     transform: translateX(0);
   }
   100% {
-    transform: translateX(calc(-250px * 29 - 2rem * 29));
+    transform: translateX(calc(-280px * 29 - 2rem * 29));
   }
 }
 
@@ -581,9 +800,11 @@
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
-  max-width: 1200px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto 4rem;
-  padding: 0 1rem;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Individual Polaroids */
@@ -626,8 +847,10 @@
   z-index: 10;
   display: flex;
   justify-content: center;
-  max-width: 1000px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto 4rem;
+  box-sizing: border-box;
 }
 
 /* Large Photo Items */
@@ -673,7 +896,7 @@
 
 .carousel-slide img {
   width: 100%;
-  height: 220px;
+  height: 248px;
   object-fit: cover;
   object-position: center;
   background: transparent;
@@ -775,9 +998,15 @@
   background: linear-gradient(135deg, #00b894 0%, #00cec9 100%);
 }
 
+/* Match other carousel life slides so Goo Lagoon 5K doesn’t collapse or sit off-grid */
+.carousel-slide .photo-placeholder.fivek-photo {
+  height: 248px;
+  min-height: 248px;
+}
+
 .carousel-life-photo {
   background: transparent;
-  height: 200px;
+  height: 248px;
 }
 
 /* Research Papers Sticky Note */
@@ -788,13 +1017,13 @@
   backdrop-filter: blur(10px);
   border: 2px solid #4682B4;
   border-radius: 8px;
-  padding: 1.5rem clamp(1.35rem, 4vw, 2.25rem);
+  padding: 1.35rem clamp(1rem, 3vw, 1.65rem);
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   max-width: 480px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   box-sizing: border-box;
   transform: none;
   transform-origin: center center;
@@ -811,10 +1040,11 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  width: min(100%, 27.5rem);
+  width: 100%;
+  max-width: min(100%, 27.5rem);
   margin-left: auto;
   margin-right: auto;
-  transform: translateX(18px);
+  transform: none;
   padding: 0;
   box-sizing: border-box;
   flex-shrink: 0;
@@ -842,8 +1072,8 @@
 .papers-list {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 0.8rem;
+  align-items: stretch;
+  gap: 0.75rem;
   width: 100%;
   box-sizing: border-box;
 }
@@ -851,42 +1081,43 @@
 .paper-item {
   background: white;
   border-radius: 8px;
-  padding: 0.8rem;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  padding: 0.75rem 0.85rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
   border-left: 4px solid #4682B4;
   width: 100%;
-  max-width: min(24.75rem, 100%);
+  max-width: none;
   box-sizing: border-box;
-}
-
-.paper-item:hover {
-  background: #E6F3FF;
-  transform: translateX(5px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
 }
 
 .paper-item h4 {
-  margin: 0 0 0.3rem 0;
-  font-size: 0.9rem;
+  margin: 0 0 0.35rem 0;
+  font-size: 1.08rem;
   color: #4682B4;
   font-weight: bold;
-  line-height: 1.3;
+  line-height: 1.5;
+  text-align: left;
 }
 
 .paper-item p {
   margin: 0;
-  font-size: 0.8rem;
+  font-size: 1rem;
+  line-height: 1.5;
   color: #666;
   font-style: italic;
+  text-align: left;
 }
 
 .scholar-link {
   margin-top: 1rem;
   text-align: center;
   width: 100%;
-  max-width: min(24.75rem, 100%);
-  align-self: center;
+  max-width: none;
+  align-self: stretch;
   box-sizing: border-box;
 }
 
@@ -934,11 +1165,13 @@
   z-index: 10;
   display: flex;
   gap: 2rem;
-  max-width: 1000px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto 4rem;
   justify-content: center;
   align-items: flex-start;
   flex-wrap: wrap;
+  box-sizing: border-box;
 }
 
 .education-skills-section .photo-item {
@@ -952,9 +1185,11 @@
   z-index: 10;
   display: flex;
   gap: 2rem;
-  max-width: 1000px;
+  max-width: 100%;
+  width: 100%;
   margin: 0 auto 4rem;
   justify-content: center;
+  box-sizing: border-box;
 }
 
 /* Small Box Styling */
@@ -1028,8 +1263,10 @@
   position: relative;
   z-index: 10;
   margin: 2rem auto;
-  max-width: 1000px;
-  padding: 0 1rem;
+  max-width: 100%;
+  width: 100%;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 /* Research & Experience Sticky Note */
@@ -1041,17 +1278,13 @@
   border: 2px solid #4169E1;
   border-radius: 8px;
   padding: 1.2rem;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
   max-width: 450px;
   transform: rotate(-1deg);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, border-color 0.25s ease;
   animation: wiggle 5s ease-in-out infinite;
-}
-
-.research-section:hover {
-  transform: rotate(0deg) scale(1.05);
-  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
-  background: rgba(240, 248, 255, 0.6);
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
 }
 
 @keyframes wiggle {
@@ -1076,10 +1309,14 @@
 }
 
 .research-item h4 {
-  margin: 0 0 0.5rem 0;
-  font-size: 1rem;
+  margin: 0 0 0.45rem 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
   color: #4169E1;
   font-weight: bold;
+  text-align: left;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .research-subtitle {
@@ -1087,22 +1324,213 @@
   font-weight: bold;
 }
 
+/* One-line punch under each research pillar title */
+.research-pillar-tagline {
+  margin: -0.25rem 0 0.85rem 0;
+  padding: 0 0.25rem;
+  font-size: 0.98rem;
+  line-height: 1.5;
+  color: #2f4f8f;
+  font-weight: bold;
+  text-align: center;
+}
+
 .research-item p {
   background: white;
   color: #4169E1;
-  padding: 0.2rem 0.6rem;
-  margin: 0.1rem 0;
+  padding: 0.32rem 0.5rem;
+  margin: 0.18rem 0;
   border-radius: 8px;
-  font-size: 0.85rem;
+  font-size: 1.05rem;
+  line-height: 1.55;
   font-weight: bold;
   text-align: left;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
 }
 
 .research-item p:hover {
   background: #E6F3FF;
-  transform: translateX(3px);
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.14);
+}
+
+@keyframes wiggle-real {
+  0%, 100% { transform: rotate(-0.85deg); }
+  25% { transform: rotate(-0.35deg); }
+  75% { transform: rotate(-1.2deg); }
+}
+
+@keyframes wiggle-ai {
+  0%, 100% { transform: rotate(0.75deg); }
+  50% { transform: rotate(-0.55deg); }
+}
+
+@keyframes wiggle-build {
+  0%, 100% { transform: rotate(-1.1deg); }
+  40% { transform: rotate(0.45deg); }
+}
+
+.research-section.research-section--real-systems {
+  background: rgba(173, 232, 244, 0.52);
+  border-color: #1a9aad;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  animation: wiggle-real 5.2s ease-in-out infinite;
+}
+
+.research-section.research-section--real-systems h3,
+.research-section.research-section--real-systems .research-subtitle,
+.research-section.research-section--real-systems .research-item h4 {
+  color: #0b6f7c;
+}
+
+.research-section.research-section--real-systems .research-pillar-tagline {
+  color: #0a5c68;
+}
+
+.research-section.research-section--real-systems .research-item p {
+  color: #0b5f80;
+  box-shadow: 0 1px 3px rgba(20, 134, 150, 0.12);
+}
+
+.research-section.research-section--real-systems .research-item p:hover {
+  background: #dff7fc;
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(20, 134, 150, 0.22);
+}
+
+.research-section.research-section--ai-cv {
+  background: rgba(220, 214, 255, 0.5);
+  border-color: #6b5dbf;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  animation: wiggle-ai 4.8s ease-in-out infinite;
+}
+
+.research-section.research-section--ai-cv h3,
+.research-section.research-section--ai-cv .research-subtitle,
+.research-section.research-section--ai-cv .research-item h4 {
+  color: #4c3d9e;
+}
+
+.research-section.research-section--ai-cv .research-pillar-tagline {
+  color: #43358a;
+}
+
+.research-section.research-section--ai-cv .research-item p {
+  color: #3d4f8f;
+  box-shadow: 0 1px 3px rgba(107, 93, 191, 0.15);
+}
+
+.research-section.research-section--ai-cv .research-item p:hover {
+  background: #ebe8ff;
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(107, 93, 191, 0.24);
+}
+
+.research-section.research-section--build-ship {
+  background: rgba(255, 230, 185, 0.55);
+  border-color: #e8943c;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+  animation: wiggle-build 5.5s ease-in-out infinite;
+}
+
+.research-section.research-section--build-ship h3,
+.research-section.research-section--build-ship .research-subtitle {
+  color: #b45309;
+}
+
+.research-section.research-section--build-ship .research-item h4 {
+  color: #b45309;
+  margin-top: 0.5rem;
+}
+
+.research-section.research-section--build-ship .research-pillar-tagline {
+  color: #9a3412;
+}
+
+.research-section.research-section--build-ship .research-item p {
+  color: #9a3412;
+  box-shadow: 0 1px 3px rgba(232, 148, 60, 0.2);
+}
+
+.research-section.research-section--build-ship .research-item p:hover {
+  background: #fff3d6;
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 16px 36px rgba(232, 148, 60, 0.26);
+}
+
+/* Pillar cards: 3D tilt + lift (fine pointer); simple lift on touch */
+@media (hover: hover) and (pointer: fine) {
+  .about-tilt-host:hover .research-section.research-section--real-systems {
+    animation: none;
+    transform: perspective(920px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0) translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
+    background: rgba(173, 232, 244, 0.75);
+    border-color: #148696;
+  }
+
+  .about-tilt-host:hover .research-section.research-section--ai-cv {
+    animation: none;
+    transform: perspective(920px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0) translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
+    background: rgba(220, 214, 255, 0.72);
+    border-color: #5a4daf;
+  }
+
+  .about-tilt-host:hover .research-section.research-section--build-ship {
+    animation: none;
+    transform: perspective(920px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0) translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
+    background: rgba(255, 230, 185, 0.78);
+    border-color: #d97820;
+  }
+
+  .about-tilt-host--paper:hover .paper-item {
+    transform: perspective(820px) rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg)) translateZ(0) translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.17);
+    background: #fafcff;
+  }
+}
+
+@media (hover: none), (pointer: coarse) {
+  .about-tilt-host:hover .research-section.research-section--real-systems,
+  .about-tilt-host:active .research-section.research-section--real-systems {
+    animation: none;
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.17);
+    background: rgba(173, 232, 244, 0.75);
+    border-color: #148696;
+  }
+
+  .about-tilt-host:hover .research-section.research-section--ai-cv,
+  .about-tilt-host:active .research-section.research-section--ai-cv {
+    animation: none;
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.17);
+    background: rgba(220, 214, 255, 0.72);
+    border-color: #5a4daf;
+  }
+
+  .about-tilt-host:hover .research-section.research-section--build-ship,
+  .about-tilt-host:active .research-section.research-section--build-ship {
+    animation: none;
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.17);
+    background: rgba(255, 230, 185, 0.78);
+    border-color: #d97820;
+  }
+
+  .about-tilt-host--paper:hover .paper-item,
+  .about-tilt-host--paper:active .paper-item {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 18px 44px rgba(0, 0, 0, 0.16);
+    background: #fafcff;
+  }
 }
 
 /* Goals Sticky Note */
@@ -1268,12 +1696,17 @@
 }
 
 .why-story-cards {
-  display: grid;
-  gap: 0.85rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  max-width: 100%;
+  width: 100%;
   margin-top: 0.75rem;
 }
 
 .why-story-card {
+  min-width: 200px;
+  flex: 1;
   background: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(221, 160, 221, 0.9);
   border-radius: 8px;
@@ -1306,7 +1739,7 @@
   box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
   transform: rotate(-3deg);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  max-width: 320px;
+  max-width: 360px;
   margin: 0;
   z-index: 15;
   animation: stickyFloat 4s ease-in-out infinite;
@@ -1353,7 +1786,7 @@
 
 .me-photo-placeholder {
   width: 100%;
-  height: 278px;
+  height: 308px;
   border-radius: 4px;
   display: flex;
   align-items: center;
@@ -1473,10 +1906,44 @@
   transform: translateY(0);
 }
 
+@media (min-width: 1024px) and (max-width: 1440px) {
+  .about-container,
+  .about-content {
+    max-width: min(1400px, 90vw);
+    padding-left: clamp(2.25rem, 4vw, 3.5rem);
+    padding-right: clamp(2.25rem, 4vw, 3.5rem);
+  }
+
+  .about-why-row,
+  .education-research-keck-row {
+    max-width: 100%;
+  }
+
+  .about-intro-columns {
+    gap: 2.5rem;
+  }
+
+  .education-research-keck-columns {
+    gap: 2.5rem;
+  }
+
+  .content-row {
+    gap: 2.5rem;
+    max-width: 100%;
+  }
+
+  .why-story-cards {
+    gap: 1.5rem;
+    max-width: 100%;
+  }
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .about-container {
-    padding: 2rem 0.5rem 4rem;
+    max-width: 100%;
+    padding: 2rem clamp(1rem, 4vw, 1.25rem) 4rem;
+    overflow-x: clip;
   }
   
   .content-row {
@@ -1485,7 +1952,7 @@
     max-width: 100%;
     min-height: auto;
     margin: 0 auto 2rem;
-    padding: 0 0.5rem;
+    padding: 0;
   }
   
   .content-row.reverse {
@@ -1509,10 +1976,37 @@
   .carousel-title {
     font-size: 1.2rem;
   }
+
+  .carousel-title-row {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.85rem;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    padding: 0 0.5rem;
+  }
+
+  .carousel-scroll-cue {
+    white-space: normal;
+    text-align: center;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 0.7rem 1.25rem;
+    transform: rotate(-1.5deg);
+  }
+
+  .carousel-scroll-cue-label {
+    font-size: 1.15rem;
+  }
+
+  .carousel-scroll-cue-arrow {
+    font-size: 1.35rem;
+  }
   
   .carousel-title-container {
     padding: 0.5rem 1rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0;
   }
   
   .education-skills-container {
@@ -1559,6 +2053,15 @@
 
   .carousel-slide .lazy-image {
     height: 180px;
+  }
+
+  .carousel-life-photo {
+    height: 180px;
+  }
+
+  .carousel-slide .photo-placeholder.fivek-photo {
+    height: 180px;
+    min-height: 180px;
   }
 
   .keck-photo,
@@ -1654,6 +2157,36 @@
     padding: 1rem;
   }
 
+  .research-grid {
+    grid-template-columns: 1fr;
+    grid-template-rows: none;
+    grid-auto-rows: auto;
+    aspect-ratio: unset;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .research-grid-cell .research-section {
+    height: auto;
+    min-height: 0;
+  }
+
+  .research-grid-cell .research-content {
+    overflow-y: visible;
+    flex: none;
+  }
+
+  .research-grid-cell--photo {
+    padding: 0.5rem 0 1rem;
+  }
+
+  .research-grid-cell--photo .keck-people-photo {
+    max-width: 100%;
+    max-height: none;
+    aspect-ratio: unset;
+    height: 220px;
+  }
+
   .research-papers-section {
     padding: 1rem clamp(0.85rem, 3.2vw, 1.2rem);
   }
@@ -1720,6 +2253,17 @@
   .research-section h3 {
     font-size: 1.4rem;
   }
+
+  .research-pillar-tagline {
+    font-size: 0.92rem;
+    line-height: 1.45;
+    padding: 0 0.15rem;
+  }
+
+  .research-grid .research-item p {
+    font-size: 1rem;
+    padding: 0.3rem 0.45rem;
+  }
   
   .goals-section h3,
   .fun-section h3 {
@@ -1731,12 +2275,13 @@
   }
   
   .paper-item h4 {
-    font-size: 0.85rem;
-    line-height: 1.3;
+    font-size: 0.95rem;
+    line-height: 1.45;
   }
   
   .paper-item p {
-    font-size: 0.75rem;
+    font-size: 0.88rem;
+    line-height: 1.45;
   }
   
   .resume-title {
@@ -1750,7 +2295,7 @@
 
 @media (max-width: 480px) {
   .about-container {
-    padding: 1.5rem 0.5rem 3rem;
+    padding: 1.5rem clamp(1rem, 4vw, 1.25rem) 3rem;
   }
   
   .about-card,
@@ -1816,6 +2361,10 @@
       transform: translateX(calc(-150px * 29 - 0.6rem * 29));
     }
   }
+
+  .carousel-life-photo {
+    height: 150px;
+  }
   
   .resume-container {
     padding: 1rem;
@@ -1862,12 +2411,13 @@
   }
   
   .paper-item h4 {
-    font-size: 0.8rem;
-    line-height: 1.2;
+    font-size: 0.9rem;
+    line-height: 1.4;
   }
   
   .paper-item p {
-    font-size: 0.7rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
   }
   
   .me-polaroid {

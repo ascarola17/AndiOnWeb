@@ -1,13 +1,13 @@
-/* Contact Page Styles - Simple Form with Transparent Background */
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&display=swap');
 
 .contact-container {
   min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Kalam', cursive, 'Segoe UI', sans-serif;
+  color: #1a1a1a;
 }
 
-/* Contact Background Image */
 .contact-background {
   position: fixed;
   top: 0;
@@ -21,66 +21,207 @@
   z-index: -1;
 }
 
-/* Hidden text animation */
+/* BubbleTransition: starts hidden */
 .hidden-text {
   opacity: 0;
-  transform: translateY(30px);
-  transition: all 0.8s ease-out;
+  transform: translateY(24px);
+  transition: opacity 0.75s ease-out, transform 0.75s ease-out;
 }
 
-.hidden-text:not(.hidden-text) {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* Main Content */
-.main-content {
+.contact-main {
   display: flex;
   justify-content: center;
   align-items: center;
   min-height: 100vh;
   padding: 2rem;
-  padding-top: 120px; /* Add space for navbar */
+  padding-top: clamp(5.5rem, 14vh, 7.5rem);
+  padding-bottom: 2.5rem;
   position: relative;
   z-index: 1;
+  box-sizing: border-box;
 }
 
-/* Contact Form Container */
-.contact-form-container {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border-radius: 20px;
-  padding: 3rem;
-  max-width: 500px;
-  width: 100%;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+/* Notebook page taped into the scrapbook */
+.contact-notebook-page {
   position: relative;
-  z-index: 1;
+  width: 100%;
+  max-width: 34rem;
+  margin: 0 auto;
+  padding: clamp(1.75rem, 4vw, 2.35rem) clamp(1.25rem, 4vw, 2rem) clamp(1.5rem, 3.5vw, 2rem);
+  padding-left: clamp(1.75rem, 5vw, 2.5rem);
+  box-sizing: border-box;
+  transform: rotate(-1.25deg);
+  transform-origin: 50% 3%;
+  border-radius: 3px 5px 8px 4px;
+  background-color: #fffdf6;
+  background-image:
+    repeating-linear-gradient(
+      transparent 0,
+      transparent calc(1.5rem - 1px),
+      rgba(120, 175, 230, 0.28) calc(1.5rem - 1px),
+      rgba(120, 175, 230, 0.28) 1.5rem
+    ),
+    linear-gradient(
+      90deg,
+      rgba(255, 130, 130, 0.4) 0,
+      rgba(255, 130, 130, 0.4) 2px,
+      transparent 2px
+    );
+  background-size: 100% 1.5rem, 100% 100%;
+  background-position: 0 0.35rem, 0 0;
+  border: 2px solid rgba(30, 24, 18, 0.88);
+  box-shadow:
+    5px 7px 0 rgba(0, 0, 0, 0.07),
+    0 18px 40px rgba(0, 0, 0, 0.14);
+}
+
+/* Scattered sparkle stickers (CSS only) */
+.contact-notebook-page::before {
+  content: '';
+  position: absolute;
+  inset: -12px -8px -8px -12px;
+  pointer-events: none;
+  z-index: 2;
+  background:
+    radial-gradient(circle at 8% 12%, rgba(255, 215, 0, 0.95) 0 2px, transparent 3px),
+    radial-gradient(circle at 22% 4%, rgba(255, 180, 120, 0.9) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 94% 18%, rgba(120, 200, 255, 0.85) 0 2px, transparent 3px),
+    radial-gradient(circle at 88% 72%, rgba(255, 215, 0, 0.75) 0 1.5px, transparent 2.5px),
+    radial-gradient(circle at 6% 78%, rgba(255, 140, 180, 0.7) 0 2px, transparent 3px),
+    radial-gradient(circle at 48% -2%, rgba(180, 255, 220, 0.65) 0 1.5px, transparent 2.5px);
+  opacity: 0.9;
+}
+
+.contact-notebook-page::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
+}
+
+/* Washi tape — top corners */
+.contact-washi {
+  position: absolute;
+  z-index: 4;
+  height: 20px;
+  border-radius: 2px;
+  opacity: 0.88;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+
+.contact-washi--left {
+  top: -6px;
+  left: 8%;
+  width: clamp(64px, 18vw, 92px);
+  transform: rotate(-11deg);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(255, 200, 200, 0.82) 0 5px,
+    rgba(255, 245, 200, 0.82) 5px 10px,
+    rgba(220, 240, 255, 0.82) 10px 15px
+  );
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.contact-washi--right {
+  top: -5px;
+  right: 10%;
+  width: clamp(58px, 16vw, 84px);
+  transform: rotate(9deg);
+  background: repeating-linear-gradient(
+    90deg,
+    rgba(200, 230, 255, 0.85) 0 4px,
+    rgba(255, 220, 235, 0.85) 4px 9px,
+    rgba(220, 255, 230, 0.85) 9px 14px
+  );
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* Postage stamp */
+.contact-postage-stamp {
+  position: absolute;
+  top: clamp(10px, 2.5vw, 18px);
+  right: clamp(10px, 3vw, 20px);
+  z-index: 5;
+  width: 3.1rem;
+  height: 3.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform: rotate(6deg);
+  background: linear-gradient(160deg, #f8f4ff 0%, #e8f4fc 100%);
+  border: 2px dashed rgba(30, 24, 18, 0.55);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.6) inset,
+    2px 3px 0 rgba(0, 0, 0, 0.08);
+  pointer-events: none;
+}
+
+.contact-postage-inner {
+  font-family: 'Courier New', monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: #2c3e50;
+  text-align: center;
+  line-height: 1.2;
+}
+
+/* Jellyfish doodle — corner */
+.contact-doodle {
+  position: absolute;
+  bottom: clamp(6px, 2vw, 14px);
+  right: clamp(4px, 2vw, 12px);
+  z-index: 3;
+  opacity: 0.88;
+  pointer-events: none;
+  transform: rotate(-8deg);
+}
+
+.contact-form-container {
+  position: relative;
+  z-index: 3;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+  max-width: 100%;
+  width: 100%;
 }
 
 .form-header {
   text-align: center;
-  margin-bottom: 2rem;
+  margin-bottom: 1.65rem;
+  padding-right: 2.5rem;
 }
 
-.form-header h2 {
-  color: #2c3e50;
-  font-size: 2rem;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
+.form-header-title {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(1.55rem, 5vw, 2.15rem);
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  margin: 0 0 0.35rem;
+  color: #0d3d5c;
+  text-shadow: 2px 2px 0 rgba(255, 255, 255, 0.6), 1px 1px 0 rgba(0, 0, 0, 0.12);
+  transform: rotate(-1.8deg);
 }
 
-.form-header p {
-  color: #7f8c8d;
-  font-size: 1.1rem;
+.form-header-sub {
+  margin: 0;
+  font-family: 'Kalam', cursive;
+  font-size: clamp(1rem, 2.8vw, 1.2rem);
+  font-weight: 700;
+  color: rgba(25, 45, 65, 0.82);
 }
 
-/* Contact Form */
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.15rem;
 }
 
 .name-fields {
@@ -94,298 +235,383 @@
   flex-direction: column;
 }
 
+.contact-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .form-group input,
 .form-group textarea {
-  padding: 1rem;
-  border: 2px solid rgba(255, 255, 255, 0.3);
-  border-radius: 10px;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  background: rgba(255, 255, 255, 0.8);
-  font-family: inherit;
-  backdrop-filter: blur(5px);
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.45rem 0 0.5rem;
+  border: none;
+  border-bottom: 2px solid rgba(25, 55, 85, 0.35);
+  border-radius: 0;
+  font-size: clamp(1rem, 2.5vw, 1.12rem);
+  font-family: 'Kalam', cursive;
+  font-weight: 400;
+  color: #14232f;
+  background: transparent;
+  transition:
+    border-bottom-width 0.22s ease,
+    border-color 0.22s ease,
+    background-color 0.22s ease;
+  resize: vertical;
+  min-height: 0;
+}
+
+.form-group textarea {
+  min-height: 6.5rem;
+  line-height: 1.5rem;
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent calc(1.5rem - 1px),
+    rgba(120, 175, 230, 0.12) calc(1.5rem - 1px),
+    rgba(120, 175, 230, 0.12) 1.5rem
+  );
+  background-size: 100% 1.5rem;
+  background-position: 0 0.15rem;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: rgba(25, 55, 85, 0.42);
+  font-weight: 300;
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
   outline: none;
-  border-color: #3498db;
-  box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.9);
+  border-bottom-width: 3px;
+  border-color: #1a6fb5;
+  background-color: rgba(255, 255, 255, 0.35);
 }
 
-.form-group textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
+/* Neobrutalist pill — aligned with project source buttons */
 .submit-button {
-  background: linear-gradient(45deg, #3498db, #2980b9);
-  color: white;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 25px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  --contact-pill-bg: #ffe0b2;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.35rem;
+  font-family: 'Courier New', monospace;
+  font-size: clamp(0.88rem, 2.2vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: lowercase;
+  color: #000;
+  background: var(--contact-pill-bg);
+  border: 3px solid #000;
+  border-radius: 999px;
+  padding: 0.55em 1.35em;
   cursor: pointer;
-  transition: all 0.3s ease;
-  margin-top: 1rem;
-  box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.12);
+  transition:
+    background 0.26s ease,
+    color 0.26s ease,
+    transform 0.26s ease,
+    box-shadow 0.26s ease;
 }
 
 .submit-button:hover:not(:disabled) {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 25px rgba(52, 152, 219, 0.4);
-  background: linear-gradient(45deg, #2980b9, #1f4e79);
+  background: #000;
+  color: var(--contact-pill-bg);
+  box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.18);
+  transform: rotate(-2deg) translateY(-2px);
+}
+
+.submit-button:active:not(:disabled) {
+  transform: rotate(-1deg) translateY(0) scale(0.98);
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+.submit-button:focus-visible {
+  outline: 2px solid #1a6fb5;
+  outline-offset: 3px;
 }
 
 .submit-button:disabled {
-  opacity: 0.7;
+  opacity: 0.55;
   cursor: not-allowed;
   transform: none;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.08);
 }
 
-/* Success Message */
 .success-message {
   text-align: center;
-  padding: 2rem;
-  background: rgba(39, 174, 96, 0.1);
-  border-radius: 15px;
-  border: 1px solid rgba(39, 174, 96, 0.3);
+  padding: 1.5rem 1rem;
+  border: 2px solid #1a5c38;
+  border-radius: 4px;
+  background: rgba(200, 255, 210, 0.35);
+  box-shadow: 4px 5px 0 rgba(0, 0, 0, 0.06);
 }
 
 .success-message h3 {
-  color: #27ae60;
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
+  font-family: 'Luckiest Guy', cursive;
+  color: #14532d;
+  font-size: 1.35rem;
+  margin: 0 0 0.4rem;
+  letter-spacing: 0.03em;
 }
 
 .success-message p {
-  color: #2c3e50;
-  font-size: 1rem;
   margin: 0;
+  font-family: 'Kalam', cursive;
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #1a2f22;
 }
 
-/* Error Message */
 .error-message {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
-  padding: 1rem;
-  background: rgba(231, 76, 60, 0.1);
-  border: 1px solid rgba(231, 76, 60, 0.3);
-  border-radius: 10px;
-  color: #e74c3c;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
+  padding: 0.85rem 1rem;
+  background: rgba(255, 220, 210, 0.55);
+  border: 2px solid rgba(180, 40, 40, 0.55);
+  border-radius: 4px;
+  color: #7f1d1d;
+  font-family: 'Kalam', cursive;
+  font-weight: 600;
+  font-size: 0.95rem;
+  line-height: 1.35;
 }
 
 .error-icon {
+  flex-shrink: 0;
   font-size: 1.1rem;
 }
 
-/* Contact Info */
-.contact-info {
-  padding: 2rem;
+/* Social — sticker row */
+.contact-info--scrapbook {
+  position: relative;
+  z-index: 3;
+  margin-top: 1.85rem;
+  padding-top: 1.35rem;
+  border-top: 2px dashed rgba(25, 55, 85, 0.22);
   text-align: center;
-  background: rgba(255, 255, 255, 0.1);
-  margin: 2rem;
-  border-radius: 15px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+  backdrop-filter: none;
 }
 
-.contact-info h3 {
-  color: #2c3e50;
-  font-size: 1.5rem;
-  margin-bottom: 1rem;
-  font-weight: bold;
+.contact-info--scrapbook h3 {
+  font-family: 'Luckiest Guy', cursive;
+  font-size: clamp(1.05rem, 3.2vw, 1.35rem);
+  letter-spacing: 0.03em;
+  color: #0d3d5c;
+  margin: 0 0 0.65rem;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .contact-direct-hint {
-  font-size: 0.9rem;
-  color: rgba(44, 62, 80, 0.65);
-  line-height: 1.6;
-  margin: 0 0 1.25rem;
+  font-size: 0.92rem;
+  color: rgba(20, 35, 50, 0.72);
+  line-height: 1.55;
+  margin: 0 0 1.1rem;
+  font-family: 'Kalam', cursive;
+  font-weight: 600;
 }
 
 .contact-direct-label {
-  font-weight: 600;
-  color: rgba(44, 62, 80, 0.85);
+  font-weight: 700;
+  color: rgba(15, 35, 55, 0.88);
 }
 
 .contact-methods {
   display: flex;
   justify-content: center;
-  gap: 2rem;
-  flex-wrap: wrap;
-}
-
-.contact-method {
-  display: flex;
   align-items: center;
-  gap: 0.5rem;
-  padding: 0.8rem 1.2rem;
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: 25px;
-  transition: all 0.3s ease;
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  cursor: pointer;
-  backdrop-filter: blur(5px);
-  text-decoration: none;
-  color: #2c3e50;
-  font-weight: 500;
+  flex-wrap: wrap;
+  gap: 1rem 1.35rem;
+  padding: 0.25rem 0 0.5rem;
 }
 
-.contact-method:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  background: rgba(255, 255, 255, 0.3);
+.contact-method--sticker {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.55rem 1rem;
+  font-family: 'Kalam', cursive;
+  font-weight: 700;
+  font-size: 1rem;
   text-decoration: none;
-  color: #2c3e50;
+  color: #14232f;
+  background: #fff8e8;
+  border: 2.5px solid #000;
+  border-radius: 6px 10px 8px 12px;
+  box-shadow: 3px 4px 0 rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.28s ease,
+    box-shadow 0.28s ease,
+    background 0.22s ease;
+}
+
+.contact-method--sticker-a {
+  transform: rotate(-5deg);
+}
+
+.contact-method--sticker-b {
+  transform: rotate(4.5deg);
+}
+
+.contact-method--sticker:hover,
+.contact-method--sticker:focus-visible {
+  transform: rotate(0deg) scale(1.06);
+  background: #fff;
+  box-shadow: 5px 6px 0 rgba(0, 0, 0, 0.12);
+  outline: none;
+  color: #14232f;
 }
 
 .method-icon {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
 }
 
-/* Reveal Animation */
 .reveal {
   opacity: 0;
-  transform: translateY(50px);
-  transition: all 0.8s ease-out;
+  transform: translateY(36px) rotate(-1.25deg);
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
 }
 
 .reveal.visible {
   opacity: 1;
-  transform: translateY(0);
+  transform: translateY(0) rotate(-1.25deg);
 }
 
-/* Responsive Design */
 @media (max-width: 768px) {
-  .main-content {
-    padding-top: 90px; /* Adjust for mobile navbar */
-    padding: 1.5rem;
+  .contact-main {
+    padding-top: 5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
   }
-  
-  .contact-form-container {
-    padding: 1.5rem;
-    margin: 0.5rem;
+
+  .contact-notebook-page {
+    transform: none;
     max-width: 100%;
+    padding: 1.5rem 1.15rem 1.35rem;
+    padding-left: 1.5rem;
   }
-  
+
+  .contact-notebook-page::before {
+    inset: -8px -4px;
+    opacity: 0.75;
+  }
+
+  .contact-washi--left {
+    left: 5%;
+    transform: rotate(-6deg);
+  }
+
+  .contact-washi--right {
+    right: 6%;
+    transform: rotate(5deg);
+  }
+
+  .contact-postage-stamp {
+    transform: rotate(3deg);
+  }
+
+  .contact-doodle {
+    opacity: 0.55;
+    transform: rotate(-4deg) scale(0.88);
+  }
+
+  .form-header {
+    padding-right: 0;
+  }
+
+  .form-header-title {
+    transform: none;
+  }
+
   .name-fields {
     grid-template-columns: 1fr;
-    gap: 0.8rem;
+    gap: 0.85rem;
   }
-  
+
   .contact-methods {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-  
-  .contact-method {
-    width: 100%;
-    max-width: 250px;
+    flex-direction: row;
     justify-content: center;
+    gap: 0.85rem;
   }
-  
-  .form-header h2 {
-    font-size: 1.6rem;
+
+  .contact-method--sticker {
+    transform: none;
   }
-  
-  .form-header p {
-    font-size: 1rem;
+
+  .contact-method--sticker:hover,
+  .contact-method--sticker:focus-visible {
+    transform: scale(1.04);
+  }
+
+  .reveal {
+    transform: translateY(28px);
+  }
+
+  .reveal.visible {
+    transform: translateY(0);
   }
 }
 
 @media (max-width: 480px) {
-  .main-content {
-    padding-top: 80px;
-    padding: 1rem;
+  .contact-main {
+    padding-top: 4.5rem;
+    padding-bottom: 1.5rem;
   }
-  
-  .contact-form-container {
-    padding: 1rem;
-    margin: 0;
+
+  .contact-postage-stamp {
+    top: 8px;
+    right: 8px;
+    width: 2.65rem;
+    height: 3.1rem;
   }
-  
-  .form-header h2 {
-    font-size: 1.4rem;
+
+  .contact-postage-inner {
+    font-size: 0.48rem;
   }
-  
-  .form-header p {
-    font-size: 0.9rem;
-  }
-  
+
   .form-group input,
   .form-group textarea {
-    padding: 0.7rem;
-    font-size: 0.9rem;
-  }
-  
-  .submit-button {
-    padding: 0.7rem 1.2rem;
-    font-size: 0.9rem;
-  }
-  
-  .contact-method {
-    padding: 0.6rem 1rem;
-    font-size: 0.9rem;
-  }
-  
-  .method-icon {
     font-size: 1rem;
   }
-  
-  .contact-info {
-    margin: 1rem 0;
-    padding: 1rem;
-  }
-  
-  .contact-info h3 {
-    font-size: 1.3rem;
+
+  .submit-button {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
   }
 }
 
-@media (max-width: 360px) {
-  .main-content {
-    padding-top: 70px;
-    padding: 0.8rem;
+@media (prefers-reduced-motion: reduce) {
+  .hidden-text,
+  .reveal,
+  .reveal.visible {
+    transition: none;
+    transform: none;
   }
-  
-  .contact-form-container {
-    padding: 0.8rem;
+
+  .contact-notebook-page {
+    transform: none;
   }
-  
-  .form-header h2 {
-    font-size: 1.2rem;
+
+  .submit-button:hover:not(:disabled),
+  .submit-button:active:not(:disabled) {
+    transform: none;
   }
-  
-  .form-header p {
-    font-size: 0.8rem;
-  }
-  
-  .form-group input,
-  .form-group textarea {
-    padding: 0.6rem;
-    font-size: 0.85rem;
-  }
-  
-  .submit-button {
-    padding: 0.6rem 1rem;
-    font-size: 0.85rem;
-  }
-  
-  .contact-method {
-    padding: 0.5rem 0.8rem;
-    font-size: 0.85rem;
-  }
-  
-  .contact-info h3 {
-    font-size: 1.1rem;
+
+  .contact-method--sticker:hover,
+  .contact-method--sticker:focus-visible {
+    transform: none;
   }
 }
