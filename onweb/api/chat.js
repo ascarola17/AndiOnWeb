@@ -1,4 +1,6 @@
-import { PUBLIC_PROFILE, PUBLIC_PROJECTS } from '../src/data/publicPortfolio.mjs';
+import portfolio from '../src/data/publicPortfolio.cjs';
+
+const { PUBLIC_PROFILE, PUBLIC_PROJECTS } = portfolio;
 
 const PRIVATE_REPLY = 'I can share the public project summaries, but internal methods, unpublished results, datasets, and private source code aren’t available here. Use the Contact page to ask Andi what she can discuss.';
 
