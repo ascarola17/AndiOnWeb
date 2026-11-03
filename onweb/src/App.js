@@ -10,8 +10,10 @@ import Navbar from './components/Navbar'; // Import the Navbar component
 import AskAndi from './components/AskAndi';
 import FirstVisitSplash from './components/FirstVisitSplash';
 import GlobalStyle from './styles/GlobalStyles'; // Global styles
+import PageMetadata from './components/PageMetadata';
 
 function App() {
+  const isLocalPreview = ['localhost', '127.0.0.1', '[::1]'].includes(window.location.hostname);
   useEffect(() => {
     const isDesktopFinePointer =
       typeof window !== 'undefined' &&
@@ -51,6 +53,7 @@ function App() {
       <FirstVisitSplash />
       <GlobalStyle />
       <Router>
+        <PageMetadata />
         <Navbar /> {/* Display the navbar at the top */}
         <Routes>
           <Route path="/" element={<Home />} />
@@ -60,8 +63,8 @@ function App() {
         </Routes>
         <AskAndi />
       </Router>
-      <Analytics /> {/* Vercel Analytics */}
-      <SpeedInsights /> {/* Vercel Speed Insights */}
+      {!isLocalPreview && <Analytics />} {/* Vercel Analytics */}
+      {!isLocalPreview && <SpeedInsights />} {/* Vercel Speed Insights */}
     </>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import LazyImage from '../components/LazyImage';
 import '../styles/About.css';
+import '../styles/Scrapbook.css';
 import aboutBackgroundPng from '../images/about.png';
 import keckImage from '../images/keck.JPG';
 import keckPeopleImage from '../images/keck-people.jpg';
@@ -86,39 +87,71 @@ const RESEARCH_PAPERS = [
   {
     title:
       'Learning designs that empower: navigating sandbox data science at the intersection of computing, big data and social media',
-    meta: 'Information and Learning Sciences • 2024 • Cited by 5',
+    meta: 'Information and Learning Sciences • 2024',
   },
   {
     title:
       'Data and social worlds: How data science education supports civic participation and social discourse',
-    meta: 'Proceedings of the International Society for the Learning Sciences • 2024 • Cited by 6',
+    meta: 'Proceedings of the International Society for the Learning Sciences • 2024',
   },
   {
     title: 'Cultural Relevance for Epistemic Practice in High School Computational Data Mining',
-    meta: 'IEEE Frontiers in Education • 2024 • Cited by 1',
+    meta: 'IEEE Frontiers in Education • 2024',
   },
 ];
 
 const WHY_CARDS = [
   {
-    title: 'Ship It Sandy-Style 💪',
-    body: "I like turning ideas into real systems. Whether it's a computer vision pipeline or a full-stack app, I care about shipping things that actually do something.",
+    title: 'The Sandy Cheeks department',
+    body: 'Research at the Keck Center keeps me close to real engineering problems. There’s a lot to learn when your software has to help someone do their actual work.',
   },
   {
-    title: 'All-In on the AI Deep End 🤖',
-    body: "Recently switched my master's focus to AI. Machine learning, automation, and intelligent systems are where I spend most of my energy right now.",
+    title: 'In the AI deep end',
+    body: 'My graduate studies focus on AI. I get to spend my time asking “Could this work?” and finding out. Sometimes the answer requires another attempt.',
   },
   {
-    title: 'Keck Lab, Real Hardware Energy 🔧',
-    body: "I've done research through UTEP and the Keck Center on real engineering problems — the kind where the code has to actually work, not just run.",
+    title: 'A little closer to home',
+    body: 'BorderETA comes from a place I know: El Paso and Juárez. I’m working on making crossing information more useful for the people who depend on it.',
   },
   {
-    title: 'SpongeBob Vibes on Purpose 🧽',
-    body: "I take my work seriously but I'm not trying to sound like a robot. The SpongeBob portfolio is intentional. Ambition with personality.",
+    title: 'The jellyfish were my idea',
+    body: 'The work gets plenty of serious hours. This corner of the internet gets SpongeBob, questionable puns, and a little room to play.',
   },
 ];
 
 /** Original carousel order, then newer life photos (WebP stem = public/images/{stem}.webp). */
+const PHOTO_DIMENSIONS = {
+  '5k': [4536, 8064],
+  'funnygym': [1536, 2048],
+  'pinball': [1536, 2048],
+  'climb': [940, 1312],
+  'dog': [3024, 4032],
+  'andicat': [1179, 1575],
+  'afterladygagaconcert': [1536, 2048],
+  'bigfam': [2048, 1786],
+  'daisythedog': [1536, 2048],
+  'delicious': [1536, 2730],
+  'family': [2048, 1536],
+  'golfwithfriends': [2048, 1536],
+  'gradsoon': [1536, 2048],
+  'halloween': [1536, 2048],
+  'jonanddrone': [1536, 2048],
+  'legos': [1536, 2048],
+  'lockedin': [1536, 2048],
+  'meandcousin': [2048, 1536],
+  'meandfriend': [2048, 1536],
+  'meandjonpitch': [2048, 1536],
+  'puttputt': [1536, 2048],
+  'redbull': [1206, 2144],
+  'rockclimb': [1536, 2730],
+  'shopping': [1536, 2048],
+  'sillyeyedoctor': [1536, 2048],
+  'snowboarding': [2048, 1536],
+  'swag': [2048, 1536],
+  'vipladygaga': [1536, 2048],
+  'workingondrone': [1536, 2048],
+};
+
 const CAROUSEL_SLIDES = [
   {
     stem: '5k',
@@ -290,13 +323,62 @@ const CAROUSEL_SLIDES = [
     caption: 'Plankton wishes he had this rig 🛠️',
     photoClass: 'carousel-life-photo',
   },
-].map((s) => ({ ...s, alt: s.caption }));
+].map((s) => ({ ...s, alt: s.caption, width: PHOTO_DIMENSIONS[s.stem][0], height: PHOTO_DIMENSIONS[s.stem][1] }));
 
 const About = () => {
   const [aboutBgLoaded, setAboutBgLoaded] = useState(false);
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [showAllPhotos, setShowAllPhotos] = useState(true);
+  const [selectedPhoto, setSelectedPhoto] = useState(null);
+  const photoDialogRef = useRef(null);
   const carouselContainerRef = useRef(null);
   const carouselCount = CAROUSEL_SLIDES.length;
+  const chapterNavRef = useRef(null);
+  const [activeChapter, setActiveChapter] = useState('aboutText');
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const targets = document.querySelectorAll('.scrapbook-about .carousel-slide, .scrapbook-about .why-story-card, .scrapbook-about .research-grid-cell');
+    const reveal = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        if (!reducedMotion.matches) entry.target.classList.add('scroll-arrived');
+        reveal.unobserve(entry.target);
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+    targets.forEach(target => reveal.observe(target));
+
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const ids = ['aboutText', 'camera-roll', 'research-notes', 'life-notes'];
+      const current = ids.filter(id => document.getElementById(id)?.getBoundingClientRect().top <= 180).pop() || 'aboutText';
+      setActiveChapter(current);
+      const range = document.documentElement.scrollHeight - window.innerHeight;
+      chapterNavRef.current?.style.setProperty('--reading-progress', `${range > 0 ? Math.min(100, window.scrollY / range * 100) : 0}%`);
+      if (showAllPhotos && current === 'camera-roll') {
+        const photos = [...carouselContainerRef.current.querySelectorAll('.carousel-slide')];
+        let nearest = 0;
+        let distance = Infinity;
+        photos.forEach((photo, index) => {
+          const rect = photo.getBoundingClientRect();
+          const nextDistance = Math.abs(rect.top + Math.min(rect.height / 2, 200) - window.innerHeight * 0.45);
+          if (nextDistance < distance) { distance = nextDistance; nearest = index; }
+        });
+        setCurrentSlide(nearest);
+      }
+    };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    window.addEventListener('scroll', schedule, { passive: true });
+    window.addEventListener('resize', schedule);
+    update();
+    return () => {
+      reveal.disconnect();
+      cancelAnimationFrame(frame);
+      window.removeEventListener('scroll', schedule);
+      window.removeEventListener('resize', schedule);
+    };
+  }, [showAllPhotos]);
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll('.reveal'));
@@ -325,7 +407,7 @@ const About = () => {
 
   useEffect(() => {
     const container = carouselContainerRef.current;
-    if (!container) return;
+    if (!container || showAllPhotos) return;
     const slides = container.querySelectorAll('[data-carousel-track-index]');
     if (!slides.length) return;
 
@@ -358,10 +440,20 @@ const About = () => {
       window.clearInterval(id);
       observer.disconnect();
     };
-  }, [carouselCount]);
+  }, [carouselCount, showAllPhotos]);
+
+  useEffect(() => {
+    if (selectedPhoto !== null && !photoDialogRef.current.open) photoDialogRef.current.showModal();
+  }, [selectedPhoto]);
+
+  const scrollPhotos = (direction) => {
+    const container = carouselContainerRef.current;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    container?.scrollBy({ left: direction * 300, behavior: reduced ? 'instant' : 'smooth' });
+  };
 
   return (
-    <div className="about-container">
+    <div className="about-container field-notebook-about scrapbook-about" id="main-content">
       <BubbleTransition textId="aboutText" delay={3000} />
 
       <img
@@ -383,26 +475,41 @@ const About = () => {
         }}
       />
       
-      {/* Clean & Sleek About Me Section */}
+      <div className="field-book-cover">
+        <p className="field-book-title">About me.</p>
+        <p className="field-book-subtitle">The lab, the border, and life outside the screen.</p>
+        <img className="scrapbook-jelly-sticker" src={`${publicUrl}/images/Karen.webp`} alt="" aria-hidden="true" />
+      </div>
+      <nav className="field-book-tabs reading-chapters" ref={chapterNavRef} aria-label="About page chapters">
+        <div className="reading-chapters-inner">
+          {[['aboutText', 'Hello'], ['camera-roll', 'Camera roll'], ['research-notes', 'Research'], ['life-notes', 'Life outside the shell']].map(([id, label]) =>
+            <a key={id} href={`#${id}`} aria-current={activeChapter === id ? 'location' : undefined}>{label}{id === 'camera-roll' && <span>{carouselCount}</span>}</a>
+          )}
+        </div>
+      </nav>
+      <div className="field-book-pages">
+      <div className="field-book-binding" aria-hidden="true" />
+      <p className="field-page-label">A LITTLE INTRODUCTION</p>
+      {/* Original content and every custom photo retained inside the notebook. */}
       
       {/* About Me and My Why Side by Side */}
       <div className="fade-in-section">
-        <div className="about-why-row reveal hidden-text" id="aboutText">
-          <div className="about-intro-columns">
+        <div className="about-why-row reveal" id="aboutText">
+          <div className="about-intro-columns scrapbook-intro">
             <div className="about-intro-left">
               <div className="about-card">
                 <div className="card-header">
-                  <h1>About Me</h1>
-                  <div className="card-subtitle">CS Student @ UTEP 🎓</div>
+                  <h1>Hi, I’m Andi.</h1>
+                  <div className="card-subtitle">El Paso human. AI graduate student at UTEP.</div>
                 </div>
                 <div className="card-content">
                   <p>
-                    CS student at UTEP, recently went all-in on AI for my master&apos;s.
+                    I’m a graduate student studying artificial intelligence at UTEP, doing research at the Keck Center, and building a few things of my own. Somewhere in there, I decided this website needed jellyfish.
                   </p>
-                  <div className="card-subtitle">Research Meets Real Code 💻</div>
+                  <div className="card-subtitle">Sandy’s lab energy. My own experiments.</div>
                   <p>
-                    I build things that sit at the edge of research and real software —
-                    computer vision, intelligent systems, and tools that actually work.
+                    I like finding out whether an idea can survive outside my head.
+                    Usually that means building it, breaking it, and trying again.
                   </p>
                 </div>
               </div>
@@ -412,6 +519,8 @@ const About = () => {
                     <LazyImage
                       webpSrc={aboutWebp('me')}
                       src={mePortraitImage}
+                      width={1200}
+                      height={1600}
                       alt="Andi Danielle Scarola"
                       className="me-image"
                     />
@@ -420,9 +529,10 @@ const About = () => {
                 </div>
               </div>
             </div>
+            <a className="about-next-chapter" href="#camera-roll">A little more life below <span aria-hidden="true">↓</span></a>
             <div className="about-intro-right">
               <div className="my-why-section">
-                <h3>Why?</h3>
+                <h3>Where my days go</h3>
                 <div className="why-story-cards">
                   {WHY_CARDS.map((card, idx) => (
                     <div key={`why-card-${idx}`} className="why-story-card">
@@ -439,25 +549,22 @@ const About = () => {
 
       {/* Photo Carousel — between intro/Why and Education/Keck */}
       <div className="fade-in-section">
-        <div className="photo-carousel reveal">
+        <div className={`photo-carousel reveal${showAllPhotos ? ' is-gallery-grid' : ''}`} id="camera-roll">
+          <p className="field-page-label">THE CAMERA ROLL</p>
+          <p className="scrapbook-gallery-note">The people, places, and occasional side quests.</p>
           <div className="carousel-title-row">
             <div className="carousel-title-container">
               <h3 className="carousel-title">What’s Been Brewing</h3>
             </div>
-            <div
-              className="carousel-scroll-cue"
-              role="note"
-              aria-label="More below — keep scrolling the page"
-            >
-              <span className="carousel-scroll-cue-arrow" aria-hidden="true">
-                ↓
-              </span>
-              <span className="carousel-scroll-cue-label">Keep scrolling</span>
+            <div className="field-gallery-controls">
+              {showAllPhotos && <span className="gallery-reading-count">{String(currentSlide + 1).padStart(2, '0')} / {carouselCount} photos</span>}
+              {!showAllPhotos && <><button type="button" onClick={() => scrollPhotos(-1)} aria-label="Previous photos">←</button><span aria-live="polite">{String(currentSlide + 1).padStart(2, '0')} / {carouselCount}</span><button type="button" onClick={() => scrollPhotos(1)} aria-label="Next photos">→</button></>}
+              <button type="button" className="field-gallery-view" aria-expanded={showAllPhotos} aria-controls="field-photo-gallery" onClick={() => setShowAllPhotos(value => !value)}>{showAllPhotos ? 'Switch to photo strip' : `See all ${carouselCount} photos`}</button>
             </div>
           </div>
-          <div className="carousel-container" ref={carouselContainerRef}>
+          <div className="carousel-container" id="field-photo-gallery" ref={carouselContainerRef} tabIndex={showAllPhotos ? -1 : 0} aria-label="Andi’s personal photo gallery">
             <div className="carousel-track">
-              {[0, 1].flatMap((setIdx) =>
+              {[0].flatMap((setIdx) =>
                 CAROUSEL_SLIDES.map((slide, i) => {
                   const index = setIdx * CAROUSEL_SLIDES.length + i;
                   return (
@@ -466,12 +573,14 @@ const About = () => {
                       className={['carousel-slide', slide.className].filter(Boolean).join(' ')}
                       data-carousel-track-index={index}
                     >
-                      <div className="photo-item polaroid">
+                      <button type="button" className="photo-item polaroid field-photo-button" onClick={() => setSelectedPhoto(i)} aria-label={`Open photo: ${slide.caption}`}>
                         <div className={`photo-placeholder ${slide.photoClass}`}>
                           <LazyImage
                             webpSrc={aboutWebp(slide.stem)}
                             src={slide.src}
                             alt={slide.alt}
+                            width={slide.width}
+                            height={slide.height}
                             loading={
                               index % CAROUSEL_SLIDES.length === currentSlide
                                 ? 'eager'
@@ -485,7 +594,9 @@ const About = () => {
                           />
                         </div>
                         <p className="photo-caption">{slide.caption}</p>
-                      </div>
+                        <span className="scrapbook-photo-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
+                        <span className="field-photo-expand" aria-hidden="true">↗</span>
+                      </button>
                     </div>
                   );
                 })
@@ -497,7 +608,8 @@ const About = () => {
 
       {/* Left: Education + Research Papers stacked; right: Keck polaroid spans full left height */}
       <div className="fade-in-section">
-        <div className="education-research-keck-row">
+        <div className="education-research-keck-row" id="research-notes">
+          <p className="field-page-label">RESEARCH &amp; EDUCATION</p>
           <div className="education-research-keck-columns reveal">
             <div className="education-research-keck-left">
               <div className="education-standalone">
@@ -506,14 +618,14 @@ const About = () => {
                   <div className="education-content">
                     <p>• B.S. in Computer Science — UTEP</p>
                     <p>• Minor in Mathematics</p>
-                    <p>• Fast Track M.S. in Artificial Intelligence</p>
+                    <p>• M.S. in Artificial Intelligence — in progress</p>
                     <p>• GPA: 3.39</p>
                   </div>
                 </div>
               </div>
               <div className="research-papers-section">
                 <div className="research-papers-inner">
-                  <h3>Research Papers</h3>
+                  <h3>A few things I’ve worked on</h3>
                   <div className="papers-list">
                     {RESEARCH_PAPERS.map((paper) => (
                       <AboutCardTilt key={paper.title} className="about-tilt-host--paper">
@@ -543,7 +655,7 @@ const About = () => {
                   <img
                     src={keckImage}
                     alt="Keck Center Building"
-                    style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                    style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '0', display: 'block' }}
                     loading="lazy"
                     decoding="async"
                   />
@@ -569,12 +681,11 @@ const About = () => {
                   <div className="research-content">
                     <div className="research-item">
                       <h4 className="research-subtitle">W.M Keck Center for 3D Innovation</h4>
-                      <p>Developed calibration workflows and control logic for hot-wire and pitot probe data acquisition</p>
-                      <p>Built real-time Flask dashboards for live sensor streaming and motor control</p>
-                      <p>Integrated databases, CSV pipelines, and multi-probe configurations across multiple web platforms</p>
+                      <p>Developing research software for engineering and additive manufacturing workflows</p>
+                      <p>Building tools that help researchers collect and understand experimental data</p>
+                      <p>Connecting research questions with useful software</p>
                       <p>
-                        Currently working on a computer vision pipeline for fiber segmentation: tiling large SEM images,
-                        stitching outputs, and extracting orientation + angle metrics
+                        Applying computer vision to materials imagery and composite microstructures
                       </p>
                     </div>
                   </div>
@@ -590,9 +701,9 @@ const About = () => {
                   <div className="research-content">
                     <div className="research-item">
                       <h4>AI-EDGE (NSF / OSU)</h4>
-                      <p>Built a real-time ASL interpreter using MediaPipe + LSTM designed for edge deployment</p>
-                      <p>Created custom datasets and evaluation tools to test live sign classification performance</p>
-                      <p>Designed visualizations and Colab demos to make edge ML systems easier to understand and showcase</p>
+                      <p>Built an ASL letter-recognition research prototype</p>
+                      <p>Evaluated how the prototype performed on live gestures</p>
+                      <p>Created demonstrations to communicate the research</p>
                     </div>
                   </div>
                   </div>
@@ -638,7 +749,7 @@ const About = () => {
                     <img
                       src={keckPeopleImage}
                       alt="Keck People"
-                      style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                      style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '0', display: 'block' }}
                       loading="lazy"
                       decoding="async"
                     />
@@ -653,11 +764,11 @@ const About = () => {
 
       {/* Combined Goals & Fun Stuff with Photo */}
       <div className="fade-in-section">
-        <div className="content-row reverse">
+        <div className="content-row reverse" id="life-notes">
           <div className="content-left">
             <div className="goals-fun-stack">
               <div className="goals-section">
-                <h3>Goals</h3>
+                <h3>Still on the list</h3>
                 <div className="goals-content">
                   <p>• Earn a PhD in Computer Science</p>
                   <p>• Become a Software Engineer</p>
@@ -669,8 +780,8 @@ const About = () => {
               <div className="fun-section">
                 <h3>Life outside the shell</h3>
                 <div className="fun-content">
-                  <p>Rock walls, pickleball courts, and the gym that’s where I yearn to be. When I’m not building, I’m moving.</p>
-                  <p>Motto: Not everything has to be perfect to be real.</p>
+                  <p>Rock walls, pickleball courts, and the gym. Apparently sitting at a keyboard all day makes me want to climb something afterward.</p>
+                  <p>Current reminder: not everything has to be perfect to be real.</p>
                 </div>
               </div>
             </div>
@@ -681,7 +792,7 @@ const About = () => {
                 <img
                   src={gymImage}
                   alt="My Happy Place"
-                  style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: '8px', display: 'block' }}
+                  style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '0', display: 'block' }}
                   loading="lazy"
                   decoding="async"
                 />
@@ -727,6 +838,17 @@ const About = () => {
           </div>
         </div>
       </div>
+      <p className="field-book-signoff">more lore as it develops. — Andi</p>
+      </div>
+      <dialog className="field-photo-lightbox" ref={photoDialogRef} onClose={() => setSelectedPhoto(null)} onClick={event => { if (event.target === event.currentTarget) photoDialogRef.current.close(); }} onKeyDown={event => {
+        if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') {
+          event.preventDefault();
+          setSelectedPhoto(index => (index + (event.key === 'ArrowRight' ? 1 : -1) + carouselCount) % carouselCount);
+        }
+      }} aria-label="Photo viewer">
+        <button className="field-lightbox-close" type="button" onClick={() => photoDialogRef.current.close()} aria-label="Close photo">×</button>
+        {selectedPhoto !== null && <><figure><img src={CAROUSEL_SLIDES[selectedPhoto].src} alt={CAROUSEL_SLIDES[selectedPhoto].alt}/><figcaption>{CAROUSEL_SLIDES[selectedPhoto].caption}</figcaption></figure><div className="field-lightbox-controls"><button type="button" onClick={() => setSelectedPhoto(index => (index - 1 + carouselCount) % carouselCount)} aria-label="Previous photo">←</button><span>{selectedPhoto + 1} / {carouselCount}</span><button type="button" onClick={() => setSelectedPhoto(index => (index + 1) % carouselCount)} aria-label="Next photo">→</button></div></>}
+      </dialog>
     </div>
   );
 };

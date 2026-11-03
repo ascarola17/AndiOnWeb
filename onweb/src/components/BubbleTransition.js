@@ -8,7 +8,7 @@ const BubbleTransition = ({ textId = 'pageText' }) => {
 
     // Prevent duplicate bubbles
     if (transition && transition.children.length === 0) {
-      for (let i = 0; i < 1600; i++) {
+      for (let i = 0; i < 48; i++) {
         const bubble = document.createElement('span');
         bubble.className = 'bubble';
 

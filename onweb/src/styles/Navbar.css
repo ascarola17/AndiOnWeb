@@ -383,3 +383,5 @@
     transition: none;
   }
 }
+/* Keep the original navigation readable over the notebook's light paper. */
+.navbar.navbar--notebook,.navbar.navbar--notebook.scrolled{background:rgba(43,73,68,.94);border-bottom:1px solid #d7dfb438;box-shadow:0 3px 12px #19382f20}

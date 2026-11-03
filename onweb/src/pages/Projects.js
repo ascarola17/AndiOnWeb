@@ -2,78 +2,50 @@ import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from
 import BubbleTransition from '../components/BubbleTransition';
 import '../styles/Projects.css';
 import labBackground from '../images/Bp.jpeg';
+import { PUBLIC_PROJECTS } from '../data/publicPortfolio.mjs';
+
+function WebsiteScreen({ project, active }) {
+  const screenRef = useRef(null);
+  const [ready, setReady] = useState(false);
+  useEffect(() => {
+    const screen = screenRef.current;
+    if (!screen) return;
+    const resize = () => screen.style.setProperty('--site-scale', screen.clientWidth / 1280);
+    resize();
+    const observer = new ResizeObserver(resize);
+    observer.observe(screen);
+    return () => observer.disconnect();
+  }, []);
+  return <a ref={screenRef} className="project-site-screen" href={project.projectLink} target="_blank" rel="noopener noreferrer" aria-label={`Open ${project.title} website (new tab)`}>
+    <img src={project.poster} alt={`${project.title} public website preview`} className="project-site-poster" />
+    {project.livePreview && active && <iframe className={`project-live-site${ready ? ' is-ready' : ''}`} src={project.projectLink} title={`${project.title} live website preview`} tabIndex={-1} aria-hidden="true" sandbox="allow-scripts allow-same-origin" referrerPolicy="no-referrer" onLoad={() => setReady(true)} />}
+    <span className="project-site-open">{project.livePreview && ready && active ? 'Live website' : 'Website preview'} <span>Open {project.title} ↗</span></span>
+  </a>;
+}
 
 const Projects = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-  const [parallax, setParallax] = useState({ x: 0, y: 0 });
-  const [lockedToast, setLockedToast] = useState(false);
-  const lockedToastTimer = useRef(null);
   const carouselViewportRef = useRef(null);
   const activeIndexRef = useRef(0);
   const pendingEnterRef = useRef(null);
   const [carouselViewportWidth, setCarouselViewportWidth] = useState(0);
   const [cardMotionClass, setCardMotionClass] = useState('');
 
-  const projects = [
-    {
-      title: 'Snap Market',
-      description: 'SnapMarket is a cutting-edge web application designed to streamline product identification and comparison using advanced AI and web technologies.',
-      videoUrl: 'https://www.youtube.com/embed/cj87lIUYVZQ?autoplay=1&loop=1&playlist=cj87lIUYVZQ&controls=0&showinfo=0&rel=0',
-      githubLink: 'https://github.com/ascarola17/TikTokJam',
-      isComingSoon: false,
-    },
-    {
-      title: 'DUI Risk Radar',
-      description: 'DUI Risk Heatmap is a web application designed to visualize DUI risk areas using a heatmap overlay on a Google Map. ',
-      videoUrl: 'https://www.youtube.com/embed/j8vquDaPgc8?autoplay=1&loop=1&playlist=j8vquDaPgc8&controls=0&showinfo=0&rel=0',
-      githubLink: 'https://github.com/ascarola17/DUI',
-      isComingSoon: false,
-    },
-    {
-      title: 'Fight Coach',
-      description: 'Developed a real-time pose analysis tool for combat sports using MediaPipe to extract 2D skeletal keypoints from recorded fight videos.',
-      videoUrl: 'https://www.youtube.com/embed/_qpvr-0M2Ec?autoplay=1&loop=1&playlist=_qpvr-0M2Ec&controls=0&showinfo=0&rel=0',
-      githubLink: 'https://github.com/ascarola17/Fight-coach',
-      isComingSoon: false,
-    },
-    {
-      title: 'ASL Interpreter',
-      description: 'Developed a real-time interpreter using pose estimation and MediaPipe for live ASL classification.',
-      videoUrl: 'https://www.youtube.com/embed/yWli0SsIAIU?autoplay=1&loop=1&playlist=yWli0SsIAIU&controls=0&showinfo=0&rel=0',
-      githubLink: 'https://github.com/ascarola17/Fight-coach',
-      isComingSoon: false,
-    },
-    {
-      title: 'AI Secretary — Sophia',
-      description: 'An autonomous AI assistant handling scheduling, communication, and task routing for small businesses. Powered by multi-agent orchestration.',
-      videoUrl: null,
-      githubLink: null,
-      isComingSoon: true,
-      classifiedId: 'FILE-0047-AS',
-      clearanceLevel: 'RESTRICTED',
-      eta: 'PENDING DEPLOYMENT',
-    },
-    {
-      title: 'Marketing Agents',
-      description: 'Multi-agent pipeline for automated content generation, audience targeting, and campaign analytics. Built for El Paso market validation.',
-      videoUrl: null,
-      githubLink: null,
-      isComingSoon: true,
-      classifiedId: 'FILE-0089-MA',
-      clearanceLevel: 'RESTRICTED',
-      eta: 'PENDING DEPLOYMENT',
-    },
-    {
-      title: 'Drone Recon Feed',
-      description: 'Live aerial intelligence system using autonomous drone navigation and real-time computer vision for first-response situational awareness.',
-      videoUrl: null,
-      githubLink: null,
-      isComingSoon: true,
-      classifiedId: 'FILE-0112-DR',
-      clearanceLevel: 'TOP SECRET',
-      eta: 'FOOTAGE INCOMING',
-    },
-  ];
+  const projects = PUBLIC_PROJECTS.map(project => ({
+    id: project.id,
+    title: project.title,
+    category: project.category,
+    status: project.status,
+    description: project.description,
+    videoUrl: project.video ? project.video.replace('watch?v=', 'embed/') + '?rel=0&playsinline=1' : null,
+    watchUrl: project.video || null,
+    githubLink: project.github || null,
+    projectLink: project.link || null,
+    poster: project.poster || null,
+    posterAlt: project.posterAlt || null,
+    livePreview: Boolean(project.livePreview),
+    underWraps: Boolean(project.underWraps),
+  }));
 
   const currentProject = projects[currentProjectIndex];
   const n = projects.length;
@@ -177,40 +149,10 @@ const Projects = () => {
   }, [scrollToIndex, n]);
 
   useEffect(() => {
-    document.title = currentProject.isComingSoon
-      ? `🪣 ${currentProject.title} — Coming Soon`
-      : `📺 ${currentProject.title} — Andi on the Web`;
-    return () => { document.title = 'Andi on the Web'; };
-  }, [currentProjectIndex, currentProject.isComingSoon, currentProject.title]);
+    document.title = `${currentProject.title} | Projects | Andi Scarola`;
+  }, [currentProject.title]);
 
-  useEffect(() => {
-    const mqReduce = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const mqFine = window.matchMedia('(hover: hover) and (pointer: fine)');
-    if (mqReduce.matches || !mqFine.matches) return;
 
-    const onMove = (e) => {
-      const cx = window.innerWidth / 2;
-      const cy = window.innerHeight / 2;
-      const nx = (e.clientX - cx) / cx;
-      const ny = (e.clientY - cy) / cy;
-      setParallax({ x: nx * 10, y: ny * 8 });
-    };
-    window.addEventListener('mousemove', onMove, { passive: true });
-    return () => window.removeEventListener('mousemove', onMove);
-  }, []);
-
-  useEffect(() => () => {
-    if (lockedToastTimer.current) clearTimeout(lockedToastTimer.current);
-  }, []);
-
-  const flashLockedToast = () => {
-    if (lockedToastTimer.current) clearTimeout(lockedToastTimer.current);
-    setLockedToast(true);
-    lockedToastTimer.current = setTimeout(() => {
-      setLockedToast(false);
-      lockedToastTimer.current = null;
-    }, 2600);
-  };
 
   const goCarouselPrev = () => {
     if (currentProjectIndex <= 0) return;
@@ -226,8 +168,7 @@ const Projects = () => {
     scrollToIndex(t);
   };
 
-  const onDotClick = (index) => {
-    if (projects[index].isComingSoon) flashLockedToast();
+  const onProjectSelect = (index) => {
     const cur = currentProjectIndex;
     if (index !== cur) {
       pendingEnterRef.current = {
@@ -235,13 +176,12 @@ const Projects = () => {
         dir: index > cur ? 'next' : 'prev',
       };
     }
-    scrollToIndex(index);
+    const root = carouselViewportRef.current;
+    if (root) root.scrollTo({ left: index * root.clientWidth, behavior: 'instant' });
+    setCurrentProjectIndex(index);
   };
 
-  const shouldLoadVideo = (index) => {
-    const d = Math.abs(index - currentProjectIndex);
-    return d <= 1;
-  };
+  const shouldLoadVideo = (index) => index === currentProjectIndex;
 
   const slideInlineStyle =
     carouselViewportWidth > 0
@@ -259,6 +199,7 @@ const Projects = () => {
       style={slideInlineStyle}
       data-carousel-index={index}
       aria-label={`${project.title}, project ${index + 1} of ${n}`}
+      inert={index !== currentProjectIndex}
     >
       <div className="portal-card-sway">
         <div
@@ -272,28 +213,30 @@ const Projects = () => {
           aria-label={`${project.title} monitor`}
         >
           <div className="portal-window-screen">
-            {!project.isComingSoon && shouldLoadVideo(index) ? (
+            {project.videoUrl && shouldLoadVideo(index) ? (
               <iframe
                 className="portal-iframe"
                 src={project.videoUrl}
-                title={project.title}
-                frameBorder="0"
+                title={`${project.title} video demo`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
+                referrerPolicy="strict-origin-when-cross-origin"
               />
-            ) : !project.isComingSoon ? (
+            ) : project.videoUrl ? (
               <div className="portal-iframe-placeholder" aria-hidden="true" />
+            ) : project.projectLink && project.poster ? (
+              <WebsiteScreen project={project} active={index === currentProjectIndex} />
+            ) : project.poster ? (
+              <figure className={`project-picture-screen${project.underWraps ? ' is-illustration' : ''}`}>
+                <img src={project.poster} alt={project.posterAlt} loading="lazy" />
+                <figcaption>{project.posterAlt}</figcaption>
+              </figure>
             ) : (
-              <div className="portal-classified">
-                <div className="static-noise" />
-                <div className="static-scanlines" />
-                <div className="portal-classified-text">
-                  <div className="classified-stamp">CLASSIFIED</div>
-                  <p className="portal-classified-desc">{project.description}</p>
-                  <div className="classified-eta">
-                    <span className="status-blink">◉</span> {project.eta}
-                  </div>
-                </div>
+              <div className="project-overview-screen">
+                <span className="overview-category">{project.category}</span>
+                <strong>{project.title}</strong>
+                <span className="overview-rule" aria-hidden="true" />
+                <span className="overview-status">{project.underWraps ? 'Under wraps · In development' : project.status}</span>
               </div>
             )}
           </div>
@@ -303,23 +246,20 @@ const Projects = () => {
         </div>
 
         <div className="portal-hud" data-project-slot={String(index)}>
-          <div className="hud-title">{project.title}</div>
+          <h2 className="hud-title">{project.title}</h2>
+          <p className="project-card-meta">{project.category} <span aria-hidden="true">/</span> {project.status}</p>
           <div className="portal-hud-row">
             <div className="hud-desc-note">
               <span className="hud-desc-tape" aria-hidden="true" />
               <p className="hud-desc">{project.description}</p>
             </div>
-            {project.githubLink && !project.isComingSoon && (
-              <a
-                href={project.githubLink}
-                target="_blank"
-                rel="noreferrer"
-                className="hud-github hud-github-pill"
-              >
-                source → github
-              </a>
-            )}
+
           </div>
+          {(project.projectLink || project.githubLink || project.watchUrl) && <footer className="project-bottom-links" aria-label={`${project.title} links`}>
+            {project.projectLink && <a href={project.projectLink} target="_blank" rel="noreferrer">Visit project <span aria-hidden="true">↗</span></a>}
+            {project.githubLink && <a href={project.githubLink} target="_blank" rel="noreferrer">View code <span aria-hidden="true">↗</span></a>}
+            {project.watchUrl && <a href={project.watchUrl} target="_blank" rel="noreferrer">Watch on YouTube <span aria-hidden="true">↗</span></a>}
+          </footer>}
         </div>
         </div>
       </div>
@@ -327,15 +267,12 @@ const Projects = () => {
   );
 
   return (
-    <div className="projects-wrapper">
+    <main className="projects-wrapper projects-media-refresh" id="main-content">
       <BubbleTransition />
 
       <div className="lab-stage">
         <div
           className="lab-stage-parallax"
-          style={{
-            transform: `translate3d(${parallax.x}px, ${parallax.y}px, 0) scale(1.02)`,
-          }}
         >
         <div
           className="background-container"
@@ -348,6 +285,7 @@ const Projects = () => {
           </div>
 
           <p className="lab-stamp" aria-hidden="true">PROPERTY OF PLANKTON LABS</p>
+          <header className="project-page-intro"><h1>From the lab.</h1><p>A few things I’ve built, and a few still in the works.</p></header>
 
           <div className="projects-carousel-shell">
             <button
@@ -443,42 +381,21 @@ const Projects = () => {
             </button>
           </div>
 
-          <div
-            className="projects-carousel-dots"
-            role="tablist"
-            aria-label={`Choose project, ${currentProjectIndex + 1} of ${n}`}
-          >
-            {projects.map((project, index) => (
-              <button
-                key={`dot-${project.title}`}
-                type="button"
-                role="tab"
-                aria-selected={index === currentProjectIndex}
-                aria-label={`${project.title}, project ${index + 1} of ${n}`}
-                className={[
-                  'projects-carousel-dot',
-                  index === currentProjectIndex ? 'is-active' : '',
-                  project.isComingSoon ? 'is-locked' : '',
-                ].filter(Boolean).join(' ')}
-                onClick={() => onDotClick(index)}
-              />
-            ))}
-          </div>
-
-          <p className="swipe-hint">Scroll or swipe sideways to browse projects</p>
-
-          <div
-            className={`plankton-toast${lockedToast ? ' plankton-toast--visible' : ''}`}
-            role="status"
-            aria-live="polite"
-            aria-hidden={!lockedToast}
-          >
-            PLANKTON&apos;S STILL WORKING ON IT...
+          <div className="project-picker">
+            <label htmlFor="project-choice">Choose a project <span>{currentProjectIndex + 1} / {n}</span></label>
+            <select id="project-choice" value={currentProjectIndex} onChange={event => onProjectSelect(Number(event.target.value))}>
+              <optgroup label="Current work">
+                {projects.map((project,index) => project.category !== 'Past work' ? <option key={project.id} value={index}>{project.title}{project.videoUrl ? ' · Video demo' : project.projectLink ? ' · Project link' : ''}</option> : null)}
+              </optgroup>
+              <optgroup label="Past work & demos">
+                {projects.map((project,index) => project.category === 'Past work' ? <option key={project.id} value={index}>{project.title}{project.videoUrl ? ' · Video demo' : ''}</option> : null)}
+              </optgroup>
+            </select>
           </div>
         </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

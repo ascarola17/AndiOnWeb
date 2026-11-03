@@ -3,7 +3,7 @@ import '../styles/KarenChat.css';
 
 const responses = {
   projects:
-    "Plankton has analyzed Andi's work. Projects include SnapMarket, DUI Risk Radar, Fight Coach, ASL Interpreter, and three classified ones still in development.",
+    "Plankton has analyzed Andi's work. Projects include BorderETA, manufacturing research, materials image analysis, and past hackathon builds. Check the Projects page for the public summaries.",
   skills:
     'Skills on file: React, Python, MediaPipe, computer vision, LSTM models, machine learning. Not bad for a surface dweller.',
   contact:

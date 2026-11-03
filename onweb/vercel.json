@@ -6,7 +6,19 @@
   },
   "rewrites": [
     {
-      "source": "/((?!api/).*)",
+      "source": "/about",
+      "destination": "/about/index.html"
+    },
+    {
+      "source": "/projects",
+      "destination": "/projects/index.html"
+    },
+    {
+      "source": "/contact",
+      "destination": "/contact/index.html"
+    },
+    {
+      "source": "/((?!api/|sitemap\\.xml$|robots\\.txt$|static/|images/|project-previews/|favicon\\.ico$|manifest\\.json$|logo192\\.png$|logo512\\.png$|AndiScarola_Resume\\.pdf$).*)",
       "destination": "/index.html"
     }
   ]

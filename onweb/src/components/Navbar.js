@@ -26,7 +26,7 @@ const Navbar = () => {
   };
 
   return (
-    <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+    <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${location.pathname === '/about' ? 'navbar--notebook' : ''}`}>
       <div className="navbar-container">
         <div className="navbar-logo">
           <span className="logo-text">Andi on the Web</span>

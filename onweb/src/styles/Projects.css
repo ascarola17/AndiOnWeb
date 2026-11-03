@@ -1178,3 +1178,59 @@
     transform: none !important;
   }
 }
+
+/* Keep the custom lab scene; make demos and project links easier to reach. */
+.projects-media-refresh .background-container{height:auto;min-height:100vh;padding:100px 0 32px;background-attachment:fixed}
+.projects-media-refresh .lab-stage-parallax{transform:none!important;transition:none;will-change:auto}
+.projects-media-refresh .lab-stamp{top:88px;right:24px;animation:none;font-size:8px;color:#f6e88c8c}
+.project-page-intro{position:relative;text-align:center;z-index:3;padding:0 24px 20px;color:#fff6d6}
+.project-page-intro h1{font:400 clamp(24px,3vw,36px)/1.15 'Luckiest Guy',cursive;color:#f2d25f;letter-spacing:1px;margin:0 0 9px;text-shadow:2px 3px 0 #132528}
+.project-page-intro p{font:12px/1.6 'Poppins',Arial,sans-serif;color:#f2e7c6;margin:0;text-shadow:0 2px 3px #102528}
+.projects-media-refresh .projects-carousel-shell{position:relative;inset:auto;align-items:center;padding:4px 14px 12px;min-height:0}
+.projects-media-refresh .projects-carousel-viewport{overflow-y:hidden;scrollbar-width:none}
+.projects-media-refresh .projects-carousel-viewport::-webkit-scrollbar{display:none}
+.projects-media-refresh .projects-carousel-track{align-items:stretch}
+.projects-media-refresh .portal-card{width:min(84%,740px);gap:0;transform:none;filter:none}
+.projects-media-refresh .portal-card-sway{animation:none;align-items:stretch}
+.projects-media-refresh .projects-carousel-slide:hover .portal-card{transform:none;filter:none}
+.projects-media-refresh .portal-window{background:#0a1614;border:8px solid #4b655b;border-radius:13px 13px 0 0;box-shadow:inset 0 0 0 2px #a3b09a,0 6px 24px #07181766;--screen-inset-top:2%;--screen-inset-bottom:6%;--screen-inset-x:2%}
+.projects-media-refresh .portal-iframe{transform:translate(-50%,-50%);border-radius:3px}
+.projects-media-refresh .portal-watermark{font-size:6px;bottom:0;letter-spacing:.1em;color:#b8c4a3}
+.project-overview-screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:22px;background:radial-gradient(ellipse at 50% 10%,#2d5b48,#132c27 75%);color:#e5efce;text-align:center}
+.overview-category{font:10px/1.5 'Courier New',monospace;letter-spacing:.2em;text-transform:uppercase;color:#afc5a7}
+.project-overview-screen strong{font:400 clamp(23px,3.4vw,40px)/1.15 'Luckiest Guy',cursive;letter-spacing:1px;max-width:85%;color:#f1d477;text-shadow:1px 3px 0 #0d2721}
+.overview-rule{width:45px;border-top:1px solid #9eb7906e}
+.overview-status{font:10px/1.5 'Poppins',Arial,sans-serif;color:#adc5ab}
+.projects-media-refresh .portal-hud{background:#fff7dc;pointer-events:auto;padding:23px 26px 19px;border-radius:0 0 9px 9px;margin-top:0;border:1px solid #d6c599;box-shadow:0 4px 0 #786e4d4d;gap:0}
+.projects-media-refresh .hud-title{font:400 clamp(22px,2.8vw,30px)/1.2 'Luckiest Guy',cursive;color:#254e46;text-shadow:none;letter-spacing:1px;margin:0 0 8px}
+.project-card-meta{font:9px/1.5 'Poppins',Arial,sans-serif;color:#8c7b55;margin:0 0 15px}
+.project-card-meta span{margin:0 6px}
+.projects-media-refresh .portal-hud-row{display:block}
+.projects-media-refresh .hud-desc-note{background:none;border:0;box-shadow:none;padding:0;width:100%;max-width:none;transform:none!important;animation:none;margin:0}
+.projects-media-refresh .hud-desc-tape{display:none}
+.projects-media-refresh .hud-desc{font:13px/1.8 'Poppins',Arial,sans-serif;color:#526353;margin:0;text-shadow:none}
+.project-bottom-links{display:flex;gap:22px;flex-wrap:wrap;margin-top:20px;padding-top:16px;border-top:1px solid #b7ad874f;position:relative;z-index:4;pointer-events:auto}
+.project-bottom-links a{font:600 11px/1.5 'Poppins',Arial,sans-serif;color:#785332;text-decoration:underline;text-underline-offset:4px;pointer-events:auto}
+.project-bottom-links a:hover{color:#294f43}.project-bottom-links a span{margin-left:4px}
+.project-picker{position:relative;z-index:4;width:min(500px,calc(100% - 60px));margin:23px auto 0;background:#193a32e8;padding:13px 18px 16px;border:1px solid #8395747d;border-radius:8px;box-shadow:0 4px 10px #07181733;color:#e8eacb}
+.project-picker label{display:flex;justify-content:space-between;align-items:center;font:500 10px/1.5 'Poppins',Arial,sans-serif;margin-bottom:9px;letter-spacing:.02em}
+.project-picker label span{font:10px 'Courier New',monospace;color:#d2bc6f}
+.project-picker select{width:100%;padding:10px 32px 10px 12px;min-height:42px;background:#fff8df;border:1px solid #bdc49f;border-radius:4px;color:#284b41;font:12px/1.5 'Poppins',Arial,sans-serif;cursor:pointer}
+.projects-media-refresh :is(a,button,select):focus-visible{outline:3px solid #f2ce69;outline-offset:4px}
+.projects-media-refresh .projects-carousel-arrow{width:45px;height:67px;margin:0;align-self:center;background:#16372de6;color:#f3d16f;border:1px solid #a7b98588;box-shadow:none}
+.projects-media-refresh .projects-carousel-arrow-inner{animation:none}
+@media(max-width:768px){.projects-media-refresh .background-container{padding-top:92px;padding-bottom:30px;background-attachment:scroll}.projects-media-refresh .lab-stamp{display:none}.project-page-intro{padding-bottom:17px}.project-page-intro p{font-size:10px}.projects-media-refresh .projects-carousel-shell{padding:0 8px 10px;gap:3px}.projects-media-refresh .portal-card{width:94%;margin:0 auto;max-width:580px}.projects-media-refresh .projects-carousel-arrow{width:28px;height:48px;flex-basis:28px;border-radius:5px}.projects-media-refresh .projects-carousel-arrow-svg{width:17px;height:27px}.projects-media-refresh .portal-window{border-width:5px}.projects-media-refresh .portal-hud{padding:18px 18px 17px}.projects-media-refresh .hud-title{font-size:23px}.projects-media-refresh .hud-desc{font-size:12px;line-height:1.8}.project-overview-screen{gap:10px;padding:15px}.project-overview-screen strong{font-size:25px;max-width:94%}.overview-category{font-size:8px}.overview-status{font-size:9px}.project-bottom-links{gap:17px;margin-top:17px;padding-top:14px}.project-bottom-links a{font-size:10px}.project-picker{margin-top:19px;width:calc(100% - 44px);padding:12px 14px}.project-picker select{font-size:11px}.project-picker label{font-size:9px}}
+@media(max-width:400px){.projects-media-refresh .portal-card{width:100%}.projects-media-refresh .projects-carousel-arrow{width:25px;flex-basis:25px}.projects-media-refresh .projects-carousel-shell{padding-left:5px;padding-right:5px}.project-overview-screen strong{font-size:21px}.project-overview-screen{gap:7px}.overview-rule{width:28px}.overview-status{font-size:8px}.projects-media-refresh .hud-title{font-size:21px}.projects-media-refresh .hud-desc{font-size:11px}}
+.project-site-screen{position:absolute;inset:0;display:block;background:#fff;overflow:hidden;text-decoration:none;cursor:pointer}
+.project-site-poster{width:100%;height:100%;object-fit:contain;display:block;background:#fff}
+.project-live-site{position:absolute;left:0;top:0;width:1280px;height:720px;border:0;transform:scale(var(--site-scale,0));transform-origin:top left;pointer-events:none;opacity:0;background:white}
+.project-live-site.is-ready{opacity:1}
+.project-site-open{position:absolute;bottom:0;left:0;right:0;z-index:2;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:#173f38f5;color:#fffaf0;font:11px/1.5 'Poppins',sans-serif}
+.project-site-open>span{color:#ffe16a;font-weight:600}
+.project-site-screen:hover .project-site-open{background:#245749}
+.project-site-screen:focus-visible{outline:4px solid #ffe16a;outline-offset:-5px}
+.project-picture-screen{position:absolute;inset:0;margin:0;display:flex;flex-direction:column;background:#172f28}
+.project-picture-screen img{width:100%;height:calc(100% - 32px);min-height:0;object-fit:contain;display:block}
+.project-picture-screen figcaption{padding:8px 12px;color:#d4e4cd;font:10px/1.5 'Poppins',sans-serif;text-align:center}
+.project-picture-screen.is-illustration img{padding:24px}
+@media(max-width:550px){.project-site-open{padding:8px;font-size:9px}.project-picture-screen figcaption{font-size:8px;padding:6px}.project-picture-screen.is-illustration img{padding:12px}}

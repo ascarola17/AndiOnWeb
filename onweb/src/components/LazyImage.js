@@ -1,84 +1,39 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const supportsNativeLazy =
-  typeof HTMLImageElement !== 'undefined' &&
-  'loading' in HTMLImageElement.prototype;
-
+// Let the browser display decoded images directly. A cached load event must
+// never leave a successfully loaded photo hidden behind opacity: 0.
 const LazyImage = ({
   src,
   webpSrc,
   alt,
   className = '',
   style = {},
-  loading: loadingProp,
+  loading: loadingProp = 'lazy',
   fetchPriority,
   onError: onErrorProp,
   ...props
 }) => {
-  const loadingAttr = loadingProp ?? 'lazy';
-  const wantsEager = loadingAttr === 'eager';
+  const [failedWebp, setFailedWebp] = useState(null);
+  const usingWebp = Boolean(webpSrc && failedWebp !== webpSrc);
 
-  const [isInView, setIsInView] = useState(() => wantsEager);
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [useRaster, setUseRaster] = useState(!webpSrc);
-  const imgRef = useRef();
-
-  useEffect(() => {
-    setUseRaster(!webpSrc);
-    setIsLoaded(false);
-  }, [webpSrc, src]);
-
-  useEffect(() => {
-    if (wantsEager) {
-      setIsInView(true);
+  const handleError = (event) => {
+    if (usingWebp) {
+      setFailedWebp(webpSrc);
       return;
     }
-    if (supportsNativeLazy) {
-      setIsInView(true);
-      return;
-    }
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsInView(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1, rootMargin: '100px' }
-    );
-    if (imgRef.current) observer.observe(imgRef.current);
-    return () => observer.disconnect();
-  }, [wantsEager]);
-
-  const primarySrc = useRaster ? src : webpSrc || src;
-  const showSrc =
-    wantsEager || supportsNativeLazy || isInView ? primarySrc : undefined;
-
-  const handleError = (e) => {
-    if (webpSrc && !useRaster) {
-      setUseRaster(true);
-      setIsLoaded(false);
-      return;
-    }
-    onErrorProp?.(e);
+    onErrorProp?.(event);
   };
 
   return (
     <img
-      ref={imgRef}
-      src={showSrc}
+      src={usingWebp ? webpSrc : src}
       alt={alt}
       className={className}
-      loading={loadingAttr}
+      loading={loadingProp}
       fetchPriority={fetchPriority}
       decoding="async"
-      onLoad={() => setIsLoaded(true)}
       onError={handleError}
-      style={{
-        opacity: isLoaded ? 1 : 0,
-        transition: 'opacity 0.4s ease-in-out',
-        ...style,
-      }}
+      style={style}
       {...props}
     />
   );

@@ -1,0 +1,184 @@
+/* One continuous notebook, with the original artwork and every original photo. */
+.scrapbook-about{max-width:1320px;width:95vw;padding-top:112px;--paper:#fffaf0;--ink:#315863;--muted:#65736a}
+.scrapbook-about .field-book-cover,.scrapbook-about .field-book-pages{max-width:1180px;background:var(--paper);border:0;border-radius:0;background-image:linear-gradient(90deg,transparent 48%,#a9956e08 49.5%,#8e7a5410 50%,#fffdfb70 50.5%,transparent 52%)}
+.scrapbook-about .field-book-cover{position:relative;padding:38px 64px 0;border-radius:7px 10px 0 0;overflow:hidden}
+.scrapbook-about .field-book-pages{padding:48px 64px 34px;box-shadow:0 3px 0 #e8deca,0 6px 0 #fff7e5,0 8px 0 #cabc9f,0 20px 45px #173f5330;border-radius:0 0 10px 7px}
+.scrapbook-about .field-book-title{font:700 clamp(40px,5vw,58px)/1.15 'Kalam',cursive;color:var(--ink);text-shadow:none;letter-spacing:-.04em;margin:0}
+.scrapbook-about .field-book-subtitle{font:400 22px/1.5 'Kalam',cursive;color:var(--muted);margin:5px 0 26px;max-width:75%}
+.scrapbook-jelly-sticker{position:absolute;right:37px;top:9px;width:135px;height:135px;object-fit:contain;transform:rotate(9deg);opacity:.85;pointer-events:none;filter:drop-shadow(2px 3px 1px #fff9)}
+.scrapbook-about .field-book-tabs{padding:0;gap:25px;border-bottom:1px solid #c4bea355;margin:0;align-items:center}
+.scrapbook-about .field-book-tabs a,.scrapbook-about .field-book-tabs a:nth-child(n){background:transparent;border:0;border-radius:0;padding:10px 0 15px;box-shadow:none;transform:none;color:var(--ink);font-size:11px;position:relative}
+.scrapbook-about .field-book-tabs a::after{content:'';position:absolute;left:0;right:0;bottom:7px;height:3px;background:#edcf7b;transform:scaleX(0);transform-origin:left;transition:transform .2s}
+.scrapbook-about .field-book-tabs a:hover::after,.scrapbook-about .field-book-tabs a:focus-visible::after{transform:scaleX(1)}
+.scrapbook-about .field-book-binding{display:none}
+.scrapbook-about .field-page-label{font:600 9px/1.5 'Poppins',Arial,sans-serif;color:#8a8d78;letter-spacing:.17em;margin:0 0 28px}
+.scrapbook-about .reveal,.scrapbook-about .fade-in-section{opacity:1;transform:none;transition:none}
+.scrapbook-about .about-intro-columns{display:block;max-width:none}
+.scrapbook-about .about-intro-left{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;width:100%;max-width:none;padding:6px 10px 15px}
+.scrapbook-about .about-card,.scrapbook-about .about-card:hover{order:2;width:auto;max-width:none;background:transparent;padding:0;border:0;border-radius:0;box-shadow:none;transform:none;backdrop-filter:none;animation:none}
+.scrapbook-about .about-card::before{display:none}
+.scrapbook-about .about-card h1{font:700 45px/1.2 'Kalam',cursive;text-align:left;color:var(--ink);margin:0 0 15px;text-shadow:none}
+.scrapbook-about .card-subtitle{font:600 11px/1.6 'Poppins',Arial,sans-serif;text-align:left;color:#8a7355;margin:18px 0 12px}
+.scrapbook-about .about-card p{font:400 14px/1.9 'Poppins',Arial,sans-serif;text-align:left;color:#52635b;margin:0 0 20px}
+.scrapbook-about .me-polaroid-outside{order:1;position:relative;min-width:0;justify-self:center}
+.scrapbook-about .me-polaroid{position:relative;top:auto;left:auto;margin:0;width:100%;max-width:340px;padding:11px 11px 17px;border:0;border-radius:0;background:#fffefa;transform:rotate(-2deg);box-shadow:3px 8px 16px #5e503623;animation:none}
+.scrapbook-about .me-photo-placeholder{width:100%;height:365px;overflow:hidden;border-radius:0;background:#e5dfcf}
+.scrapbook-about .me-photo-placeholder .me-image{width:100%;height:100%;object-fit:cover;border-radius:0}
+.scrapbook-about .me-caption{font:21px/1.4 'Kalam',cursive;color:#596858;margin:15px 0 0;text-shadow:none}
+.scrapbook-about .me-polaroid::after{width:90px;height:25px;left:calc(50% - 45px);top:-9px;transform:rotate(5deg);background:#d4bd8f75}
+.scrapbook-about .about-intro-right{display:block;max-width:none;width:100%;margin-top:64px}
+.scrapbook-about .my-why-section{max-width:none;background:transparent;border:0;box-shadow:none;transform:none;padding:0}
+.scrapbook-about .my-why-section::before{display:none}
+.scrapbook-about .my-why-section h3{font:700 30px/1.3 'Kalam',cursive;color:var(--ink);text-align:left;text-shadow:none;margin:0 0 28px}
+.scrapbook-about .why-story-cards{display:grid;grid-template-columns:1fr 1fr;gap:30px 80px}
+.scrapbook-about .why-story-card,.scrapbook-about .why-story-card:nth-child(n){padding:0;transform:none;background:transparent;border:0;border-radius:0;box-shadow:none;animation:none;margin:0}
+.scrapbook-about .why-story-card::before{display:none}
+.scrapbook-about .why-story-card-title{font:700 22px/1.35 'Kalam',cursive;color:#526d61;margin:0 0 8px;text-shadow:none}
+.scrapbook-about .why-story-card-body{font:400 12px/1.85 'Poppins',Arial,sans-serif;color:#5f6b62;text-shadow:none}
+.scrapbook-about .about-why-row{margin-bottom:78px}
+.scrapbook-about .photo-carousel{border:0;background:transparent;padding:0;margin:0 0 80px;box-shadow:none}
+.scrapbook-gallery-note{font:22px/1.4 'Kalam',cursive;color:#89765b;margin:0 0 8px}
+.scrapbook-about .carousel-title-row{margin:0 0 22px;gap:20px;align-items:center}
+.scrapbook-about .carousel-title{font:700 36px/1.3 'Kalam',cursive;color:var(--ink);text-shadow:none}
+.scrapbook-about .is-gallery-grid .carousel-track{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));width:100%;gap:38px 30px;padding:16px 3px 24px;align-items:start}
+.scrapbook-about .is-gallery-grid .carousel-slide{grid-column:span 2;width:100%;min-width:0;max-width:none;margin:0;transform:none!important;position:relative}
+.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+1),.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+2){grid-column:span 3}
+.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+2){padding-top:28px}
+.scrapbook-about .field-photo-button,.scrapbook-about .is-gallery-grid .field-photo-button{width:100%;max-width:none;padding:0;background:transparent;border:0;border-radius:0;box-shadow:none;transform:none;text-align:left;position:relative}
+.scrapbook-about .field-photo-button::after{display:none}
+.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+1) .field-photo-button{transform:rotate(-1deg)}
+.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+2) .field-photo-button{transform:rotate(1deg)}
+.scrapbook-about .field-photo-button:hover,.scrapbook-about .is-gallery-grid .field-photo-button:hover{transform:translateY(-3px);box-shadow:none}
+.scrapbook-about .is-gallery-grid .photo-placeholder{height:235px;margin:0 0 14px;border-radius:0;border:6px solid #fffefa;box-shadow:2px 5px 9px #5a4d351c;background:#e6e1d2}
+.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+1) .photo-placeholder,.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+2) .photo-placeholder{height:320px}
+.scrapbook-about .is-gallery-grid .photo-caption{font:19px/1.45 'Kalam',cursive;color:#596858;min-height:0;margin:0;padding:0 22px 0 2px;text-shadow:none}
+.scrapbook-photo-index{display:none}
+.scrapbook-about .field-photo-expand{right:0;bottom:5px;font-size:13px;color:#7f8e79}
+.scrapbook-about .field-gallery-controls .field-gallery-view{background:transparent;border:0;border-bottom:1px solid #aeb5a1;border-radius:0;box-shadow:none;color:#546e65;font-size:10px;padding:8px 0}
+.scrapbook-about .education-research-keck-row{padding-top:45px;border-top:1px solid #b6b39755;margin-top:0}
+.scrapbook-about .education-research-keck-columns{gap:70px;align-items:start}
+.scrapbook-about .education-section,.scrapbook-about .research-papers-section,.scrapbook-about .research-papers-inner,.scrapbook-about .research-section,.scrapbook-about .goals-section,.scrapbook-about .fun-section,.scrapbook-about .resume-container{background:transparent;border:0;border-radius:0;box-shadow:none;transform:none;animation:none;padding:0;max-width:none}
+.scrapbook-about :is(.education-section,.research-section,.goals-section,.fun-section,.paper-item)::before,.scrapbook-about .paper-item::after{display:none}
+.scrapbook-about :is(.education-section,.research-section,.goals-section,.fun-section):hover{background:transparent;box-shadow:none;transform:none}
+.scrapbook-about .education-section h3,.scrapbook-about .research-papers-section h3,.scrapbook-about .research-section h3,.scrapbook-about .goals-section h3,.scrapbook-about .fun-section h3{font:700 30px/1.3 'Kalam',cursive;color:var(--ink);text-align:left;text-shadow:none;margin-bottom:18px}
+.scrapbook-about .education-content p,.scrapbook-about .research-section .research-item p,.scrapbook-about .goals-content p{font:400 13px/1.85 'Poppins',Arial,sans-serif;color:#58685e}
+.scrapbook-about .research-papers-section{margin-top:40px}
+.scrapbook-about .research-papers-inner{padding:0}
+.scrapbook-about .paper-item{background:transparent;padding:18px 0;border:0;border-bottom:1px solid #c5bea255;border-radius:0;box-shadow:none;transform:none}
+.scrapbook-about .paper-item h4{font:500 13px/1.7 'Poppins',Arial,sans-serif;color:#45645e}
+.scrapbook-about .paper-item p{font:10px/1.6 'Poppins',Arial,sans-serif;color:#8a876e;margin-top:8px}
+.scrapbook-about .about-tilt-host{transform:none!important}
+.scrapbook-about .education-research-keck-right .polaroid{max-width:420px;transform:rotate(1.5deg)}
+.scrapbook-about .research-grid{grid-template-columns:1fr 1fr;grid-template-rows:auto;gap:54px 70px;align-items:start;margin-top:55px}
+.scrapbook-about .research-grid-cell{aspect-ratio:auto;min-width:0}
+.scrapbook-about .research-section{aspect-ratio:auto;min-height:0;height:auto}
+.scrapbook-about .research-pillar-tagline{font:18px/1.4 'Kalam',cursive;color:#8a795d;margin:0 0 20px}
+.scrapbook-about .research-grid-cell--photo .polaroid{max-width:420px;transform:rotate(-1.5deg)}
+.scrapbook-about .goals-fun-stack{gap:35px}
+.scrapbook-about .fun-content p{font:19px/1.7 'Kalam',cursive;color:#5e705f}
+.scrapbook-about .resume-container{border-top:1px solid #b6b39755;padding-top:35px}
+.scrapbook-about .field-book-signoff{font:26px/1.5 'Kalam',cursive;color:#7c876c;margin:40px 0 10px}
+@media(max-width:1000px){.scrapbook-about{width:96vw}.scrapbook-about .field-book-cover{padding:30px 40px 0}.scrapbook-about .field-book-pages{padding:36px 40px 30px}.scrapbook-about .about-intro-left{gap:45px}.scrapbook-about .why-story-cards{gap:28px 45px}.scrapbook-about .me-photo-placeholder{height:320px}.scrapbook-about .is-gallery-grid .photo-placeholder{height:190px}.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+1) .photo-placeholder,.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+2) .photo-placeholder{height:270px}.scrapbook-about .education-research-keck-columns,.scrapbook-about .research-grid{gap:40px}}
+@media(max-width:768px){.scrapbook-about{width:100%;padding:95px 10px 55px}.scrapbook-about .field-book-cover{margin:0 6px;padding:27px 28px 0}.scrapbook-about .field-book-pages{margin:0 6px;padding:30px 28px}.scrapbook-about .field-book-title{font-size:42px}.scrapbook-about .field-book-subtitle{font-size:19px;max-width:80%}.scrapbook-jelly-sticker{width:90px;height:90px;right:0;top:15px}.scrapbook-about .field-book-tabs{gap:16px}.scrapbook-about .field-book-tabs a{font-size:9px}.scrapbook-about .about-intro-left{gap:32px;padding:0;max-width:none}.scrapbook-about .about-card h1{font-size:36px}.scrapbook-about .about-card p{font-size:12px}.scrapbook-about .me-photo-placeholder{height:285px}.scrapbook-about .me-caption{font-size:18px}.scrapbook-about .why-story-cards{gap:25px 32px}.scrapbook-about .why-story-card-body{font-size:11px}.scrapbook-about .is-gallery-grid .carousel-track{gap:28px 20px}.scrapbook-about .is-gallery-grid .photo-placeholder{height:160px}.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+1) .photo-placeholder,.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(5n+2) .photo-placeholder{height:230px}.scrapbook-about .is-gallery-grid .photo-caption{font-size:17px}.scrapbook-about .carousel-title{font-size:30px}.scrapbook-gallery-note{font-size:20px}}
+@media(max-width:550px){.scrapbook-about .field-book-cover{padding:25px 22px 0}.scrapbook-about .field-book-pages{padding:27px 22px;background-image:none}.scrapbook-about .field-book-cover{background-image:none}.scrapbook-about .field-book-tabs{gap:4px 17px;flex-wrap:wrap}.scrapbook-about .field-book-tabs a{padding:5px 0 12px}.scrapbook-about .field-book-subtitle{max-width:85%;font-size:18px}.scrapbook-jelly-sticker{width:70px;height:70px;right:-6px;top:10px}.scrapbook-about .about-intro-left{display:flex;flex-direction:column;gap:35px}.scrapbook-about .me-polaroid{max-width:260px}.scrapbook-about .me-photo-placeholder{height:285px}.scrapbook-about .about-card h1{font-size:40px}.scrapbook-about .about-card p{font-size:13px}.scrapbook-about .about-intro-right{margin-top:38px}.scrapbook-about .why-story-cards{grid-template-columns:1fr;gap:24px}.scrapbook-about .why-story-card-body{font-size:12px}.scrapbook-about .about-why-row{margin-bottom:50px}.scrapbook-about .is-gallery-grid .carousel-track{grid-template-columns:1fr;gap:30px;padding:10px 0 20px}.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(n){grid-column:auto;width:100%;padding:0;margin:0;max-width:none}.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(n) .photo-placeholder{height:285px}.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(n) .field-photo-button{transform:none}.scrapbook-about .is-gallery-grid .photo-caption{font-size:20px}.scrapbook-about .photo-carousel{margin-bottom:45px}.scrapbook-about .education-research-keck-columns{gap:35px}.scrapbook-about .research-grid{display:block}.scrapbook-about .research-grid-cell{margin-bottom:38px}.scrapbook-about .research-papers-section h3{font-size:27px}.scrapbook-about .field-book-signoff{font-size:23px}}
+@media(prefers-reduced-motion:reduce){.scrapbook-about .field-book-tabs a::after,.scrapbook-about .field-photo-button{transition:none}}
+/* Remove the original floating text pills and carousel-wide hover shadows. */
+.scrapbook-about .field-book-pages :is(.education-content,.research-item,.goals-content,.fun-content) p,
+.scrapbook-about .field-book-pages :is(.education-content,.research-item,.goals-content,.fun-content) p:hover{background:transparent;border:0;border-radius:0;box-shadow:none;transform:none;animation:none;padding:0;margin:0 0 12px;text-align:left;transition:none}
+.scrapbook-about .photo-carousel:hover .carousel-slide .field-photo-button{box-shadow:none;background:transparent}
+.scrapbook-about .research-section :is(h4,.research-subtitle){background:transparent;color:#526d61;text-shadow:none;text-align:left}
+/* DesignMD hierarchy pass: artwork leads; no enclosing book/card surface. */
+.scrapbook-about{--space-1:8px;--space-2:16px;--space-3:24px;--space-4:48px;--scene-ink:#fffaf0;max-width:none;width:100%;padding:112px 0 64px;background:#fffaf0;isolation:isolate;overflow-x:clip}
+.scrapbook-about .about-bg-img{position:absolute;inset:0;width:100%;height:850px;object-position:center top;z-index:-1}
+.scrapbook-about::before{content:'';position:absolute;inset:0 0 auto;height:850px;z-index:-1;background:linear-gradient(90deg,#123e38ed 0%,#123e38cf 38%,#123e3855 70%),linear-gradient(0deg,#123e38 0%,transparent 45%);pointer-events:none}
+.scrapbook-about .field-book-cover{max-width:1120px;padding:24px 24px 0;background:none;border:0;border-radius:0;overflow:visible}
+.scrapbook-about .field-book-pages{display:contents;background:none;border:0;border-radius:0;box-shadow:none}
+.scrapbook-about .field-book-title{font:700 48px/1.2 'Kalam',cursive;color:#ffe16a;text-shadow:none;margin:0}
+.scrapbook-about .field-book-subtitle{font:400 20px/1.5 'Poppins',Arial,sans-serif;color:#fffaf0;margin:8px 0 24px;max-width:75%}
+.scrapbook-about .field-book-tabs{gap:24px;border:0}
+.scrapbook-about .field-book-tabs a,.scrapbook-about .field-book-tabs a:nth-child(n){color:#fffaf0;font-size:12px;min-height:44px;padding:8px 0}
+.scrapbook-about .scrapbook-jelly-sticker{right:24px;top:0;width:144px;height:144px;opacity:1}
+.scrapbook-about .field-book-pages>.field-page-label{display:none}
+.scrapbook-about .about-why-row{margin:0;background:none}
+.scrapbook-about .about-intro-left{max-width:1120px;width:100%;grid-template-columns:1.2fr 1fr;gap:48px;margin:0 auto;padding:48px 24px 64px;min-height:500px}
+.scrapbook-about .about-card{order:1}
+.scrapbook-about .about-card h1{font:700 48px/1.2 'Kalam',cursive;color:#fffaf0;margin:0 0 24px}
+.scrapbook-about .about-card p{font:400 16px/1.7 'Poppins',Arial,sans-serif;color:#fffaf0;margin:0 0 24px;max-width:520px}
+.scrapbook-about .card-subtitle{font:600 12px/1.5 'Poppins',Arial,sans-serif;color:#ffe16a;margin:16px 0 8px}
+.scrapbook-about .me-polaroid-outside{order:2;justify-self:end;width:100%;max-width:340px}
+.scrapbook-about .me-polaroid{max-width:none;padding:8px 8px 16px;transform:rotate(2deg);box-shadow:0 4px 16px #48484826}
+.scrapbook-about .me-photo-placeholder{height:340px}
+.scrapbook-about .me-caption{font-size:20px;margin:16px 0 0}
+.scrapbook-about .about-intro-right{margin:0;padding:48px 24px;background:#fffaf0}
+.scrapbook-about .my-why-section{max-width:1072px;margin:0 auto}
+.scrapbook-about .my-why-section h3{font-size:32px;margin-bottom:24px}
+.scrapbook-about .why-story-cards{gap:24px 48px}
+.scrapbook-about .why-story-card-title{font-size:24px}
+.scrapbook-about .why-story-card-body{font-size:16px;line-height:1.7}
+.scrapbook-about .photo-carousel{max-width:1120px;margin:0 auto;padding:48px 24px;background:transparent}
+.scrapbook-about .field-page-label{font-size:12px;letter-spacing:.1em;margin-bottom:16px}
+.scrapbook-about .carousel-title{font-size:32px}
+.scrapbook-about .scrapbook-gallery-note{font-size:20px;margin-bottom:8px}
+.scrapbook-about .is-gallery-grid .carousel-track{gap:48px 24px}
+.scrapbook-about .education-research-keck-row{max-width:1072px;margin:48px auto;padding:48px 0 0;border-top:1px solid #c4bea3}
+.scrapbook-about .education-research-keck-columns{gap:48px}
+.scrapbook-about .content-row--research-experience{max-width:1120px;margin:0 auto;padding:0 24px}
+.scrapbook-about .research-grid{gap:48px;margin-top:48px}
+.scrapbook-about .field-book-pages .research-section{padding:0}
+.scrapbook-about .education-content p,.scrapbook-about .research-section .research-item p,.scrapbook-about .goals-content p{font-size:16px;line-height:1.7}
+.scrapbook-about .paper-item h4{font-size:16px;line-height:1.7}
+.scrapbook-about .paper-item p{font-size:12px}
+.scrapbook-about #life-notes{max-width:1120px;margin:48px auto;padding:48px 24px;gap:48px}
+.scrapbook-about .resume-section{max-width:1072px;margin:48px auto}
+.scrapbook-about .field-book-signoff{max-width:1072px;margin:48px auto 0;padding:0 24px}
+@media(max-width:1150px){.scrapbook-about .education-research-keck-row,.scrapbook-about .resume-section{margin-left:24px;margin-right:24px}}
+@media(max-width:768px){.scrapbook-about{width:100%;padding:96px 0 48px}.scrapbook-about .field-book-cover{margin:0 auto;padding:16px 24px 0;background:none}.scrapbook-about .field-book-title{font-size:40px}.scrapbook-about .field-book-subtitle{font-size:16px;max-width:80%}.scrapbook-about .scrapbook-jelly-sticker{width:96px;height:96px;right:8px}.scrapbook-about .about-intro-left{gap:24px;padding:24px 24px 48px;min-height:0}.scrapbook-about .about-card h1{font-size:40px}.scrapbook-about .about-card p{font-size:16px}.scrapbook-about .me-photo-placeholder{height:300px}.scrapbook-about .why-story-cards{gap:24px}.scrapbook-about .why-story-card-body{font-size:16px}.scrapbook-about .field-book-tabs{gap:16px}.scrapbook-about .is-gallery-grid .photo-caption{font-size:20px}.scrapbook-about .field-book-pages{margin:0;padding:0;background:none}}
+@media(max-width:550px){.scrapbook-about .field-book-cover{padding:8px 24px 0}.scrapbook-about .field-book-title{font-size:40px}.scrapbook-about .field-book-subtitle{max-width:85%;font-size:16px}.scrapbook-about .scrapbook-jelly-sticker{width:72px;height:72px;top:0;right:0}.scrapbook-about .field-book-tabs{gap:8px 16px}.scrapbook-about .field-book-tabs a{font-size:11px}.scrapbook-about .about-intro-left{display:flex;flex-direction:column;align-items:stretch;padding:24px 24px 48px;gap:24px}.scrapbook-about .about-card{order:1}.scrapbook-about .about-card h1{font-size:40px;margin-bottom:16px}.scrapbook-about .me-polaroid-outside{order:2;width:80%;max-width:280px;align-self:center}.scrapbook-about .me-photo-placeholder{height:280px}.scrapbook-about .about-bg-img,.scrapbook-about::before{height:1200px}.scrapbook-about .about-intro-right{padding:48px 24px}.scrapbook-about .why-story-cards{grid-template-columns:1fr;gap:24px}.scrapbook-about .photo-carousel{padding:24px}.scrapbook-about .education-research-keck-row{margin:24px;padding-top:48px}.scrapbook-about .research-grid{display:block}.scrapbook-about .research-grid-cell{margin-bottom:48px}.scrapbook-about #life-notes{padding:24px;margin:0 auto}.scrapbook-about .field-book-pages{margin:0;padding:0;background:none}}
+/* Keep the scene tint above the artwork and intro text above both. */
+.scrapbook-about .about-bg-img{z-index:-2}
+.scrapbook-about .about-intro-left .about-card :is(h1,p){color:#fffaf0;text-shadow:none}
+.scrapbook-about .about-intro-left .about-card .card-subtitle{color:#ffe16a}
+@media(max-width:550px){.scrapbook-about::before{background:linear-gradient(0deg,#123e38 0%,#123e38c9 45%,#123e38c9 100%)}}
+/* Full photographs: intrinsic proportions, with no cover crop or hover zoom. */
+.scrapbook-about :is(.photo-placeholder,.me-photo-placeholder),
+.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(n) .photo-placeholder{height:auto;min-height:0;aspect-ratio:auto;overflow:visible;background:transparent}
+.scrapbook-about .photo-placeholder img,.scrapbook-about .me-photo-placeholder .me-image{display:block;width:100%;height:auto;max-height:none;min-height:0;object-fit:contain;transform:none;border-radius:0;transition:none}
+.scrapbook-about .photo-placeholder:hover img,.scrapbook-about .me-photo-placeholder:hover img{transform:none}
+.scrapbook-about .me-polaroid-outside{max-width:320px}
+.scrapbook-about .photo-item.polaroid:not(.field-photo-button){padding:8px 8px 20px}
+.scrapbook-about .education-research-keck-right .photo-placeholder.keck-photo,.scrapbook-about .research-grid-cell--photo .keck-people-photo{height:auto;min-height:0;aspect-ratio:auto}
+/* A clear reading scale, with handwritten type reserved for headings/captions. */
+.scrapbook-about .about-intro-left .about-card p{font-size:20px;line-height:1.65}
+.scrapbook-about .about-intro-left .about-card h1{font-size:56px}
+.scrapbook-about .about-intro-left .about-card .card-subtitle{font-size:14px;line-height:1.5}
+.scrapbook-about .why-story-card-body,.scrapbook-about .education-content p,.scrapbook-about .research-section .research-item p,.scrapbook-about .goals-content p,.scrapbook-about .paper-item h4{font-size:18px;line-height:1.7}
+.scrapbook-about .why-story-card-title{font-size:28px}
+.scrapbook-about .is-gallery-grid .photo-caption{font-size:24px}
+.scrapbook-about .field-book-tabs.reading-chapters{position:sticky;top:74px;z-index:35;display:block;width:100%;padding:0 24px;margin:24px 0 0;background:#173f38f5;backdrop-filter:blur(12px);border:0}
+.reading-chapters-inner{display:flex;gap:24px;align-items:center;max-width:1072px;margin:0 auto}
+.scrapbook-about .reading-chapters a{min-height:48px;display:inline-flex;align-items:center;gap:8px;font-size:13px;white-space:nowrap;color:#fffaf0}
+.scrapbook-about .reading-chapters a[aria-current]::after{transform:scaleX(1)}
+.reading-chapters::after{content:'';position:absolute;bottom:0;left:0;width:var(--reading-progress,0%);height:3px;background:#ffe16a;pointer-events:none}
+.scrapbook-about .about-next-chapter{display:flex;align-items:center;gap:16px;max-width:1072px;margin:0 auto;padding:0 0 32px;color:#ffe16a;font:500 14px/1.5 'Poppins',Arial,sans-serif;text-decoration:none}
+.about-next-chapter span{display:inline-block;font-size:24px;transition:transform 200ms ease-in-out}
+.about-next-chapter:hover span{transform:translateY(8px)}
+.gallery-reading-count{font:500 12px/1.5 'Poppins',Arial,sans-serif;color:#586e62;font-variant-numeric:tabular-nums}
+.scrapbook-about .carousel-title-row{position:sticky;top:122px;z-index:15;background:#fffaf0;padding:16px 0;margin-bottom:24px}
+@keyframes photo-arrive{from{opacity:.7;translate:0 24px}to{opacity:1;translate:0 0}}
+@keyframes story-arrive{from{opacity:.7;translate:0 16px}to{opacity:1;translate:0 0}}
+@media(prefers-reduced-motion:no-preference){.scrapbook-about .carousel-slide.scroll-arrived{animation:photo-arrive 650ms cubic-bezier(.16,1,.3,1) both}.scrapbook-about .why-story-card.scroll-arrived,.scrapbook-about .research-grid-cell.scroll-arrived{animation:story-arrive 500ms cubic-bezier(.16,1,.3,1) both}}
+@media(max-width:1150px){.scrapbook-about .about-next-chapter{margin-left:24px;margin-right:24px}}
+@media(max-width:768px){.scrapbook-about .field-book-tabs.reading-chapters{top:64px;margin-top:16px}.reading-chapters-inner{gap:20px;overflow-x:auto;scrollbar-width:none}.scrapbook-about .reading-chapters a{font-size:12px;flex-shrink:0}.scrapbook-about .carousel-title-row{top:112px}.scrapbook-about .about-intro-left .about-card h1{font-size:48px}.scrapbook-about .about-intro-left .about-card p{font-size:18px}.scrapbook-about .why-story-card-body{font-size:18px}}
+@media(max-width:550px){.scrapbook-about .field-book-tabs.reading-chapters{top:54px;padding:0 16px}.reading-chapters-inner{gap:16px}.scrapbook-about .reading-chapters a{font-size:11px}.scrapbook-about .carousel-title-row{top:102px;gap:8px;align-items:flex-start}.scrapbook-about .carousel-title{font-size:28px}.scrapbook-about .is-gallery-grid .photo-caption{font-size:23px}.scrapbook-about .about-next-chapter{padding-bottom:24px}.scrapbook-about .about-intro-left{padding-bottom:24px}.scrapbook-about .me-polaroid-outside{max-width:280px}.scrapbook-about .about-bg-img,.scrapbook-about::before{height:1600px}.gallery-reading-count{font-size:11px}}
+@media(prefers-reduced-motion:reduce){.scrapbook-about .scroll-arrived{animation:none!important}.about-next-chapter span{transition:none}.reading-chapters::after{transition:none}}
+/* Keep reading surfaces steady; only individual arrivals should move. */
+.scrapbook-about .reveal.visible,.scrapbook-about .fade-in-section.visible{transform:none;opacity:1;animation:none}
+.scrapbook-about .about-next-chapter{color:#315863}
+/* Compact contact sheet: preserve full frames, reduce the long two-photo rows. */
+.scrapbook-about .is-gallery-grid .carousel-track{grid-template-columns:repeat(4,minmax(0,1fr));gap:32px 24px;align-items:start}
+.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(n){grid-column:auto;padding:0;margin:0;width:100%;max-width:none}
+.scrapbook-about .is-gallery-grid .carousel-slide:nth-child(n) .field-photo-button{transform:none}
+.scrapbook-about .is-gallery-grid .photo-caption{font-size:20px;line-height:1.4;padding-right:16px}
+@media(max-width:1000px){.scrapbook-about .is-gallery-grid .carousel-track{grid-template-columns:repeat(3,minmax(0,1fr));gap:28px 20px}}
+@media(max-width:768px){.scrapbook-about .is-gallery-grid .carousel-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:28px 20px}}
+@media(max-width:550px){.scrapbook-about .is-gallery-grid .carousel-track{grid-template-columns:repeat(2,minmax(0,1fr));gap:24px 16px}.scrapbook-about .is-gallery-grid .photo-caption{font-size:18px}.scrapbook-about .is-gallery-grid .photo-placeholder{border-width:4px}.scrapbook-about .field-photo-expand{font-size:11px}}

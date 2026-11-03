@@ -1,5 +1,7 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
-  "icons": []
+  "short_name": "Andi Scarola",
+  "name": "Andi Scarola \u2014 Andi on the Web",
+  "icons": [],
+  "start_url": "/",
+  "display": "browser"
 }
