@@ -21,5 +21,18 @@
       "source": "/((?!api/|sitemap\\.xml$|robots\\.txt$|static/|images/|project-previews/|favicon\\.ico$|manifest\\.json$|logo192\\.png$|logo512\\.png$|AndiScarola_Resume\\.pdf$).*)",
       "destination": "/index.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [
+        {
+          "type": "host",
+          "value": "andiscarola.vercel.app"
+        }
+      ],
+      "destination": "https://andiscarola.com/:path*",
+      "permanent": true
+    }
   ]
 }
