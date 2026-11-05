@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import LazyImage from '../components/LazyImage';
+import PhotoCurrents from '../components/PhotoCurrents';
+import photoRoll from '../data/photoRoll.json';
 import '../styles/About.css';
 import '../styles/Scrapbook.css';
 import aboutBackgroundPng from '../images/about.png';
@@ -28,7 +30,6 @@ import jonAndDrone from '../images/jonanddrone.jpeg';
 import legos from '../images/legos.jpeg';
 import lockedIn from '../images/lockedin.jpeg';
 import meAndCousin from '../images/meandcousin.jpeg';
-import meAndFriend from '../images/meandfriend.jpeg';
 import meAndJonPitch from '../images/meandjonpitch.jpeg';
 import puttPutt from '../images/puttputt.jpeg';
 import redBull from '../images/redbull.jpeg';
@@ -120,38 +121,6 @@ const WHY_CARDS = [
 ];
 
 /** Original carousel order, then newer life photos (WebP stem = public/images/{stem}.webp). */
-const PHOTO_DIMENSIONS = {
-  '5k': [4536, 8064],
-  'funnygym': [1536, 2048],
-  'pinball': [1536, 2048],
-  'climb': [940, 1312],
-  'dog': [3024, 4032],
-  'andicat': [1179, 1575],
-  'afterladygagaconcert': [1536, 2048],
-  'bigfam': [2048, 1786],
-  'daisythedog': [1536, 2048],
-  'delicious': [1536, 2730],
-  'family': [2048, 1536],
-  'golfwithfriends': [2048, 1536],
-  'gradsoon': [1536, 2048],
-  'halloween': [1536, 2048],
-  'jonanddrone': [1536, 2048],
-  'legos': [1536, 2048],
-  'lockedin': [1536, 2048],
-  'meandcousin': [2048, 1536],
-  'meandfriend': [2048, 1536],
-  'meandjonpitch': [2048, 1536],
-  'puttputt': [1536, 2048],
-  'redbull': [1206, 2144],
-  'rockclimb': [1536, 2730],
-  'shopping': [1536, 2048],
-  'sillyeyedoctor': [1536, 2048],
-  'snowboarding': [2048, 1536],
-  'swag': [2048, 1536],
-  'vipladygaga': [1536, 2048],
-  'workingondrone': [1536, 2048],
-};
-
 const CAROUSEL_SLIDES = [
   {
     stem: '5k',
@@ -262,8 +231,8 @@ const CAROUSEL_SLIDES = [
     photoClass: 'carousel-life-photo',
   },
   {
-    stem: 'meandfriend',
-    src: meAndFriend,
+    stem: 'camera-5',
+    src: `${publicUrl}/photo-roll/camera-5-1600.webp`,
     caption: 'Bubble buddies for life 🫧',
     photoClass: 'carousel-life-photo',
   },
@@ -323,15 +292,13 @@ const CAROUSEL_SLIDES = [
     caption: 'Plankton wishes he had this rig 🛠️',
     photoClass: 'carousel-life-photo',
   },
-].map((s) => ({ ...s, alt: s.caption, width: PHOTO_DIMENSIONS[s.stem][0], height: PHOTO_DIMENSIONS[s.stem][1] }));
+  ...Object.entries(photoRoll).filter(([stem]) => stem.startsWith('camera-') && stem !== 'camera-5').map(([stem, photo]) => ({ stem, caption: photo.caption })),
+].sort((a, b) => Number(b.stem.startsWith('camera-')) - Number(a.stem.startsWith('camera-'))).map(s => ({ ...s, ...photoRoll[s.stem], alt: s.caption, src: `${publicUrl}/photo-roll/${s.stem}-1600.webp`, thumbnail: `${publicUrl}/photo-roll/${s.stem}-480.webp`, medium: `${publicUrl}/photo-roll/${s.stem}-960.webp` }));
 
 const About = () => {
   const [aboutBgLoaded, setAboutBgLoaded] = useState(false);
-  const [currentSlide, setCurrentSlide] = useState(0);
-  const [showAllPhotos, setShowAllPhotos] = useState(true);
   const [selectedPhoto, setSelectedPhoto] = useState(null);
   const photoDialogRef = useRef(null);
-  const carouselContainerRef = useRef(null);
   const carouselCount = CAROUSEL_SLIDES.length;
   const chapterNavRef = useRef(null);
   const [activeChapter, setActiveChapter] = useState('aboutText');
@@ -356,17 +323,7 @@ const About = () => {
       setActiveChapter(current);
       const range = document.documentElement.scrollHeight - window.innerHeight;
       chapterNavRef.current?.style.setProperty('--reading-progress', `${range > 0 ? Math.min(100, window.scrollY / range * 100) : 0}%`);
-      if (showAllPhotos && current === 'camera-roll') {
-        const photos = [...carouselContainerRef.current.querySelectorAll('.carousel-slide')];
-        let nearest = 0;
-        let distance = Infinity;
-        photos.forEach((photo, index) => {
-          const rect = photo.getBoundingClientRect();
-          const nextDistance = Math.abs(rect.top + Math.min(rect.height / 2, 200) - window.innerHeight * 0.45);
-          if (nextDistance < distance) { distance = nextDistance; nearest = index; }
-        });
-        setCurrentSlide(nearest);
-      }
+
     };
     const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
     window.addEventListener('scroll', schedule, { passive: true });
@@ -378,7 +335,7 @@ const About = () => {
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
     };
-  }, [showAllPhotos]);
+  }, []);
 
   useEffect(() => {
     const elements = Array.from(document.querySelectorAll('.reveal'));
@@ -406,51 +363,9 @@ const About = () => {
   }, []);
 
   useEffect(() => {
-    const container = carouselContainerRef.current;
-    if (!container || showAllPhotos) return;
-    const slides = container.querySelectorAll('[data-carousel-track-index]');
-    if (!slides.length) return;
-
-    const pickBest = () => {
-      const cR = container.getBoundingClientRect();
-      let bestLogical = 0;
-      let bestOverlap = -1;
-      slides.forEach((el) => {
-        const logical = Number(el.dataset.carouselTrackIndex) % carouselCount;
-        const r = el.getBoundingClientRect();
-        const w = Math.max(0, Math.min(r.right, cR.right) - Math.max(r.left, cR.left));
-        const h = Math.max(0, Math.min(r.bottom, cR.bottom) - Math.max(r.top, cR.top));
-        const overlap = w * h;
-        if (overlap > bestOverlap) {
-          bestOverlap = overlap;
-          bestLogical = logical;
-        }
-      });
-      if (bestOverlap > 0) setCurrentSlide(bestLogical);
-    };
-
-    const observer = new IntersectionObserver(pickBest, {
-      root: container,
-      threshold: [0, 0.05, 0.1, 0.2, 0.35, 0.5, 0.65, 0.8, 1],
-    });
-    slides.forEach((el) => observer.observe(el));
-    pickBest();
-    const id = window.setInterval(pickBest, 250);
-    return () => {
-      window.clearInterval(id);
-      observer.disconnect();
-    };
-  }, [carouselCount, showAllPhotos]);
-
-  useEffect(() => {
     if (selectedPhoto !== null && !photoDialogRef.current.open) photoDialogRef.current.showModal();
   }, [selectedPhoto]);
 
-  const scrollPhotos = (direction) => {
-    const container = carouselContainerRef.current;
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    container?.scrollBy({ left: direction * 300, behavior: reduced ? 'instant' : 'smooth' });
-  };
 
   return (
     <div className="about-container field-notebook-about scrapbook-about" id="main-content">
@@ -547,64 +462,7 @@ const About = () => {
         </div>
       </div>
 
-      {/* Photo Carousel — between intro/Why and Education/Keck */}
-      <div className="fade-in-section">
-        <div className={`photo-carousel reveal${showAllPhotos ? ' is-gallery-grid' : ''}`} id="camera-roll">
-          <p className="field-page-label">THE CAMERA ROLL</p>
-          <p className="scrapbook-gallery-note">The people, places, and occasional side quests.</p>
-          <div className="carousel-title-row">
-            <div className="carousel-title-container">
-              <h3 className="carousel-title">What’s Been Brewing</h3>
-            </div>
-            <div className="field-gallery-controls">
-              {showAllPhotos && <span className="gallery-reading-count">{String(currentSlide + 1).padStart(2, '0')} / {carouselCount} photos</span>}
-              {!showAllPhotos && <><button type="button" onClick={() => scrollPhotos(-1)} aria-label="Previous photos">←</button><span aria-live="polite">{String(currentSlide + 1).padStart(2, '0')} / {carouselCount}</span><button type="button" onClick={() => scrollPhotos(1)} aria-label="Next photos">→</button></>}
-              <button type="button" className="field-gallery-view" aria-expanded={showAllPhotos} aria-controls="field-photo-gallery" onClick={() => setShowAllPhotos(value => !value)}>{showAllPhotos ? 'Switch to photo strip' : `See all ${carouselCount} photos`}</button>
-            </div>
-          </div>
-          <div className="carousel-container" id="field-photo-gallery" ref={carouselContainerRef} tabIndex={showAllPhotos ? -1 : 0} aria-label="Andi’s personal photo gallery">
-            <div className="carousel-track">
-              {[0].flatMap((setIdx) =>
-                CAROUSEL_SLIDES.map((slide, i) => {
-                  const index = setIdx * CAROUSEL_SLIDES.length + i;
-                  return (
-                    <div
-                      key={`carousel-${setIdx}-${slide.stem}`}
-                      className={['carousel-slide', slide.className].filter(Boolean).join(' ')}
-                      data-carousel-track-index={index}
-                    >
-                      <button type="button" className="photo-item polaroid field-photo-button" onClick={() => setSelectedPhoto(i)} aria-label={`Open photo: ${slide.caption}`}>
-                        <div className={`photo-placeholder ${slide.photoClass}`}>
-                          <LazyImage
-                            webpSrc={aboutWebp(slide.stem)}
-                            src={slide.src}
-                            alt={slide.alt}
-                            width={slide.width}
-                            height={slide.height}
-                            loading={
-                              index % CAROUSEL_SLIDES.length === currentSlide
-                                ? 'eager'
-                                : 'lazy'
-                            }
-                            fetchPriority={
-                              index % CAROUSEL_SLIDES.length === currentSlide
-                                ? 'high'
-                                : 'auto'
-                            }
-                          />
-                        </div>
-                        <p className="photo-caption">{slide.caption}</p>
-                        <span className="scrapbook-photo-index" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>
-                        <span className="field-photo-expand" aria-hidden="true">↗</span>
-                      </button>
-                    </div>
-                  );
-                })
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+      <PhotoCurrents photos={CAROUSEL_SLIDES} onOpen={setSelectedPhoto} viewerOpen={selectedPhoto !== null} />
 
       {/* Left: Education + Research Papers stacked; right: Keck polaroid spans full left height */}
       <div className="fade-in-section">
@@ -746,7 +604,10 @@ const About = () => {
               <div className="research-grid-cell research-grid-cell--photo">
                 <div className="photo-item polaroid">
                   <div className="photo-placeholder keck-people-photo">
-                    <img
+                    <LazyImage
+                      webpSrc={aboutWebp('keck-people')}
+                      width={1179}
+                      height={789}
                       src={keckPeopleImage}
                       alt="Keck People"
                       style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '0', display: 'block' }}
@@ -789,7 +650,10 @@ const About = () => {
           <div className="content-right">
             <div className="photo-item polaroid">
               <div className="photo-placeholder gym-photo">
-                <img
+                <LazyImage
+                  webpSrc={aboutWebp('gym')}
+                  width={3024}
+                  height={4032}
                   src={gymImage}
                   alt="My Happy Place"
                   style={{ width: '100%', height: 'auto', objectFit: 'contain', borderRadius: '0', display: 'block' }}

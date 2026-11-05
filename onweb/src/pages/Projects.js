@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef, useCallback, useLayoutEffect } from 'react';
 import BubbleTransition from '../components/BubbleTransition';
 import '../styles/Projects.css';
+import '../styles/ProjectExplorer.css';
 import labBackground from '../images/Bp.jpeg';
 import { PUBLIC_PROJECTS } from '../data/publicPortfolio.mjs';
 
@@ -25,8 +26,17 @@ function WebsiteScreen({ project, active }) {
 
 const Projects = () => {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
+  const [labMotionPaused, setLabMotionPaused] = useState(false);
+  const [pageVisible, setPageVisible] = useState(!document.hidden);
+  useEffect(() => {
+    const update = () => setPageVisible(!document.hidden);
+    document.addEventListener('visibilitychange', update);
+    return () => document.removeEventListener('visibilitychange', update);
+  }, []);
   const carouselViewportRef = useRef(null);
   const activeIndexRef = useRef(0);
+  const projectDockRef = useRef(null);
+  const labDepthRef = useRef(null);
   const pendingEnterRef = useRef(null);
   const [carouselViewportWidth, setCarouselViewportWidth] = useState(0);
   const [cardMotionClass, setCardMotionClass] = useState('');
@@ -43,6 +53,7 @@ const Projects = () => {
     projectLink: project.link || null,
     poster: project.poster || null,
     posterAlt: project.posterAlt || null,
+    thumbnail: project.thumbnail || project.poster || (project.video ? `https://i.ytimg.com/vi/${project.video.split('v=')[1]}/hqdefault.jpg` : null),
     livePreview: Boolean(project.livePreview),
     underWraps: Boolean(project.underWraps),
   }));
@@ -111,6 +122,9 @@ const Projects = () => {
 
   useEffect(() => {
     activeIndexRef.current = currentProjectIndex;
+    const dock = projectDockRef.current;
+    const button = dock?.children[currentProjectIndex];
+    if (dock && button) dock.scrollTo({ left: button.offsetLeft - dock.offsetLeft - (dock.clientWidth - button.clientWidth) / 2, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
   }, [currentProjectIndex]);
 
   useEffect(() => {
@@ -179,6 +193,17 @@ const Projects = () => {
     const root = carouselViewportRef.current;
     if (root) root.scrollTo({ left: index * root.clientWidth, behavior: 'instant' });
     setCurrentProjectIndex(index);
+  };
+
+  const moveLabDepth = event => {
+    if (!window.matchMedia('(hover: hover) and (pointer: fine)').matches || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const box = event.currentTarget.getBoundingClientRect();
+    labDepthRef.current?.style.setProperty('--lab-turn', `${((event.clientX - box.left) / box.width - .5) * 3}deg`);
+    labDepthRef.current?.style.setProperty('--lab-rise', `${((event.clientY - box.top) / box.height - .5) * -2}deg`);
+  };
+  const resetLabDepth = () => {
+    labDepthRef.current?.style.setProperty('--lab-turn', '0deg');
+    labDepthRef.current?.style.setProperty('--lab-rise', '0deg');
   };
 
   const shouldLoadVideo = (index) => index === currentProjectIndex;
@@ -267,7 +292,7 @@ const Projects = () => {
   );
 
   return (
-    <main className="projects-wrapper projects-media-refresh" id="main-content">
+    <main className="projects-wrapper projects-media-refresh project-lab-explorer" id="main-content">
       <BubbleTransition />
 
       <div className="lab-stage">
@@ -275,9 +300,14 @@ const Projects = () => {
           className="lab-stage-parallax"
         >
         <div
-          className="background-container"
-          style={{ backgroundImage: `url(${labBackground})` }}
+          className={`background-container${labMotionPaused || !pageVisible ? ' lab-motion-paused' : ''}`}
+          ref={labDepthRef}
+          onPointerMove={moveLabDepth}
+          onPointerLeave={resetLabDepth}
         >
+          <div className="lab-room-art" style={{ backgroundImage: `url(${labBackground})` }} aria-hidden="true" />
+          <div className="lab-water-light" aria-hidden="true" />
+          <button type="button" className="lab-motion-toggle" aria-pressed={labMotionPaused} onClick={() => setLabMotionPaused(value => !value)}>{labMotionPaused ? 'Resume lab motion' : 'Pause lab motion'}</button>
           <div className="ambient-bubbles" aria-hidden="true">
             {Array.from({ length: 12 }).map((_, i) => (
               <span key={i} className={`ambient-bubble b${i % 6}`} />
@@ -285,7 +315,8 @@ const Projects = () => {
           </div>
 
           <p className="lab-stamp" aria-hidden="true">PROPERTY OF PLANKTON LABS</p>
-          <header className="project-page-intro"><h1>From the lab.</h1><p>A few things I’ve built, and a few still in the works.</p></header>
+          <header className="project-page-intro"><h1>From the lab.</h1><p>Pick an experiment. See what’s on the screen.</p></header>
+
 
           <div className="projects-carousel-shell">
             <button
@@ -381,6 +412,17 @@ const Projects = () => {
             </button>
           </div>
 
+          <section className="project-channel-station" aria-label="Explore projects">
+            <div className="project-channel-heading"><span><i aria-hidden="true" /> NOW SHOWING <strong>{String(currentProjectIndex + 1).padStart(2, '0')}</strong> / {n}</span><span>Keep exploring <span aria-hidden="true">↓</span></span></div>
+            <div className="project-channel-dock" ref={projectDockRef}>
+              {projects.map((project, index) => <button type="button" key={project.id} className={`project-channel${index === currentProjectIndex ? ' is-selected' : ''}`} aria-pressed={index === currentProjectIndex} aria-label={`Show ${project.title}`} onClick={() => onProjectSelect(index)}>
+                <div className="project-channel-image">{project.thumbnail ? <img src={project.thumbnail} alt="" loading="lazy" decoding="async" /> : <span aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>}<span className="project-channel-kind">{project.videoUrl ? '▶ Demo' : project.projectLink ? '↗ Website' : 'Research & builds'}</span></div>
+                <span className="project-channel-title">{project.title}</span>
+              </button>)}
+            </div>
+          </section>
+
+          <button type="button" className="project-next-teaser" onClick={() => onProjectSelect((currentProjectIndex + 1) % n)}><span>Up next <span aria-hidden="true">→</span></span><strong>{projects[(currentProjectIndex + 1) % n].title}</strong></button>
           <div className="project-picker">
             <label htmlFor="project-choice">Choose a project <span>{currentProjectIndex + 1} / {n}</span></label>
             <select id="project-choice" value={currentProjectIndex} onChange={event => onProjectSelect(Number(event.target.value))}>

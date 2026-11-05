@@ -1,0 +1,41 @@
+/* Two equal groups per track make the loop continuous, without a reset jump. */
+.scrapbook-about .photo-currents{--photo-height:224px;max-width:1280px;margin:0 auto;padding:48px 0;scroll-margin-top:160px}
+.photo-currents-heading{display:flex;justify-content:space-between;align-items:end;gap:24px;padding:0 32px 28px;max-width:1136px;margin:auto}
+.photo-currents-heading h3{font:700 36px/1.2 'Kalam',cursive;color:#315a6c;margin:0 0 8px}
+.photo-currents-heading p:not(.field-page-label){font:18px/1.5 'Poppins',Arial,sans-serif;color:#526d61;margin:0}
+.current-controls{display:flex;gap:8px;flex-wrap:wrap;flex-shrink:0}
+.current-controls button{font:500 12px/1.4 'Poppins',Arial,sans-serif;border:1px solid #8fa9ae;border-radius:6px;background:transparent;color:#31566d;padding:10px 12px;min-height:44px;cursor:pointer}
+.current-controls button:hover{background:#f8e5ac}
+.photo-current{overflow:clip;scrollbar-width:none;overscroll-behavior-x:contain;overflow-anchor:none}
+.photo-current-track{display:flex;width:max-content;animation:photo-current-drift linear infinite;will-change:transform}
+.photo-current--reverse .photo-current-track{animation-direction:reverse}
+.photo-current-group{display:flex;gap:18px;padding:8px 18px 16px 0;flex-shrink:0;align-items:start}
+.scrapbook-about .current-photo{flex:none;width:calc(var(--photo-height) * var(--photo-ratio));border:0;padding:0;background:transparent;box-shadow:none;cursor:zoom-in;color:#38535b;text-align:left;transform:none;animation:none}
+.current-photo-frame{height:var(--photo-height);width:100%;background:#e5e7dc}
+.scrapbook-about .current-photo-frame img{display:block;height:100%;width:100%;object-fit:contain;transform:none;border-radius:2px}
+.current-photo-caption{display:block;min-height:60px;padding:10px 8px 0;font:20px/1.3 'Kalam',cursive;white-space:normal}
+.photo-current:hover .photo-current-track,.photo-current:focus-within .photo-current-track{animation-play-state:paused!important}
+.current-photo:focus-visible{outline:3px solid #d38a49;outline-offset:3px}
+.current-hint{font:12px/1.5 'Poppins',Arial,sans-serif;color:#586e62;text-align:center;margin:12px 24px 0}
+@keyframes photo-current-drift{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+.photo-currents--grid .photo-current-rows{display:flex;gap:20px;padding:0 32px;align-items:start}
+.photo-currents--grid .photo-current{width:50%;overflow:visible}
+.photo-currents--grid .photo-current-track{width:100%;animation:none;transform:none;will-change:auto}
+.photo-currents--grid .photo-current-group{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));width:100%;padding:0;gap:20px}
+.photo-currents--grid .photo-current-group[aria-hidden]{display:none}
+.scrapbook-about .photo-currents--grid .current-photo{width:100%;min-width:0}
+.photo-currents--grid .current-photo-frame{height:auto;aspect-ratio:var(--photo-ratio)}
+@media(max-width:768px){.photo-currents-heading{display:block;padding:0 24px 24px}.current-controls{margin-top:16px}.scrapbook-about .photo-currents{--photo-height:190px}.current-photo-caption{font-size:18px;min-height:56px}.photo-currents--grid .photo-current-rows{padding:0 24px;gap:16px}.photo-currents--grid .photo-current-group{grid-template-columns:1fr;gap:16px}.photo-currents-heading h3{font-size:32px}}
+@media(prefers-reduced-motion:reduce){.photo-current-track{animation:none!important;transform:none!important;will-change:auto}.photo-current-group[aria-hidden]{display:none}.photo-current{overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}}
+
+/* A small buoyant offset keeps the current playful without moving the text. */
+@keyframes current-photo-bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-5px)}}
+@media(prefers-reduced-motion:no-preference){
+.photo-current .current-photo-frame{animation:current-photo-bob 5s ease-in-out infinite;animation-play-state:inherit}
+.photo-current .current-photo:nth-child(3n+1) .current-photo-frame{animation-delay:-1.7s}
+.photo-current .current-photo:nth-child(3n+2) .current-photo-frame{animation-delay:-3.3s}
+.photo-current-track{animation-play-state:inherit}
+.photo-current-group,.current-photo{animation-play-state:inherit!important}
+.photo-currents--grid .current-photo-frame{animation:none}
+.photo-current:hover .current-photo-frame,.photo-current:focus-within .current-photo-frame{animation-play-state:paused}
+}

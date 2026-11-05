@@ -18,7 +18,7 @@
       "destination": "/contact/index.html"
     },
     {
-      "source": "/((?!api/|sitemap\\.xml$|robots\\.txt$|static/|images/|project-previews/|favicon\\.ico$|manifest\\.json$|logo192\\.png$|logo512\\.png$|AndiScarola_Resume\\.pdf$).*)",
+      "source": "/((?!api/|sitemap\\.xml$|robots\\.txt$|static/|images/|photo-roll/|project-previews/|favicon\\.ico$|manifest\\.json$|logo192\\.png$|logo512\\.png$|AndiScarola_Resume\\.pdf$).*)",
       "destination": "/index.html"
     }
   ],
